@@ -7,6 +7,7 @@ import typescriptParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import storybook from "eslint-plugin-storybook";
 
 const eslintConfig = defineConfig([
   // Base ESLint recommended rules
@@ -33,6 +34,7 @@ const eslintConfig = defineConfig([
       '@typescript-eslint': typescriptEslint,
       import: importPlugin,
       prettier,
+      storybook,
     },
     languageOptions: {
       parser: typescriptParser,
@@ -126,6 +128,9 @@ const eslintConfig = defineConfig([
       'no-unused-vars': 'off', // Use TypeScript version instead
       'prefer-const': 'error',
       'no-var': 'error',
+
+      // Storybook rules
+      ...storybook.configs.recommended.rules,
     },
   },
 
