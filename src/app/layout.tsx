@@ -1,13 +1,8 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
-import './globals.css';
 
-const pretendard = localFont({
-  src: '../../public/fonts/PretendardVariable.woff2',
-  variable: '--font-pretendard',
-  display: 'swap',
-});
+import { pretendard } from '@/shared/assets/fonts/pretendard';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
