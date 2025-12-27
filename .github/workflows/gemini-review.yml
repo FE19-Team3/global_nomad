@@ -12,11 +12,21 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Gemini Review
-        uses: google-github-actions/gemini-code-review@v1
-        with:
-          api_key: ${{ secrets.GEMINI_API_KEY }}
-          prompt_file: .github/gemini/prompt.txt
+      - name: Run Gemini Review
+        run: |
+          PROMPT=$(cat .github/gemini/prompt.txt)
+
+          RESPONSE=$(curl -s -X POST \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"contents\": [{
+                \"parts\": [{
+                  \"text\": \"$PROMPT\"
+                }]
+              }]
+            }")
+
+          echo "$RESPONSE"
