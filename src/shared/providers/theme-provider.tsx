@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import ThemeToggleButton from '@/components/ThemeToggleButton';
+
 export type Theme = 'light' | 'dark';
 
 type ThemeContextValue = {
@@ -29,7 +31,12 @@ export const ThemeProvider = ({ initialTheme, children }: ThemeProviderProps) =>
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+      <ThemeToggleButton />
+    </ThemeContext.Provider>
+  );
 };
 
 export const useTheme = () => {
