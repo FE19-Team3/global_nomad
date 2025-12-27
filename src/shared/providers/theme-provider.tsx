@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import ThemeToggleButton from '@/components/ThemeToggleButton';
+import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
 
 export type Theme = 'light' | 'dark';
 

@@ -1,4 +1,4 @@
-import Text from '@/components/ui/Text';
+import Text from '@/shared/ui/Text';
 
 export default function Home() {
   return (
