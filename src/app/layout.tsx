@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import type { ReactNode } from 'react';
 
 import { pretendard } from '@/shared/assets/fonts/pretendard';
+import ReactQueryProvider from '@/shared/providers/ReactQueryProvider';
 import { ThemeProvider, type Theme } from '@/shared/providers/theme-provider';
 import './globals.css';
 import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
@@ -26,10 +27,12 @@ const RootLayout = async ({
   return (
     <html lang="ko" data-theme={theme}>
       <body className={`${pretendard.variable} antialiased`}>
-        <ThemeProvider initialTheme={theme}>
-          {children}
-          <ThemeToggleButton />
-        </ThemeProvider>
+        <ReactQueryProvider>
+          <ThemeProvider initialTheme={theme}>
+            {children}
+            <ThemeToggleButton />
+          </ThemeProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
