@@ -8,6 +8,7 @@ import importPlugin from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import storybook from "eslint-plugin-storybook";
+import boundaries from 'eslint-plugin-boundaries';
 
 const eslintConfig = defineConfig([
   // Base ESLint recommended rules
@@ -35,6 +36,7 @@ const eslintConfig = defineConfig([
       import: importPlugin,
       prettier,
       storybook,
+      boundaries,
     },
     languageOptions: {
       parser: typescriptParser,
@@ -56,6 +58,13 @@ const eslintConfig = defineConfig([
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
       },
+      'boundaries/elements': [
+        { type: 'shared', pattern: 'src/shared/**' },
+        { type: 'entities', pattern: 'src/entities/**' },
+        { type: 'features', pattern: 'src/features/**' },
+        { type: 'widgets', pattern: 'src/widgets/**' },
+        { type: 'app', pattern: 'src/app/**' },
+      ],
     },
     rules: {
       // Prettier integration
@@ -131,6 +140,29 @@ const eslintConfig = defineConfig([
 
       // Storybook rules
       ...storybook.configs.recommended.rules,
+
+      // 레이어 단방향 의존성 강제
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            { from: 'shared', allow: [] },
+            { from: 'entities', allow: ['shared'] },
+            { from: 'features', allow: ['entities', 'shared'] },
+            { from: 'widgets', allow: ['features', 'entities', 'shared'] },
+            { from: 'app', allow: ['widgets', 'features', 'entities', 'shared'] },
+          ],
+        },
+      ],
+
+      // internal 직접 import 금지
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: ['@/shared/lib/internal/*'],
+        },
+      ],
     },
   },
 
