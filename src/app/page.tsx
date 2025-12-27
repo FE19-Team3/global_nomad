@@ -1,4 +1,3 @@
-import ThemeToggleButton from '@/components/ThemeToggleButton';
 import Text from '@/components/ui/Text';
 
 export default function Home() {
@@ -13,7 +12,6 @@ export default function Home() {
             </Text.M12>
             <Text.Body16 className="text-gray-600">{'<Text.Body16>'}</Text.Body16>
           </div>
-          <ThemeToggleButton />
         </div>
         <div className="flex flex-wrap gap-3">
           <span className="rounded-full bg-primary-100 px-3 py-1 text-sm text-primary">

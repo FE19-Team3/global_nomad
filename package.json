@@ -23,9 +23,10 @@
     "next": "16.0.10",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "storybook": "^10.1.10",
     "tailwind-merge": "^3.4.0",
     "tailwind-variants": "^3.2.2",
-    "storybook": "^10.1.10"
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",
