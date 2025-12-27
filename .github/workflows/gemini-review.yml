@@ -1,0 +1,32 @@
+name: Gemini Code Review (Critical Only)
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  gemini-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Gemini Review
+        run: |
+          PROMPT=$(cat .github/gemini/prompt.txt)
+
+          RESPONSE=$(curl -s -X POST \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${{ secrets.GEMINI_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"contents\": [{
+                \"parts\": [{
+                  \"text\": \"$PROMPT\"
+                }]
+              }]
+            }")
+
+          echo "$RESPONSE"
