@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { cn } from '@/shared/lib/cn';
 
-const TEXT_VARIANTS = {
+export const TEXT_VARIANTS = {
   '11_M': 'text-[11px] leading-[1.3] font-[500]',
   '11_B': 'text-[11px] leading-[1.3] font-[700]',
   '12_M': 'text-[12px] leading-[1.3] font-[500]',
