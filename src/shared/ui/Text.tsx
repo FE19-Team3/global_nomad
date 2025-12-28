@@ -109,6 +109,8 @@ export const Text = Object.assign(TextRoot, {
   B14: shorthand(14, 'B'),
   M16: shorthand(16, 'M'),
   B16: shorthand(16, 'B'),
+  M18: shorthand(18, 'M'),
+  B18: shorthand(18, 'B'),
   M20: shorthand(20, 'M'),
   B20: shorthand(20, 'B'),
   Body: TextBody,
