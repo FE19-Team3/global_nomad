@@ -6,7 +6,7 @@ type FormValues = {
   email: string;
 };
 
-export default function SampleForm() {
+const SampleForm = () => {
   const {
     register,
     handleSubmit,
@@ -27,4 +27,6 @@ export default function SampleForm() {
       <button type="submit">확인</button>
     </form>
   );
-}
+};
+
+export default SampleForm;

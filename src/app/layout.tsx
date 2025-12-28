@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   description: '3팀에서 작업한 Globalnomad 페이지입니다.',
 };
 
-export default async function RootLayout({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: ReactNode;
-}>) {
+}>) => {
   const cookieStore = await cookies();
   const cookieTheme = cookieStore.get('theme')?.value;
   const theme: Theme = cookieTheme === 'dark' ? 'dark' : 'light';
@@ -33,4 +33,6 @@ export default async function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
