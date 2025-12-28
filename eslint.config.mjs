@@ -78,7 +78,7 @@ const eslintConfig = defineConfig([
         'error',
         { extensions: ['.tsx', '.jsx'] },
       ],
-      'react/jsx-props-no-spreading': 'warn',
+      'react/jsx-props-no-spreading': 'off',
       'react/require-default-props': 'off', // TypeScript handles this
       'react/function-component-definition': [
         'warn',

@@ -52,12 +52,10 @@ const TextRoot = ({
   ...props
 }: TextProps) => {
   const variant = resolveVariant(size, weight, line);
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return <Component {...props} className={cn(TEXT_VARIANTS[variant], className)} />;
 };
 
 const TextBody = ({ as, size = 16, weight = 'M', ...props }: TextProps) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
   <TextRoot {...props} as={as ?? 'p'} size={size} weight={weight} line="body" />
 );
 TextBody.displayName = 'TextBody';
@@ -84,7 +82,6 @@ type TextComponent = React.FC<TextProps> & {
 
 const shorthand = (size: Size, weight: Weight): React.FC<TextProps> => {
   const Comp: React.FC<TextProps> = (p: TextProps) => (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <TextRoot {...p} size={size} weight={weight} />
   );
   Comp.displayName = `Text${weight}${size}`;
@@ -93,7 +90,6 @@ const shorthand = (size: Size, weight: Weight): React.FC<TextProps> => {
 
 const bodyShorthand = (size: BodySize, weight: Weight): React.FC<TextProps> => {
   const Comp: React.FC<TextProps> = (p: TextProps) => (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <TextRoot {...p} as={p.as ?? 'p'} size={size} weight={weight} line="body" />
   );
   Comp.displayName = `TextBody${weight}${size}`;
