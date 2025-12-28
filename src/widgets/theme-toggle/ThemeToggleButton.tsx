@@ -2,7 +2,7 @@
 
 import { useTheme } from '@/shared/providers/theme-provider';
 
-export default function ThemeToggleButton() {
+const ThemeToggleButton = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -14,4 +14,6 @@ export default function ThemeToggleButton() {
       {theme === 'light' ? '다크모드' : '기본모드'}
     </button>
   );
-}
+};
+
+export default ThemeToggleButton;

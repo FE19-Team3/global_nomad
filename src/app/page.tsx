@@ -1,6 +1,6 @@
 import Text from '@/shared/ui/Text';
 
-export default function Home() {
+const Home = () => {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 px-6 py-16 text-gray-900">
       <div className="flex w-full max-w-3xl flex-col gap-6 rounded-2xl bg-white p-10 shadow-sm">
@@ -29,4 +29,6 @@ export default function Home() {
       </div>
     </main>
   );
-}
+};
+
+export default Home;

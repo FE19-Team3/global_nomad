@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { pretendard } from '@/shared/assets/fonts/pretendard';
 import { ThemeProvider, type Theme } from '@/shared/providers/theme-provider';
 import './globals.css';
+import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,11 +14,11 @@ export const metadata: Metadata = {
   description: '3팀에서 작업한 Globalnomad 페이지입니다.',
 };
 
-export default async function RootLayout({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: ReactNode;
-}>) {
+}>) => {
   const cookieStore = await cookies();
   const cookieTheme = cookieStore.get('theme')?.value;
   const theme: Theme = cookieTheme === 'dark' ? 'dark' : 'light';
@@ -25,8 +26,13 @@ export default async function RootLayout({
   return (
     <html lang="ko" data-theme={theme}>
       <body className={`${pretendard.variable} antialiased`}>
-        <ThemeProvider initialTheme={theme}>{children}</ThemeProvider>
+        <ThemeProvider initialTheme={theme}>
+          {children}
+          <ThemeToggleButton />
+        </ThemeProvider>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
