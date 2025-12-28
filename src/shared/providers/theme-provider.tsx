@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
+// import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
 
 export type Theme = 'light' | 'dark';
 
@@ -34,7 +34,7 @@ export const ThemeProvider = ({ initialTheme, children }: ThemeProviderProps) =>
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
-      <ThemeToggleButton />
+      {/* <ThemeToggleButton /> */}
     </ThemeContext.Provider>
   );
 };

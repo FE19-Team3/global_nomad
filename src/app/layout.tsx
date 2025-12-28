@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { pretendard } from '@/shared/assets/fonts/pretendard';
 import { ThemeProvider, type Theme } from '@/shared/providers/theme-provider';
 import './globals.css';
+import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,7 +26,10 @@ export default async function RootLayout({
   return (
     <html lang="ko" data-theme={theme}>
       <body className={`${pretendard.variable} antialiased`}>
-        <ThemeProvider initialTheme={theme}>{children}</ThemeProvider>
+        <ThemeProvider initialTheme={theme}>
+          {children}
+          <ThemeToggleButton />
+        </ThemeProvider>
       </body>
     </html>
   );
