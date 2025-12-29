@@ -17,7 +17,7 @@ export type ButtonVariant =
   | 'tertiary';
 export type ButtonSize = 'sm' | 'md' | 'full';
 export type ButtonRadius = 'sm' | 'md' | 'full';
-export type ButtonIconSize = 'sm' | 'md';
+export type ButtonIconSize = 'sm' | 'md' | 'md2';
 
 // Context
 interface ButtonContextValue {
