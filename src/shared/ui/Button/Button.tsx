@@ -92,6 +92,7 @@ const ButtonRoot = ({
     return (
       <ButtonContext.Provider value={contextValue}>
         <Link
+          role="button"
           href={href}
           className={cn(slots.root(), className)}
           aria-disabled={disabled}
