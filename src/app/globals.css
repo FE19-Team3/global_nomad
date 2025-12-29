@@ -2,6 +2,9 @@
 @config '../../tailwind.config.ts';
 
 :root {
+  --color-white-force: 255 255 255;
+  --color-black-force: 0 0 0;
+
   --color-white: 255 255 255;
   --color-black: 0 0 0;
 
@@ -50,6 +53,20 @@
 }
 
 @layer utilities {
+  /* color force(-force을 붙여서 dark 테마도 동일 색상 적용) */
+  .text-white-force {
+    color: rgb(var(--color-white-force) / 1);
+  }
+  .text-black-force {
+    color: rgb(var(--color-black-force) / 1);
+  }
+  .bg-white-force {
+    background-color: rgb(var(--color-white-force) / 1);
+  }
+  .bg-black-force {
+    background-color: rgb(var(--color-black-force) / 1);
+  }
+
   /* text m/b */
   .text-m-11 {
     @apply text-[11px] leading-[1.3] font-medium;

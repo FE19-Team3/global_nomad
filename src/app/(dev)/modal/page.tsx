@@ -47,7 +47,7 @@ const ReviewModal = () => {
       </div>
 
       <button
-        className="w-full bg-blue-500 text-white py-3 rounded-xl disabled:opacity-30"
+        className="w-full bg-blue-500 text-white-force py-3 rounded-xl disabled:opacity-30"
         disabled={rating === 0}
       >
         리뷰 등록하기(컴포넌트로 교체 필요)
