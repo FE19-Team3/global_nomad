@@ -49,6 +49,65 @@
   --color-red: 255 80 80;
 }
 
+@layer utilities {
+  /* text m/b */
+  .text-m-11 {
+    @apply text-[11px] leading-[1.3] font-medium;
+  }
+  .text-b-11 {
+    @apply text-[11px] leading-[1.3] font-bold;
+  }
+
+  .text-m-12 {
+    @apply text-[12px] leading-[1.3] font-medium;
+  }
+  .text-b-12 {
+    @apply text-[12px] leading-[1.3] font-bold;
+  }
+
+  .text-m-14 {
+    @apply text-[14px] leading-[1.3] font-medium;
+  }
+  .text-b-14 {
+    @apply text-[14px] leading-[1.3] font-bold;
+  }
+
+  .text-m-16 {
+    @apply text-[16px] leading-[1.3] font-medium;
+  }
+  .text-b-16 {
+    @apply text-[16px] leading-[1.3] font-bold;
+  }
+
+  .text-m-18 {
+    @apply text-[18px] leading-[1.3] font-medium;
+  }
+  .text-b-18 {
+    @apply text-[18px] leading-[1.3] font-bold;
+  }
+
+  .text-m-20 {
+    @apply text-[20px] leading-[1.3] font-medium;
+  }
+  .text-b-20 {
+    @apply text-[20px] leading-[1.3] font-bold;
+  }
+
+  /* text body */
+  .text-body-14 {
+    @apply text-[14px] leading-[1.8] font-medium;
+  }
+  .text-body-16 {
+    @apply text-[16px] leading-[1.8] font-medium;
+  }
+  .text-body-18b {
+    @apply text-[18px] leading-[1.4] font-bold;
+  }
+  .text-body-20b {
+    @apply text-[20px] leading-[1.6] font-bold;
+  }
+}
+
 body {
   background: rgb(var(--color-white) / 1);
   color: rgb(var(--color-gray-950) / 1);
