@@ -17,7 +17,7 @@ export const ModalProvider = () => {
           <BaseModal
             key={i}
             isOpen
-            onClose={isTop ? closeTop : undefined}
+            onClose={isTop ? closeTop : () => {}}
             zIndex={50 + i}
             showCloseButton={modal.type === 'base' && modal.showCloseButton}
           >
