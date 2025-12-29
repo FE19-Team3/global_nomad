@@ -46,6 +46,7 @@ const BaseModal = ({
       className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm"
       style={{ zIndex }}
       onClick={onClose}
+      role="alertdialog"
     >
       <div
         className="rounded-2xl bg-white p-6 max-w-100 w-full"
