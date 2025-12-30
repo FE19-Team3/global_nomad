@@ -9,11 +9,11 @@ interface DropdownMenuProps {
 }
 
 const DropdownMenu = ({ children }: DropdownMenuProps) => {
-  const { open } = useDropdown();
+  const { open, styles } = useDropdown();
 
   if (!open) return null;
 
-  return <ul className="absolute top-full left-0 w-full">{children}</ul>;
+  return <ul className={styles.menu()}>{children}</ul>;
 };
 
 export default DropdownMenu;

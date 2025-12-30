@@ -4,11 +4,15 @@
 //useContext: 만들어진 저장소에서 데이터를 꺼내 쓰는 함수
 import { createContext, useContext } from 'react';
 
+import { dropdownStyles } from './Dropdown.style';
+
 interface DropdownContextType {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   value?: string;
-  onValueChange?: (value: string) => void;
+  onValueChange: (value: string, label?: string) => void;
+  selectedLabel?: string;
+  styles: ReturnType<typeof dropdownStyles>;
 }
 
 //데이터 저장소 생성

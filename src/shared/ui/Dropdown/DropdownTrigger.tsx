@@ -10,19 +10,18 @@ interface DropdownTriggerProps {
 }
 
 const DropdownTrigger = ({ children, placeholder }: DropdownTriggerProps) => {
-  const { open, onOpenChange, value } = useDropdown();
+  const { open, onOpenChange, selectedLabel, styles } = useDropdown();
 
   const displayContent = () => {
-    if (value) return value; // 1순위: 선택된 값
+    if (selectedLabel) return selectedLabel; // 1순위: 선택된 label(한글)
     if (children) return children; // 2순위: 커스텀 컨텐츠
-    return placeholder; // 3순위: 플레이스홀더
+    return placeholder; // 3순위: placeholder
   };
 
   return (
-    <button onClick={() => onOpenChange(!open)}>
-      {displayContent()}
-      {value || placeholder || children}
-      <span className={open ? 'rotate-180' : ''}>▼</span>{' '}
+    <button onClick={() => onOpenChange(!open)} className={styles.trigger()}>
+      <span>{displayContent()}</span>
+      <span className={styles.icon()}>▼</span>
     </button>
   );
 };

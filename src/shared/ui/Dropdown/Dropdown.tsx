@@ -1,8 +1,8 @@
 'use client';
-// 테스트
 
 import { useState, ReactNode } from 'react';
 
+import { dropdownStyles } from './Dropdown.style';
 import { DropdownContext } from './DropdownContext';
 
 interface DropdownProps {
@@ -11,6 +11,9 @@ interface DropdownProps {
   onChange?: (value: string) => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  size?: 'md';
+  radius?: 'md';
+  disabled?: boolean;
 }
 
 const Dropdown = ({
@@ -19,14 +22,21 @@ const Dropdown = ({
   onChange,
   open: externalOpen,
   onOpenChange: externalOnOpenChange,
+  size = 'md',
+  radius = 'md',
+  disabled = false,
 }: DropdownProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
+  // 선택된 value에 대응하는 label 저장용 상태
+  const [selectedLabel, setSelectedLabel] = useState<string | undefined>();
 
   // 외부 props 있으면 Controlled, 없으면 Uncontrolled
   const isControlled = externalOpen !== undefined;
   const open = isControlled ? externalOpen : internalOpen;
 
   const onOpenChange = (newOpen: boolean) => {
+    if (disabled) return;
+
     if (isControlled) {
       // Controlled인 경우 외부 함수 호출
       externalOnOpenChange?.(newOpen);
@@ -36,10 +46,14 @@ const Dropdown = ({
     }
   };
 
-  const handleSelect = (newValue: string) => {
+  const handleSelect = (newValue: string, label?: string) => {
     onChange?.(newValue);
+    // Trigger에 보여줄 label 저장
+    setSelectedLabel(label);
     onOpenChange(false);
   };
+
+  const styles = dropdownStyles({ size, radius, open, disabled });
 
   return (
     <DropdownContext.Provider
@@ -48,9 +62,11 @@ const Dropdown = ({
         onOpenChange,
         value: value,
         onValueChange: handleSelect,
+        selectedLabel,
+        styles,
       }}
     >
-      <div className="relative">{children}</div>
+      <div className={styles.container()}>{children}</div>
     </DropdownContext.Provider>
   );
 };

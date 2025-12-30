@@ -11,16 +11,18 @@ interface DropdownItemProps {
   className?: string;
 }
 
-const DropdownItem = ({ children, value, onClick, className }: DropdownItemProps) => {
-  const { onValueChange } = useDropdown();
+const DropdownItem = ({ children, value, onClick }: DropdownItemProps) => {
+  const { onValueChange, value: selectedValue, styles } = useDropdown();
 
   const handleClick = () => {
-    onValueChange?.(value);
+    onValueChange?.(value, children as string);
     onClick?.();
   };
 
+  const isSelected = selectedValue === value;
+
   return (
-    <li onClick={handleClick} className={className}>
+    <li onClick={handleClick} className={styles.item({ selected: isSelected })}>
       {children}
     </li>
   );
