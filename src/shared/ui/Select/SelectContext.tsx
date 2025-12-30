@@ -3,9 +3,7 @@ import { createContext, useContext } from 'react';
 
 import { SelectContextValue } from './Select.types';
 
-export const SelectContext = createContext<SelectContextValue>(
-  null as unknown as SelectContextValue,
-);
+export const SelectContext = createContext<SelectContextValue | undefined>(undefined);
 
 export const useSelectContext = () => {
   const context = useContext(SelectContext);
