@@ -16,7 +16,7 @@ export default meta;
 /* 기본 */
 export const Default = {
   render: () => (
-    <div className='className="flex w-100'>
+    <div className="flex w-100">
       <Select.Root>
         <Select.Trigger placeholder="카테고리를 선택해 주세요" />
         <Select.Content>
