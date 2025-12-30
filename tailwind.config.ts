@@ -30,6 +30,16 @@ const config: Config = {
           DEFAULT: 'rgb(var(--color-red) / <alpha-value>)',
         },
       },
+      fontFamily: {
+        sans: [
+          'var(--font-pretendard)',
+          'Pretendard',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'sans-serif',
+        ],
+      },
     },
   },
 };

@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import type { ReactNode } from 'react';
 
 import { pretendard } from '@/shared/assets/fonts/pretendard';
+import { ModalProvider } from '@/shared/providers/ModalProvider';
 import ReactQueryProvider from '@/shared/providers/ReactQueryProvider';
 import { ThemeProvider, type Theme } from '@/shared/providers/theme-provider';
 import './globals.css';
@@ -29,8 +30,9 @@ const RootLayout = async ({
       <body className={`${pretendard.variable} antialiased`}>
         <ReactQueryProvider>
           <ThemeProvider initialTheme={theme}>
-            {children}
+            <ModalProvider />
             <ThemeToggleButton />
+            {children}
           </ThemeProvider>
         </ReactQueryProvider>
       </body>
