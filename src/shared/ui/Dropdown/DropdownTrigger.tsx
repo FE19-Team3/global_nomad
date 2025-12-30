@@ -2,6 +2,9 @@
 
 import { ReactNode } from 'react';
 
+import ChevronDownIcon from '@/shared/assets/icons/ChevronDownIcon.svg';
+import { cn } from '@/shared/lib/cn';
+
 import { useDropdown } from './DropdownContext';
 
 interface DropdownTriggerProps {
@@ -21,7 +24,7 @@ const DropdownTrigger = ({ children, placeholder }: DropdownTriggerProps) => {
   return (
     <button onClick={() => onOpenChange(!open)} className={styles.trigger()}>
       <span>{displayContent()}</span>
-      <span className={styles.icon()}>▼</span>
+      <ChevronDownIcon className={cn(styles.icon(), open && 'scale-x-[-1]')} />
     </button>
   );
 };
