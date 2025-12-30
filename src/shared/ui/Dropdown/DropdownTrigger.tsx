@@ -22,7 +22,30 @@ const DropdownTrigger = ({ children, placeholder }: DropdownTriggerProps) => {
   };
 
   return (
-    <button onClick={() => onOpenChange(!open)} className={styles.trigger()}>
+    <button
+      type="button"
+      aria-haspopup="listbox"
+      aria-expanded={open}
+      onClick={() => {
+        onOpenChange(!open);
+        if (!open) {
+          setTimeout(() => {
+            const firstOption = document.querySelector('[role="option"]') as HTMLElement | null;
+            firstOption?.focus();
+          });
+        }
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onOpenChange(!open);
+        }
+        if (e.key === 'Escape') {
+          onOpenChange(false);
+        }
+      }}
+      className={styles.trigger()}
+    >
       <span>{displayContent()}</span>
       <ChevronDownIcon className={cn(styles.icon(), open && 'scale-x-[-1]')} />
     </button>

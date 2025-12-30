@@ -22,7 +22,29 @@ const DropdownItem = ({ children, value, onClick }: DropdownItemProps) => {
   const isSelected = selectedValue === value;
 
   return (
-    <li onClick={handleClick} className={styles.item({ selected: isSelected })}>
+    <li
+      role="option"
+      aria-selected={isSelected}
+      tabIndex={0}
+      onClick={handleClick}
+      className={styles.item({ selected: isSelected })}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick();
+        }
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          (e.currentTarget.nextElementSibling as HTMLElement | null)?.focus();
+        }
+
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          (e.currentTarget.previousElementSibling as HTMLElement | null)?.focus();
+        }
+      }}
+    >
       {children}
     </li>
   );
