@@ -8,7 +8,7 @@ export const styles = tv({
       'focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed',
     ],
     icon: 'h-4 w-4 text-gray-400 transition-transform duration-200',
-    value: 'ext-gray-900',
+    value: 'text-gray-900',
     placeholder: 'text-gray-400',
     content:
       'absolute z-50 mt-2 w-full min-w-max overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl animate-in fade-in zoom-in-95 duration-150',
