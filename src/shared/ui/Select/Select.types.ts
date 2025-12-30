@@ -6,7 +6,7 @@ export interface SelectContextValue {
   disabled: boolean;
   onValueChange: (value: string) => void;
   onOpenChange: (open: boolean) => void;
-  triggerRef: React.RefObject<HTMLButtonElement | null>;
+  triggerRef: React.RefObject<HTMLButtonElement>;
 }
 
 export interface SelectRootProps {
