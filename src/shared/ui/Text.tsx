@@ -7,7 +7,7 @@ export const TEXT_VARIANTS = {
   '11_B': 'text-[11px] leading-[1.3] font-[700]',
   '12_M': 'text-[12px] leading-[1.3] font-[500]',
   '12_B': 'text-[12px] leading-[1.3] font-[700]',
-  '13_M': 'text-[13x] leading-[1.3] font-[500]',
+  '13_M': 'text-[13px] leading-[1.3] font-[500]',
   '13_B': 'text-[13px] leading-[1.3] font-[700]',
   '14_M': 'text-[14px] leading-[1.3] font-[500]',
   '14_B': 'text-[14px] leading-[1.3] font-[700]',

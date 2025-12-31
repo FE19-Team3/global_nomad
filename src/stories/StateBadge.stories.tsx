@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import StateBadge from '@/shared/ui/StateBadge';
+import StateBadge, { BadgeVariant, BADGE_CONFIG } from '@/shared/ui/StateBadge';
 
 const meta: Meta<typeof StateBadge> = {
   title: 'Components/StateBadge',
@@ -9,7 +9,7 @@ const meta: Meta<typeof StateBadge> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['cancel', 'done', 'reject', 'complete', 'approve'],
+      options: Object.keys(BADGE_CONFIG) as BadgeVariant[],
       description: '배지의 상태 타입을 선택합니다.',
     },
   },
@@ -27,11 +27,9 @@ export const Default: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4 p-4 bg-gray-800 rounded-lg">
-      <StateBadge variant="cancel" />
-      <StateBadge variant="done" />
-      <StateBadge variant="reject" />
-      <StateBadge variant="complete" />
-      <StateBadge variant="approve" />
+      {(Object.keys(BADGE_CONFIG) as BadgeVariant[]).map((variant) => (
+        <StateBadge key={variant} variant={variant} />
+      ))}
     </div>
   ),
 };
