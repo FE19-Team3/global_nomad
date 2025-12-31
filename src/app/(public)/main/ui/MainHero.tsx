@@ -17,7 +17,7 @@ const heroKeyframes = `
 
 const MainHero = () => {
   return (
-    <div className="relative flex flex-col items-center overflow-hidden w-full h-125 rounded-3xl bg-slate-900">
+    <div className="relative flex flex-col items-center overflow-hidden w-full h-125 rounded-3xl bg-gray-100">
       <style>{heroKeyframes}</style>
 
       {/* 이미지 */}
