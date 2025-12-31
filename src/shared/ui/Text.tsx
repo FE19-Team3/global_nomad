@@ -15,13 +15,17 @@ export const TEXT_VARIANTS = {
   '18_B': 'text-[18px] leading-[1.3] font-[700]',
   '20_M': 'text-[20px] leading-[1.3] font-[500]',
   '20_B': 'text-[20px] leading-[1.3] font-[700]',
+  '24_M': 'text-[24px] leading-[1.3] font-[500]',
+  '24_B': 'text-[24px] leading-[1.3] font-[700]',
+  '32_M': 'text-[32px] leading-[1.3] font-[500]',
+  '32_B': 'text-[32px] leading-[1.3] font-[700]',
   '14_body_M': 'text-[14px] leading-[1.8] font-[500]',
   '16_body_M': 'text-[16px] leading-[1.8] font-[500]',
   '18_body_B': 'text-[18px] leading-[1.4] font-[700]',
   '20_body_B': 'text-[20px] leading-[1.6] font-[700]',
 } as const;
 
-type Size = 11 | 12 | 14 | 16 | 18 | 20;
+type Size = 11 | 12 | 14 | 16 | 18 | 20 | 24 | 32;
 type BodySize = 14 | 16 | 18 | 20;
 type Weight = 'M' | 'B';
 type Line = 'tight' | 'body';
@@ -73,6 +77,10 @@ type TextComponent = React.FC<TextProps> & {
   B18: React.FC<TextProps>;
   M20: React.FC<TextProps>;
   B20: React.FC<TextProps>;
+  M24: React.FC<TextProps>;
+  B24: React.FC<TextProps>;
+  M32: React.FC<TextProps>;
+  B32: React.FC<TextProps>;
   Body: typeof TextBody;
   Body14: React.FC<TextProps>;
   Body16: React.FC<TextProps>;
@@ -109,6 +117,10 @@ export const Text = Object.assign(TextRoot, {
   B18: shorthand(18, 'B'),
   M20: shorthand(20, 'M'),
   B20: shorthand(20, 'B'),
+  M24: shorthand(24, 'M'),
+  B24: shorthand(24, 'B'),
+  M32: shorthand(32, 'M'),
+  B32: shorthand(32, 'B'),
   Body: TextBody,
   Body14: bodyShorthand(14, 'M'),
   Body16: bodyShorthand(16, 'M'),
