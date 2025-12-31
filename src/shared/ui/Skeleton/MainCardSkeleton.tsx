@@ -1,4 +1,4 @@
-import { Skeleton } from './Skeleton';
+import { Skeleton } from '@/shared/ui/Skeleton';
 
 const MainCardSkeleton = () => {
   return (

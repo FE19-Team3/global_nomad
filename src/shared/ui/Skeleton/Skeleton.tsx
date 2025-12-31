@@ -47,8 +47,12 @@ const Rect = ({ width, height, className }: RowProps) => {
   );
 };
 
-export const Skeleton = Object.assign(SkeletonBase, {
-  Circle,
-  Row,
-  Rect,
-});
+export const Skeleton = SkeletonBase as typeof SkeletonBase & {
+  Circle: typeof Circle;
+  Row: typeof Row;
+  Rect: typeof Rect;
+};
+
+Skeleton.Circle = Circle;
+Skeleton.Row = Row;
+Skeleton.Rect = Rect;
