@@ -10,9 +10,8 @@ export const isApiError = (e: unknown): e is ApiError => {
   if (typeof obj.status !== 'number') return false;
   if (typeof obj.message !== 'string') return false;
 
-  const code = obj.code;
-  if (typeof code !== 'string') return false;
-  if (!(ERROR_CODES as readonly string[]).includes(code)) return false;
+  if (typeof obj.code !== 'string') return false;
+  if (!(ERROR_CODES as readonly string[]).includes(obj.code)) return false;
 
   return true;
 };
