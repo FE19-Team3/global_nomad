@@ -24,17 +24,7 @@ export const Checkbox = ({ checked, onChange, label, icon, disabled = false }: C
   };
 
   return (
-    <label
-      htmlFor={id}
-      className={cn(styles.root())}
-      tabIndex={disabled ? -1 : 0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          if (!disabled) onChange(!checked);
-        }
-      }}
-    >
+    <label htmlFor={id} className={cn(styles.root())}>
       <input
         id={id}
         type="checkbox"
@@ -42,7 +32,12 @@ export const Checkbox = ({ checked, onChange, label, icon, disabled = false }: C
         disabled={disabled}
         onChange={handleChange}
         className={styles.input()}
-        tabIndex={-1}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            if (!disabled) onChange(!checked);
+          }
+        }}
       />
 
       {icon && (

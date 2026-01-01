@@ -16,10 +16,10 @@ export const TEXT_VARIANTS = {
   '18_M': 'text-[18px] leading-[1.3] font-[500]',
   '18_B': 'text-[18px] leading-[1.3] font-[700]',
   '20_M': 'text-[20px] leading-[1.3] font-[500]',
-  '20_B': 'text-[20px] leading-[1.3] font-[700]',
   '24_M': 'text-[24px] leading-[1.3] font-[500]',
   '24_B': 'text-[24px] leading-[1.3] font-[700]',
   '32_M': 'text-[32px] leading-[1.3] font-[500]',
+  '20_B': 'text-[20px] leading-[1.3] font-[700]',
   '32_B': 'text-[32px] leading-[1.3] font-[700]',
   '14_body_M': 'text-[14px] leading-[1.8] font-[500]',
   '16_body_M': 'text-[16px] leading-[1.8] font-[500]',
@@ -33,6 +33,8 @@ type Weight = 'M' | 'B';
 type Line = 'tight' | 'body';
 
 export type TextVariant = keyof typeof TEXT_VARIANTS;
+
+export type TextBaseComponent = React.FC<TextProps>;
 
 export type TextProps = React.HTMLAttributes<HTMLElement> & {
   as?: React.ElementType;
@@ -69,30 +71,23 @@ const TextBody = ({ as, size = 16, weight = 'M', ...props }: TextProps) => (
 );
 TextBody.displayName = 'TextBody';
 
-type TextBaseComponent = (props: TextProps) => React.ReactElement;
-
-type TextComponent = TextBaseComponent & {
-  displayName?: string;
-
-  M11: TextBaseComponent;
-  B11: TextBaseComponent;
-  M12: TextBaseComponent;
-  B12: TextBaseComponent;
-  M13: TextBaseComponent;
-  B13: TextBaseComponent;
-  M14: TextBaseComponent;
-  B14: TextBaseComponent;
-  M16: TextBaseComponent;
-  B16: TextBaseComponent;
-  M18: TextBaseComponent;
-  B18: TextBaseComponent;
-  M20: TextBaseComponent;
-  B20: TextBaseComponent;
-  M24: TextBaseComponent;
-  B24: TextBaseComponent;
-  M32: TextBaseComponent;
-  B32: TextBaseComponent;
-
+type TextComponent = React.FC<TextProps> & {
+  M11: React.FC<TextProps>;
+  B11: React.FC<TextProps>;
+  M12: React.FC<TextProps>;
+  B12: React.FC<TextProps>;
+  M14: React.FC<TextProps>;
+  B14: React.FC<TextProps>;
+  M16: React.FC<TextProps>;
+  B16: React.FC<TextProps>;
+  M18: React.FC<TextProps>;
+  B18: React.FC<TextProps>;
+  M20: React.FC<TextProps>;
+  B20: React.FC<TextProps>;
+  M24: React.FC<TextProps>;
+  B24: React.FC<TextProps>;
+  B32: React.FC<TextProps>;
+  M32: React.FC<TextProps>;
   Body: typeof TextBody;
   Body14: TextBaseComponent;
   Body16: TextBaseComponent;
