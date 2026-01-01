@@ -35,7 +35,7 @@ export default function Page() {
       {/* 로그인 */}
       <div>
         <h2 className="text-lg font-semibold mb-2">로그인</h2>
-        <header className="sticky top-0 z-50 w-full 18 bg-white">
+        <header className="sticky top-0 z-50 w-full h-18 bg-white">
           <div className="max-w-[1520px] mx-auto h-full flex items-center justify-between px-4">
             <Button as="link" href="/" variant="icon" iconOnly>
               <LogoImg />
