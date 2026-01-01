@@ -5,8 +5,8 @@ import Button from '@/shared/ui/Button/Button';
 export const NotificationButton = () => {
   return (
     <>
-      <Button variant="icon" iconOnly>
-        <Notification alt="알림" />
+      <Button variant="icon" iconOnly aria-label="알림">
+        <Notification />
       </Button>
     </>
   );
