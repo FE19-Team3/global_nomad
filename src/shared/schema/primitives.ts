@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const Id = z.number();
 
 // ISO 8601 DateTime ex)2025-01-01T12:00:00Z
-export const ISODate = z.iso.datetime();
+export const ISODateTime = z.iso.datetime();
 
 // YYYY-MM-DD
 export const DateYMD = z.iso.date();
