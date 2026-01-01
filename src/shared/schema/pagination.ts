@@ -13,13 +13,8 @@ export const CursorQuery = z.object({
 });
 
 export const YearMonthQuery = z.object({
-  year: z
-    .string()
-    .regex(/^\d{4}$/, '연도는 4자리 숫자여야 합니다.')
-    .refine((y) => Number(y) >= 1900 && Number(y) <= 2100, {
-      message: '연도는 1900~2100 사이여야 합니다.',
-    }),
-  month: z.string().regex(/^(0[1-9]|1[0-2])$/, '월은 01~12 사이여야 합니다.'),
+  year: z.coerce.number().min(1970).max(2100),
+  month: z.coerce.number().min(1).max(12),
 });
 
 export const KeywordQuery = z.object({

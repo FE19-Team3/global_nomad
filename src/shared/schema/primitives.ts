@@ -16,7 +16,7 @@ export const TimeHM = z.iso.time();
 export const Url = z.url();
 
 // 공백 불가 문자열
-export const NonEmptyString = z.string().min(1);
+export const NonEmptyString = z.string().trim().min(1);
 
 // 가격, 금액
 export const Price = z.number().nonnegative();
