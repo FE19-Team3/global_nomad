@@ -1,5 +1,9 @@
 import Text from '@/shared/ui/Text';
-import { styles, ReviewCardVM, renderStars } from '@/widgets/review-card';
+
+import { ReviewCardVM } from '../model/types';
+import { renderStars } from '../utils/rating';
+
+import { styles } from './reviewCard.styles';
 
 export const ReviewCard = ({ nickname, rating, content, createdAt }: ReviewCardVM) => {
   const slots = styles();
@@ -10,7 +14,7 @@ export const ReviewCard = ({ nickname, rating, content, createdAt }: ReviewCardV
         <Text.B14 as="h3" className="md:text-[16px]">
           {nickname}
         </Text.B14>
-        <Text.M12 className="md:text-[14px] text-gray-400" aria-label={`작성일: ${createdAt}`}>
+        <Text.M12 className="md:text-[14px] text-gray-400" as="time" dateTime={createdAt}>
           {createdAt}
         </Text.M12>
       </div>
