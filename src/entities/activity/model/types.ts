@@ -1,4 +1,4 @@
-export interface Experience {
+export interface Activity {
   id: number;
   title: string;
   rating: number;

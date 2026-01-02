@@ -2,18 +2,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import StarIcon from '@/shared/assets/images/icons/icon-star-sm.png';
+import type { Activity } from '@/widgets/activity/types';
 
-import type { Experience } from '../model/types';
-
-export const ExperienceCard = ({ title, rating, reviewCount, price, imageUrl }: Experience) => {
+export const ActivityCard = ({ id, title, rating, reviewCount, price, imageUrl }: Activity) => {
   return (
-    <Link href="#" className="group block relative w-full h-92">
-      <div className="relative w-full h-92 rounded-4xl text-gray-950">
+    <Link href={`/experience/${id}`} className="group relative block h-92 w-full">
+      <div className="relative h-92 w-full rounded-4xl text-gray-950">
         <div className="absolute inset-0 overflow-hidden rounded-4xl bg-gray-50">
           {imageUrl && <Image src={imageUrl} alt={title} fill className="object-cover" />}
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0">
+        <div className="absolute inset-x-0 bottom-0">
           <div className="rounded-4xl bg-white px-7 py-5 shadow-lg">
             <h3 className="mb-1 truncate text-b-18 group-hover:text-primary">{title}</h3>
 

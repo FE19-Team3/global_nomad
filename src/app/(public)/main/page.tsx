@@ -1,4 +1,5 @@
-import { ExperienceList } from './ui/ExperienceList';
+import { ActivityList } from '@/widgets/activity/activity-list';
+
 import MainHero from './ui/MainHero';
 
 // Mock 데이터
@@ -31,7 +32,7 @@ const MainPage = () => {
       <MainHero />
       <section className="flex flex-col gap-6">
         <h2 className="text-b-32 text-gray-950">🛼 모든 체험</h2>
-        <ExperienceList experiences={MOCK_DATA} />
+        <ActivityList experiences={MOCK_DATA} />
       </section>
     </main>
   );
