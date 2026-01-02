@@ -7,6 +7,8 @@ export const TEXT_VARIANTS = {
   '11_B': 'text-[11px] leading-[1.3] font-[700]',
   '12_M': 'text-[12px] leading-[1.3] font-[500]',
   '12_B': 'text-[12px] leading-[1.3] font-[700]',
+  '13_M': 'text-[13px] leading-[1.3] font-[500]',
+  '13_B': 'text-[13px] leading-[1.3] font-[700]',
   '14_M': 'text-[14px] leading-[1.3] font-[500]',
   '14_B': 'text-[14px] leading-[1.3] font-[700]',
   '16_M': 'text-[16px] leading-[1.3] font-[500]',
@@ -69,6 +71,8 @@ type TextComponent = React.FC<TextProps> & {
   B11: React.FC<TextProps>;
   M12: React.FC<TextProps>;
   B12: React.FC<TextProps>;
+  M13: React.FC<TextProps>;
+  B13: React.FC<TextProps>;
   M14: React.FC<TextProps>;
   B14: React.FC<TextProps>;
   M16: React.FC<TextProps>;
@@ -109,6 +113,8 @@ export const Text = Object.assign(TextRoot, {
   B11: shorthand(11, 'B'),
   M12: shorthand(12, 'M'),
   B12: shorthand(12, 'B'),
+  M13: shorthand(13, 'M'),
+  B13: shorthand(13, 'B'),
   M14: shorthand(14, 'M'),
   B14: shorthand(14, 'B'),
   M16: shorthand(16, 'M'),
