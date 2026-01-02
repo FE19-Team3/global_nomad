@@ -2,7 +2,7 @@ import { tv } from 'tailwind-variants';
 
 export const styles = tv({
   slots: {
-    root: 'group flex flex-col md:flex-row md:items-stretch bg-white rounded-3xl overflow-hidden shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] transition-all',
+    root: 'group flex flex-col md:flex-row md:items-stretch bg-white rounded-3xl overflow-hidden shadow-[0_4px_24px_0_rgba(156,180,202,0.2)] transition-all min-w-[320px]',
     thumbWrapper:
       'relative shrink-0 w-full h-[220px] md:w-[204px] md:h-auto md:order-2 overflow-hidden',
     thumb: 'object-cover transition-transform duration-500',
