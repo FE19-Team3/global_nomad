@@ -22,7 +22,7 @@ const Select = ({
   // 제어하지 않을 때 사용하는 내부 open 상태
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   // Trigger(button) DOM을 참조하기 위한 ref (외부 클릭 감지에 사용)
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const slots = styles();
 
   // value를 외부에서 제어하는지 여부

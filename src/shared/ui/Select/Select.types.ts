@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, RefObject } from 'react';
 
 export interface SelectContextValue {
   value: string;
@@ -6,7 +6,7 @@ export interface SelectContextValue {
   disabled: boolean;
   onValueChange: (value: string) => void;
   onOpenChange: (open: boolean) => void;
-  triggerRef: React.RefObject<HTMLButtonElement>;
+  triggerRef: RefObject<HTMLButtonElement | null>;
 }
 
 export interface SelectRootProps {
