@@ -1,11 +1,4 @@
-// widgets/header/model/types.ts
-// **추후수정** entities/user에서 User import로 변경
-// import type { User } from 'entities/user';
-export interface User {
-  id: number;
-  nickname: string;
-  profileImageUrl?: string;
-}
+import { User } from './../../../entities/user/model/types';
 
 export interface AuthState {
   user: User | null; // 사용자 정보 (없으면 null)
