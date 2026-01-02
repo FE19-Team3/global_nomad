@@ -2,13 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react';
 
+import { User } from '@/entities/user';
 import Profile from '@/shared/assets/images/icon/ic_profile.svg';
 import Button from '@/shared/ui/Button/Button';
 import { Text } from '@/shared/ui/Text';
 
-import type { User } from '../model/types';
-
 import { NotificationButton } from './NotificationButton';
+// import Image from 'next/image';
 
 interface UserMenuProps {
   user: User;
@@ -55,6 +55,13 @@ export const HeaderAuth = ({ user }: UserMenuProps) => {
           {user.profileImageUrl ? (
             <Button.Icon>
               <Profile className="w-full h-full object-cover" />
+              {/* ** 추후 수정 ** api 연결후 주석해제 */}
+              {/* <Image
+                src={user.profileImageUrl}
+                alt={`${user.nickname}님의 프로필`}
+                fill
+                className="object-cover"
+              /> */}
             </Button.Icon>
           ) : (
             <span className="text-sm font-medium text-gray-600">{user.nickname[0]}</span>
