@@ -17,22 +17,37 @@ const meta: Meta<typeof ActivityGallery> = {
 export default meta;
 type Story = StoryObj<typeof ActivityGallery>;
 
-export const Empty: Story = {
-  args: { subImageUrls: [] },
+export const OnlyMainImage: Story = {
+  args: {
+    mainImageUrl: '/sub1.png',
+    subImageUrls: [],
+  },
 };
 
-export const OneImage: Story = {
-  args: { subImageUrls: ['/sub1.png'] },
+export const OneSubImage: Story = {
+  args: {
+    mainImageUrl: '/sub1.png',
+    subImageUrls: ['/sub1.png'],
+  },
 };
 
-export const TwoImages: Story = {
-  args: { subImageUrls: ['/sub1.png', '/sub2.png'] },
+export const TwoSubImages: Story = {
+  args: {
+    mainImageUrl: '/sub1.png',
+    subImageUrls: ['/sub1.png', '/sub2.png'],
+  },
 };
 
-export const ThreeImages: Story = {
-  args: { subImageUrls: ['/sub1.png', '/sub2.png', '/sub3.png'] },
+export const ThreeSubImages: Story = {
+  args: {
+    mainImageUrl: '/sub1.png',
+    subImageUrls: ['/sub1.png', '/sub2.png', '/sub3.png'],
+  },
 };
 
-export const FourImages: Story = {
-  args: { subImageUrls: ['/sub1.png', '/sub2.png', '/sub3.png', '/sub4.png'] },
+export const FourSubImages: Story = {
+  args: {
+    mainImageUrl: '/sub1.png',
+    subImageUrls: ['/sub1.png', '/sub2.png', '/sub3.png', '/sub4.png'],
+  },
 };

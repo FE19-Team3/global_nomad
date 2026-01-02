@@ -5,16 +5,19 @@ import { cn } from '@/shared/lib/cn';
 import { styles } from './ActivityGallery.styles';
 
 interface ActivityGalleryProps {
-  subImageUrls: string[];
+  mainImageUrl: string;
+  subImageUrls?: string[];
 }
 
-export const ActivityGallery = ({ subImageUrls }: ActivityGalleryProps) => {
-  const displaySubImgs = subImageUrls.slice(0, 4);
-  const slots = styles({ count: displaySubImgs.length as any });
+export const ActivityGallery = ({ mainImageUrl, subImageUrls = [] }: ActivityGalleryProps) => {
+  const images = subImageUrls.length > 0 ? subImageUrls : [mainImageUrl];
+
+  const displayImages = images.slice(0, 4);
+  const slots = styles({ count: displayImages.length as 0 | 1 | 2 | 3 | 4 });
 
   return (
     <div className={cn(slots.root())}>
-      {displaySubImgs.map((url, idx) => (
+      {displayImages.map((url, idx) => (
         <div key={url} className={idx === 0 ? slots.main() : slots.sub()}>
           <Image src={url} alt={`activity-sub-${idx}`} fill className={cn(slots.image())} />
         </div>
