@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Divider from '@/shared/ui/Divider/Divider';
 import Dropdown from '@/shared/ui/Dropdown';
 
-export default function DropdownPage() {
+const DropdownPage = () => {
   const [selectedValue, setSelectedValue] = useState('');
 
   return (
@@ -26,4 +26,6 @@ export default function DropdownPage() {
       </div>
     </div>
   );
-}
+};
+
+export default DropdownPage;
