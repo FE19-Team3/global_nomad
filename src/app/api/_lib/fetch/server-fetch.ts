@@ -1,12 +1,9 @@
 import { cookies } from 'next/headers';
 
-import {
-  responseToApiError,
-  toApiError,
-  parseJsonResponse,
-  fetchWithTimeout,
-} from '@/app/api/_lib';
+import { responseToApiError, toApiError, parseJsonResponse, fetchWithRetry } from '@/app/api/_lib';
 import { createApiError } from '@/shared/api-error';
+
+import type { RetryConfig } from './fetch-with-retry';
 
 const getBaseUrl = () => {
   const base = process.env.UPSTREAM_BASE_URL;
@@ -37,12 +34,13 @@ export const serverFetchJson = async <T>(
   path: string,
   options: RequestInit = {},
   timeoutMs: number = 5000,
+  retryConfig: RetryConfig = {},
 ): Promise<T> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
   try {
-    const res = await fetchWithTimeout(
+    const res = await fetchWithRetry(
       `${getBaseUrl()}${path}`,
       {
         ...options,
@@ -50,6 +48,7 @@ export const serverFetchJson = async <T>(
         cache: 'no-store',
       },
       timeoutMs,
+      retryConfig,
     );
 
     if (!res.ok) throw await responseToApiError(res);
@@ -64,12 +63,13 @@ export const serverFetchVoid = async (
   path: string,
   options: RequestInit = {},
   timeoutMs: number = 5000,
+  retryConfig: RetryConfig = {},
 ): Promise<void> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
   try {
-    const res = await fetchWithTimeout(
+    const res = await fetchWithRetry(
       `${getBaseUrl()}${path}`,
       {
         ...options,
@@ -77,6 +77,7 @@ export const serverFetchVoid = async (
         cache: 'no-store',
       },
       timeoutMs,
+      retryConfig,
     );
     if (!res.ok) throw await responseToApiError(res);
 
