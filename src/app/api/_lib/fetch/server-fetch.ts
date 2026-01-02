@@ -1,9 +1,7 @@
 import { cookies } from 'next/headers';
 
+import { responseToApiError, toApiError, parseJsonResponse } from '@/app/api/_lib';
 import { createApiError } from '@/shared/api-error';
-
-import { mapUpstreamError } from './error-mapper';
-import { toApiError } from './to-api-error';
 
 const getBaseUrl = () => {
   const base = process.env.UPSTREAM_BASE_URL;
@@ -41,24 +39,9 @@ export const serverFetchJson = async <T>(path: string, options: RequestInit = {}
       cache: 'no-store',
     });
 
-    if (!res.ok) throw await mapUpstreamError(res);
+    if (!res.ok) throw await responseToApiError(res);
 
-    if (res.status === 204) {
-      throw createApiError({
-        status: 500,
-        message: '응답 컨텐츠 형식이 올바르지 않습니다.',
-      });
-    }
-
-    const contentType = res.headers.get('Content-Type') ?? '';
-    if (!contentType.includes('application/json')) {
-      throw createApiError({
-        status: 500,
-        message: '응답 컨텐츠 형식이 올바르지 않습니다.',
-      });
-    }
-
-    return (await res.json()) as T;
+    return await parseJsonResponse(res);
   } catch (e) {
     throw toApiError(e);
   }
@@ -75,7 +58,7 @@ export const serverFetchVoid = async (path: string, options: RequestInit = {}): 
       cache: 'no-store',
     });
 
-    if (!res.ok) throw await mapUpstreamError(res);
+    if (!res.ok) throw await responseToApiError(res);
 
     return;
   } catch (e) {
