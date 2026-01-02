@@ -1,4 +1,8 @@
-import { User } from './../../../entities/user/model/types';
+export type User = {
+  id: number;
+  nickname: string;
+  profileImageUrl: string;
+};
 
 export interface AuthState {
   user: User | null; // 사용자 정보 (없으면 null)
