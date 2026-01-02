@@ -16,20 +16,26 @@ const buildHeaders = (options: RequestInit) => {
   return headers;
 };
 
+const clientFetch = async (path: string, options: RequestInit) => {
+  const normalizedPath = path.replace(/^\/+/, '');
+  const res = await fetch(normalizedPath, {
+    ...options,
+    headers: buildHeaders(options),
+    credentials: options.credentials ?? 'include',
+    cache: options.cache ?? 'no-store',
+  });
+
+  if (!res.ok) throw await responseToApiError(res);
+
+  return res;
+};
+
 export const clientFetchJson = async <T>(
   path: string,
   options: ClientFetchOptions<T> = {},
 ): Promise<T> => {
   try {
-    const res = await fetch(path, {
-      ...options,
-      headers: buildHeaders(options),
-      credentials: options.credentials ?? 'include',
-      cache: options.cache ?? 'no-store',
-    });
-
-    if (!res.ok) throw await responseToApiError(res);
-
+    const res = await clientFetch(path, options);
     return await parseJsonResponse(res, { schema: options.schema });
   } catch (e) {
     throw toApiError(e);
@@ -38,14 +44,7 @@ export const clientFetchJson = async <T>(
 
 export const clientFetchVoid = async (path: string, options: RequestInit = {}): Promise<void> => {
   try {
-    const res = await fetch(path, {
-      ...options,
-      headers: buildHeaders(options),
-      credentials: options.credentials ?? 'include',
-      cache: options.cache ?? 'no-store',
-    });
-
-    if (!res.ok) throw await responseToApiError(res);
+    await clientFetch(path, options);
   } catch (e) {
     throw toApiError(e);
   }
