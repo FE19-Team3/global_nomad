@@ -1,5 +1,5 @@
-import { ERROR_CODES } from '@/shared/api-error/codes';
-import type { ApiError } from '@/shared/api-error/type';
+import { ERROR_CODES } from '@/shared/api';
+import type { ApiError } from '@/shared/api';
 
 export const isApiError = (e: unknown): e is ApiError => {
   if (!e || typeof e !== 'object') return false;

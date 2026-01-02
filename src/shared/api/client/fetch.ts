@@ -1,6 +1,6 @@
 import type { ZodType } from 'zod';
 
-import { parseJsonResponse, toApiError, responseToApiError } from '@/app/api/_lib';
+import { parseJsonResponse, toApiError, responseToApiError } from '@/shared/api';
 
 type ClientFetchOptions<T> = RequestInit & {
   schema?: ZodType<T>;

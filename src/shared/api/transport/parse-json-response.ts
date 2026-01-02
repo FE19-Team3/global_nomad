@@ -1,6 +1,6 @@
 import type { ZodType } from 'zod';
 
-import { createApiError } from '@/shared/api-error';
+import { createApiError } from '@/shared/api';
 
 type ParseJsonOptions<T> = {
   schema?: ZodType<T>;

@@ -1,4 +1,4 @@
-import type { ApiError } from '@/shared/api-error';
+import type { ApiError } from '@/shared/api';
 
 export const respondError = (e: ApiError) => {
   return Response.json(e, {

@@ -1,5 +1,5 @@
-import type { ApiError } from '@/shared/api-error';
-import { createApiError } from '@/shared/api-error';
+import type { ApiError } from '@/shared/api';
+import { createApiError } from '@/shared/api';
 
 export const coerceApiError = (input: unknown): ApiError | null => {
   if (!input || typeof input !== 'object') return null;

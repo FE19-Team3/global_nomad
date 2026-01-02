@@ -1,4 +1,4 @@
-import { ErrorCode } from '@/shared/api-error';
+import { ErrorCode } from '@/shared/api';
 
 export function mapStatusToCode(status: number): ErrorCode {
   switch (status) {
