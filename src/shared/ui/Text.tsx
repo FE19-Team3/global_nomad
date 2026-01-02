@@ -39,6 +39,9 @@ export type TextProps = React.HTMLAttributes<HTMLElement> & {
   size?: Size;
   weight?: Weight;
   line?: Line;
+
+  // time 태그에서만 사용
+  dateTime?: string;
 };
 
 const resolveVariant = (size: Size, weight: Weight, line: Line): TextVariant => {
