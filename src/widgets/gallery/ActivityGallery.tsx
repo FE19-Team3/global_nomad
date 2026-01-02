@@ -18,7 +18,7 @@ export const ActivityGallery = ({ mainImageUrl, subImageUrls = [] }: ActivityGal
   return (
     <div className={cn(slots.root())}>
       {displayImages.map((url, idx) => (
-        <div key={url} className={idx === 0 ? slots.main() : slots.sub()}>
+        <div key={`${url}-${idx}`} className={idx === 0 ? slots.main() : slots.sub()}>
           <Image src={url} alt={`activity-sub-${idx}`} fill className={cn(slots.image())} />
         </div>
       ))}

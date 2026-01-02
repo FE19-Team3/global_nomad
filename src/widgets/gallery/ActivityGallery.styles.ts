@@ -5,8 +5,7 @@ export const styles = tv({
     root: 'grid grid-cols-2 grid-rows-2 gap-2 w-full h-[245px] md:h-[400px] overflow-hidden rounded-xl',
     main: 'relative overflow-hidden',
     sub: 'relative overflow-hidden',
-    subImageWrapper: 'relative w-full h-full overflow-hidden',
-    image: 'object-cover ',
+    image: 'object-cover',
   },
   variants: {
     count: {
