@@ -1,6 +1,5 @@
-import { readBody } from '@/app/api/_lib';
-import type { ApiError } from '@/shared/api-error';
-import { createApiError, coerceApiError } from '@/shared/api-error';
+import type { ApiError } from '@/shared/api';
+import { readBody, createApiError, coerceApiError } from '@/shared/api';
 
 const includedRaw = process.env.NODE_ENV !== 'production';
 

@@ -1,5 +1,5 @@
-import { mapStatusToCode } from '@/shared/api-error';
-import type { ApiError, ApiErrorDetails } from '@/shared/api-error';
+import { mapStatusToCode } from '@/shared/api';
+import type { ApiError, ApiErrorDetails } from '@/shared/api';
 
 type CreateApiErrorInput = {
   status: number;

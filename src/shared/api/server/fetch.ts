@@ -1,9 +1,13 @@
 import { cookies } from 'next/headers';
 
-import { responseToApiError, toApiError, parseJsonResponse, fetchWithRetry } from '@/app/api/_lib';
-import { createApiError } from '@/shared/api-error';
-
-import type { RetryConfig } from './fetch-with-retry';
+import {
+  createApiError,
+  responseToApiError,
+  toApiError,
+  parseJsonResponse,
+  fetchWithRetry,
+} from '@/shared/api';
+import type { RetryConfig } from '@/shared/api';
 
 const getBaseUrl = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;

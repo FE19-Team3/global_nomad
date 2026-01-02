@@ -1,4 +1,4 @@
-import { respondError, toApiError } from '@/app/api/_lib';
+import { respondError, toApiError } from '@/shared/api';
 
 export async function GET() {
   try {

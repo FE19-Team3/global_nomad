@@ -1,5 +1,5 @@
-import { TimeoutError } from '@/app/api/_lib';
-import { createApiError, isApiError } from '@/shared/api-error';
+import { TimeoutError } from '@/shared/api';
+import { createApiError, isApiError } from '@/shared/api';
 
 export const toApiError = (e: unknown) => {
   if (isApiError(e)) return e;

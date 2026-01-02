@@ -1,4 +1,4 @@
-import { fetchWithTimeout } from './fetch-with-timeout';
+import { fetchWithTimeout } from '@/shared/api';
 
 export type RetryConfig = {
   maxRetries?: number;

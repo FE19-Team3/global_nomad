@@ -1,5 +1,4 @@
-import type { ErrorCode } from '@/shared/api-error/codes';
-
+import type { ErrorCode } from '@/shared/api';
 export type FieldErrors = Record<string, string[]>;
 
 export interface ApiErrorDetails {
