@@ -20,6 +20,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-query-devtools": "^5.91.1",
     "next": "16.0.10",
@@ -29,6 +30,7 @@
     "storybook": "^10.1.10",
     "tailwind-merge": "^3.4.0",
     "tailwind-variants": "^3.2.2",
+    "zod": "^4.3.4",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
