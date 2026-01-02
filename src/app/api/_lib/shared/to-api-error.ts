@@ -1,7 +1,16 @@
+import { TimeoutError } from '@/app/api/_lib';
 import { createApiError, isApiError } from '@/shared/api-error';
 
 export const toApiError = (e: unknown) => {
   if (isApiError(e)) return e;
+
+  if (e instanceof TimeoutError) {
+    return createApiError({
+      status: 504,
+      message: e.message,
+      details: { meta: { timeoutMs: e.timeoutMs, url: e.url } },
+    });
+  }
 
   if (e instanceof TypeError && e.message.includes('fetch')) {
     return createApiError({

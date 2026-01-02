@@ -6,3 +6,4 @@ export * from './shared/response-to-api-error';
 export * from './client/client-fetch';
 export * from './shared/parse-json-response';
 export * from './fetch/fetch-with-timeout';
+export * from './fetch/fetch-with-retry';
