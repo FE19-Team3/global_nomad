@@ -22,7 +22,7 @@ const StateBadge = ({ variant, className }: StateBadgeProps) => {
   return (
     <Text.B13
       className={cn(
-        'inline-flex items-center justify-center px-5 py-2 rounded-full font-bold tracking-tight',
+        'inline-flex items-center justify-center px-5 py-2 rounded-full',
         style,
         className,
       )}
