@@ -60,9 +60,8 @@ const RadioItem = ({ value, label, className, id, ...props }: RadioItemProps) =>
           // 기본 스타일 제거
           'appearance-none w-4 h-4 border border-gray-300 rounded-full',
           // 체크되었을 때 스타일
-          'checked:border-primary checked:border-[4px] transition-all',
+          'checked:border-primary checked:border-4 transition-all',
           'cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary',
-          className,
         )}
         {...props}
       />

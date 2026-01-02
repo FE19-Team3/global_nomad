@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Radio } from '@/shared/ui/Radio';
 
 const meta: Meta<typeof Radio> = {
-  title: 'Shared/Radio',
+  title: 'Components/Radio',
   component: Radio,
   tags: ['autodocs'],
 };
