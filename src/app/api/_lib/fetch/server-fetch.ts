@@ -32,29 +32,40 @@ const buildHeaders = (options: RequestInit, accessToken?: string) => {
   return header;
 };
 
+const serverFetch = async (
+  path: string,
+  options: RequestInit,
+  timeoutMs: number,
+  retryConfig: RetryConfig,
+) => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value;
+
+  const normalizedPath = path.replace(/^\/+/, '');
+  const res = await fetchWithRetry(
+    `${getBaseUrl()}${normalizedPath}`,
+    {
+      ...options,
+      headers: buildHeaders(options, accessToken),
+      cache: 'no-store',
+    },
+    timeoutMs,
+    retryConfig,
+  );
+
+  if (!res.ok) throw await responseToApiError(res);
+
+  return res;
+};
+
 export const serverFetchJson = async <T>(
   path: string,
   options: RequestInit = {},
   timeoutMs: number = 5000,
   retryConfig: RetryConfig = {},
 ): Promise<T> => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-
   try {
-    const res = await fetchWithRetry(
-      `${getBaseUrl()}${path}`,
-      {
-        ...options,
-        headers: buildHeaders(options, accessToken),
-        cache: 'no-store',
-      },
-      timeoutMs,
-      retryConfig,
-    );
-
-    if (!res.ok) throw await responseToApiError(res);
-
+    const res = await serverFetch(path, options, timeoutMs, retryConfig);
     return await parseJsonResponse(res);
   } catch (e) {
     throw toApiError(e);
@@ -67,23 +78,8 @@ export const serverFetchVoid = async (
   timeoutMs: number = 5000,
   retryConfig: RetryConfig = {},
 ): Promise<void> => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-
   try {
-    const res = await fetchWithRetry(
-      `${getBaseUrl()}${path}`,
-      {
-        ...options,
-        headers: buildHeaders(options, accessToken),
-        cache: 'no-store',
-      },
-      timeoutMs,
-      retryConfig,
-    );
-    if (!res.ok) throw await responseToApiError(res);
-
-    return;
+    await serverFetch(path, options, timeoutMs, retryConfig);
   } catch (e) {
     throw toApiError(e);
   }
