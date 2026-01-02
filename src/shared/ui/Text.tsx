@@ -21,7 +21,7 @@ export const TEXT_VARIANTS = {
   '20_body_B': 'text-[20px] leading-[1.6] font-[700]',
 } as const;
 
-type Size = 11 | 12 | 14 | 16 | 18 | 20;
+type Size = 11 | 12 | 13 | 14 | 16 | 18 | 20;
 type BodySize = 14 | 16 | 18 | 20;
 type Weight = 'M' | 'B';
 type Line = 'tight' | 'body';
@@ -106,6 +106,8 @@ export const Text = Object.assign(TextRoot, {
   B11: shorthand(11, 'B'),
   M12: shorthand(12, 'M'),
   B12: shorthand(12, 'B'),
+  M13: shorthand(13, 'M'),
+  B13: shorthand(13, 'B'),
   M14: shorthand(14, 'M'),
   B14: shorthand(14, 'B'),
   M16: shorthand(16, 'M'),
