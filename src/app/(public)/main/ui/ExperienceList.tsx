@@ -1,21 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
+import { ExperienceCard, type Experience } from '@/entities/experience';
 import IconPageLeft from '@/shared/assets/images/icons/icon-page-left.svg';
 import IconPageRight from '@/shared/assets/images/icons/icon-page-right.svg';
 import Button from '@/shared/ui/Button/Button';
 
-import { ExperienceCard } from './ExperienceCard';
-
-interface Experience {
-  id: number;
-  title: string;
-  rating: number;
-  reviewCount: number;
-  price: number;
-  imageUrl?: string;
-}
+// 디바운스로 성능저하 막기
+const debounce = <T extends (...args: any[]) => any>(func: T, delay: number) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+};
 
 interface ExperienceListProps {
   experiences: Experience[];
@@ -26,72 +25,57 @@ export const ExperienceList = ({ experiences }: ExperienceListProps) => {
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const pageLimit = 5;
 
-  // 반응형에 따른 아이템 개수 조절
+  // 반응형 아이템 개수 조절
   useEffect(() => {
     const updateItemsPerPage = () => {
-      if (window.innerWidth < 640) {
-        // sm 기준
-        setItemsPerPage(4);
-      } else {
-        setItemsPerPage(15);
-      }
+      const width = window.innerWidth;
+      setItemsPerPage(width < 640 ? 4 : 15);
     };
 
-    updateItemsPerPage();
-    window.addEventListener('resize', updateItemsPerPage);
-    return () => window.removeEventListener('resize', updateItemsPerPage);
+    const debouncedUpdate = debounce(updateItemsPerPage, 200);
+
+    updateItemsPerPage(); // 초기 실행
+    window.addEventListener('resize', debouncedUpdate);
+    return () => window.removeEventListener('resize', debouncedUpdate);
   }, []);
 
-  if (!experiences || experiences.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20 text-gray-400">
-        <p className="text-lg">등록된 체험이 없습니다.</p>
-      </div>
-    );
-  }
-
+  // 페이지네이션 계산 로직
   const totalPages = Math.ceil(experiences.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = experiences.slice(startIndex, startIndex + itemsPerPage);
 
-  // 현재 페이지가 속한 페이지 그룹 계산 (1~5, 6~10)
+  // 현재 페이지가 속한 그룹 계산 (예: 1~5페이지는 group 1)
   const currentGroup = Math.ceil(currentPage / pageLimit);
   const startPage = (currentGroup - 1) * pageLimit + 1;
   const endPage = Math.min(startPage + pageLimit - 1, totalPages);
 
-  const handlePrev = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
+  const currentItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return experiences.slice(start, start + itemsPerPage);
+  }, [experiences, currentPage, itemsPerPage]);
 
-  const handleNext = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
+  if (!experiences.length) return null;
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8 sm:gap-x-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
         {currentItems.map((item) => (
           <ExperienceCard key={item.id} {...item} />
         ))}
       </div>
 
-      {/* 페이지네이션: 총 아이템이 한 페이지 분량보다 많을 때만 노출 */}
-      {experiences.length > itemsPerPage && (
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
         <div className="flex justify-center items-center gap-1 mt-4">
-          {/* 이전 버튼 */}
           <Button
             variant="icon"
             iconOnly
-            className={`!bg-transparent !border-none ${currentPage === 1 ? '!cursor-default !pointer-events-none opacity-30' : ''}`}
-            disabled={currentPage === 1}
-            onClick={handlePrev}
+            className={`!bg-transparent !border-none ${currentPage === 1 ? 'opacity-30 !cursor-default !pointer-events-none' : ''}`}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            <Button.Icon className="flex items-center justify-center m-0">
+            <Button.Icon>
               <IconPageLeft width={24} height={24} className="text-gray-950" />
             </Button.Icon>
           </Button>
 
-          {/* 숫자 버튼 그룹 */}
           <div className="flex gap-1">
             {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(
               (pageNum) => (
@@ -111,15 +95,13 @@ export const ExperienceList = ({ experiences }: ExperienceListProps) => {
             )}
           </div>
 
-          {/* 다음 버튼 */}
           <Button
             variant="icon"
             iconOnly
-            className={`!bg-transparent !border-none ${currentPage === totalPages ? '!cursor-default !pointer-events-none opacity-30' : ''}`}
-            disabled={currentPage === totalPages}
-            onClick={handleNext}
+            className={`!bg-transparent !border-none ${currentPage === totalPages ? 'opacity-30 !cursor-default !pointer-events-none' : ''}`}
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           >
-            <Button.Icon className="flex items-center justify-center m-0">
+            <Button.Icon>
               <IconPageRight width={24} height={24} className="text-gray-950" />
             </Button.Icon>
           </Button>
