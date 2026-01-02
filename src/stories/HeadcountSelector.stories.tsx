@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 
-import { HeadcountSelector } from '@/shared/ui/HeadcountSelector';
+import { HeadcountSelector } from '@/widgets/detail/HeadcountSelector';
 
 const meta = {
   title: 'Widgets/Detail/HeadcountSelector',
