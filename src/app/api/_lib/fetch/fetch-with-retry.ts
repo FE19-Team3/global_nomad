@@ -6,7 +6,7 @@ export type RetryConfig = {
   maxDelay?: number;
   retryOn?: number[];
   jitter?: boolean;
-  shouldRetry?: (error: unknown, attempt: number) => boolean; // 커스텀 재시도 로직
+  shouldRetry?: (error: unknown, attempt: number) => boolean;
 };
 
 const DEFAULT_RETRY_CONFIG: Required<Omit<RetryConfig, 'shouldRetry'>> = {
@@ -77,7 +77,7 @@ export const fetchWithRetry = async (
         : calculateDelay(attempt, config);
 
       console.warn(
-        `[Retry] Status ${response.status} on ${url}. Retrying in ${waitTime}ms... (${attempt + 1}/${config.maxRetries})`,
+        `[Retry] ${url} 요청 실패. ${waitTime}ms 후 재시도 예정 (${attempt + 1}/${config.maxRetries})`,
       );
 
       await sleep(waitTime);
@@ -94,7 +94,7 @@ export const fetchWithRetry = async (
 
       const waitTime = calculateDelay(attempt, config);
       console.warn(
-        `[Retry] Error on ${url}. Retrying in ${waitTime}ms... (${attempt + 1}/${config.maxRetries})`,
+        `[Retry] ${url} 요청 실패. ${waitTime}ms 후 재시도 예정 (${attempt + 1}/${config.maxRetries})`,
         e,
       );
 

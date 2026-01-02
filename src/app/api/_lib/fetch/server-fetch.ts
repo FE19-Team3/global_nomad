@@ -6,7 +6,9 @@ import { createApiError } from '@/shared/api-error';
 import type { RetryConfig } from './fetch-with-retry';
 
 const getBaseUrl = () => {
-  const base = process.env.UPSTREAM_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const teamId = process.env.NEXT_PUBLIC_TEAM_ID;
+  const base = baseUrl && teamId ? `${baseUrl}/${teamId}/` : null;
   if (!base) {
     throw createApiError({
       status: 500,
