@@ -1,6 +1,11 @@
 import { cookies } from 'next/headers';
 
-import { responseToApiError, toApiError, parseJsonResponse } from '@/app/api/_lib';
+import {
+  responseToApiError,
+  toApiError,
+  parseJsonResponse,
+  fetchWithTimeout,
+} from '@/app/api/_lib';
 import { createApiError } from '@/shared/api-error';
 
 const getBaseUrl = () => {
@@ -28,16 +33,24 @@ const buildHeaders = (options: RequestInit, accessToken?: string) => {
   return header;
 };
 
-export const serverFetchJson = async <T>(path: string, options: RequestInit = {}): Promise<T> => {
+export const serverFetchJson = async <T>(
+  path: string,
+  options: RequestInit = {},
+  timeoutMs: number = 5000,
+): Promise<T> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
   try {
-    const res = await fetch(`${getBaseUrl()}${path}`, {
-      ...options,
-      headers: buildHeaders(options, accessToken),
-      cache: 'no-store',
-    });
+    const res = await fetchWithTimeout(
+      `${getBaseUrl()}${path}`,
+      {
+        ...options,
+        headers: buildHeaders(options, accessToken),
+        cache: 'no-store',
+      },
+      timeoutMs,
+    );
 
     if (!res.ok) throw await responseToApiError(res);
 
@@ -47,17 +60,24 @@ export const serverFetchJson = async <T>(path: string, options: RequestInit = {}
   }
 };
 
-export const serverFetchVoid = async (path: string, options: RequestInit = {}): Promise<void> => {
+export const serverFetchVoid = async (
+  path: string,
+  options: RequestInit = {},
+  timeoutMs: number = 5000,
+): Promise<void> => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
 
   try {
-    const res = await fetch(`${getBaseUrl()}${path}`, {
-      ...options,
-      headers: buildHeaders(options, accessToken),
-      cache: 'no-store',
-    });
-
+    const res = await fetchWithTimeout(
+      `${getBaseUrl()}${path}`,
+      {
+        ...options,
+        headers: buildHeaders(options, accessToken),
+        cache: 'no-store',
+      },
+      timeoutMs,
+    );
     if (!res.ok) throw await responseToApiError(res);
 
     return;

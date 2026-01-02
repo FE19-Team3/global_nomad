@@ -3,7 +3,7 @@ import { createApiError } from '@/shared/api-error';
 export const fetchWithTimeout = async (
   url: string,
   options: RequestInit = {},
-  timeoutMs: number = 5000,
+  timeoutMs: number,
 ): Promise<Response> => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -13,6 +13,8 @@ export const fetchWithTimeout = async (
       ...options,
       signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
     return res;
   } catch (error) {
     clearTimeout(timeoutId);
@@ -31,7 +33,6 @@ export const fetchWithTimeout = async (
       });
     }
 
-    // 다른 에러는 그대로 throw
     throw error;
   }
 };
