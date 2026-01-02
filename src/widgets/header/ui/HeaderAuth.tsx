@@ -2,12 +2,14 @@
 
 import { useState, useRef, useEffect } from 'react';
 
-import { User } from '@/entities/user';
 import Profile from '@/shared/assets/images/icon/ic_profile.svg';
 import Button from '@/shared/ui/Button/Button';
 import { Text } from '@/shared/ui/Text';
 
+import { User } from '../model/types';
+
 import { NotificationButton } from './NotificationButton';
+
 // import Image from 'next/image';
 
 interface UserMenuProps {
