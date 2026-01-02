@@ -1,6 +1,5 @@
 export interface ReviewCardVM {
-  authorNickname: string;
-  authorProfileImageUrl: string | null;
+  nickname: string;
   rating: number;
   content: string;
   createdAt: string;
