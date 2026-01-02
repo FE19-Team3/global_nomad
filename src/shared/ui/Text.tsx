@@ -21,7 +21,7 @@ export const TEXT_VARIANTS = {
   '20_body_B': 'text-[20px] leading-[1.6] font-[700]',
 } as const;
 
-type Size = 11 | 12 | 14 | 16 | 18 | 20;
+type Size = 11 | 12 | 13 | 14 | 16 | 18 | 20;
 type BodySize = 14 | 16 | 18 | 20;
 type Weight = 'M' | 'B';
 type Line = 'tight' | 'body';
@@ -60,30 +60,35 @@ const TextBody = ({ as, size = 16, weight = 'M', ...props }: TextProps) => (
 );
 TextBody.displayName = 'TextBody';
 
-type TextComponent = React.FC<TextProps> & {
-  M11: React.FC<TextProps>;
-  B11: React.FC<TextProps>;
-  M12: React.FC<TextProps>;
-  B12: React.FC<TextProps>;
-  M14: React.FC<TextProps>;
-  B14: React.FC<TextProps>;
-  M16: React.FC<TextProps>;
-  B16: React.FC<TextProps>;
-  M18: React.FC<TextProps>;
-  B18: React.FC<TextProps>;
-  M20: React.FC<TextProps>;
-  B20: React.FC<TextProps>;
+type TextBaseComponent = (props: TextProps) => React.ReactElement;
+
+type TextComponent = TextBaseComponent & {
+  displayName?: string;
+
+  M11: TextBaseComponent;
+  B11: TextBaseComponent;
+  M12: TextBaseComponent;
+  B12: TextBaseComponent;
+  M13: TextBaseComponent;
+  B13: TextBaseComponent;
+  M14: TextBaseComponent;
+  B14: TextBaseComponent;
+  M16: TextBaseComponent;
+  B16: TextBaseComponent;
+  M18: TextBaseComponent;
+  B18: TextBaseComponent;
+  M20: TextBaseComponent;
+  B20: TextBaseComponent;
+
   Body: typeof TextBody;
-  Body14: React.FC<TextProps>;
-  Body16: React.FC<TextProps>;
-  Body18B: React.FC<TextProps>;
-  Body20B: React.FC<TextProps>;
+  Body14: TextBaseComponent;
+  Body16: TextBaseComponent;
+  Body18B: TextBaseComponent;
+  Body20B: TextBaseComponent;
 };
 
-const shorthand = (size: Size, weight: Weight): React.FC<TextProps> => {
-  const Comp: React.FC<TextProps> = (p: TextProps) => (
-    <TextRoot {...p} size={size} weight={weight} />
-  );
+const shorthand = (size: Size, weight: Weight): TextBaseComponent => {
+  const Comp = (p: TextProps) => <TextRoot {...p} size={size} weight={weight} />;
   Comp.displayName = `Text${weight}${size}`;
   return Comp;
 };
@@ -101,6 +106,8 @@ export const Text = Object.assign(TextRoot, {
   B11: shorthand(11, 'B'),
   M12: shorthand(12, 'M'),
   B12: shorthand(12, 'B'),
+  M13: shorthand(13, 'M'),
+  B13: shorthand(13, 'B'),
   M14: shorthand(14, 'M'),
   B14: shorthand(14, 'B'),
   M16: shorthand(16, 'M'),
