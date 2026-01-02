@@ -1,11 +1,11 @@
 'use client';
 
-import { ReactNode } from 'react';
+// import { ReactNode } from 'react';
 
 import { useDropdown } from './DropdownContext';
 
 interface DropdownItemProps {
-  children: ReactNode;
+  children: string;
   value: string;
   onClick?: () => void;
   className?: string;
@@ -15,7 +15,7 @@ const DropdownItem = ({ children, value, onClick }: DropdownItemProps) => {
   const { onValueChange, value: selectedValue, styles } = useDropdown();
 
   const handleClick = () => {
-    onValueChange?.(value, children as string);
+    onValueChange?.(value, children);
     onClick?.();
   };
 

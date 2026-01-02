@@ -22,8 +22,6 @@ const Dropdown = ({
   onChange,
   open: externalOpen,
   onOpenChange: externalOnOpenChange,
-  size = 'md',
-  radius = 'md',
   disabled = false,
 }: DropdownProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -53,14 +51,14 @@ const Dropdown = ({
     onOpenChange(false);
   };
 
-  const styles = dropdownStyles({ size, radius, open, disabled });
+  const styles = dropdownStyles({ open, disabled });
 
   return (
     <DropdownContext.Provider
       value={{
         open,
         onOpenChange,
-        value: value,
+        value,
         onValueChange: handleSelect,
         selectedLabel,
         styles,
