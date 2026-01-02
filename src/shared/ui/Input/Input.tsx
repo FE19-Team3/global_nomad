@@ -19,7 +19,7 @@ export interface InputProps extends Omit<
   radius?: 'md' | 'lg';
   size?: 'md' | 'lg';
   type?: 'text' | 'password';
-  value: string;
+  value?: string;
   variant?: 'primary' | 'secondary';
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }

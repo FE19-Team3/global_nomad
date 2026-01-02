@@ -18,7 +18,6 @@ export const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -47,8 +46,6 @@ export const SignupForm = () => {
           <Input
             {...register('email')}
             id="signup-email"
-            value={watch('email')}
-            onChange={register('email').onChange}
             placeholder="이메일을 입력해주세요"
             error={!!errors.email}
             errorMsg={errors.email?.message}
@@ -65,8 +62,6 @@ export const SignupForm = () => {
             <Input
               {...register('password')}
               id="signup-password"
-              value={watch('password')}
-              onChange={register('password').onChange}
               type={showPassword ? 'text' : 'password'}
               placeholder="8자 이상 입력해 주세요"
               error={!!errors.password}
@@ -90,10 +85,8 @@ export const SignupForm = () => {
           </label>
           <div className="relative">
             <Input
-              {...register('passwordConfirm')}
+              {...register('passwordConfirm')} // 여기도 마찬가지입니다
               id="signup-password-confirm"
-              value={watch('passwordConfirm')}
-              onChange={register('passwordConfirm').onChange}
               type={showConfirm ? 'text' : 'password'}
               placeholder="비밀번호를 한 번 더 입력해 주세요"
               error={!!errors.passwordConfirm}
