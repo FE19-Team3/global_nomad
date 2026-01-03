@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import { PopoverContent } from '@/shared/ui/Popover/Content';
-import { Popover } from '@/shared/ui/Popover/Popover';
+import PopoverContent from '@/shared/ui/Popover/Content';
+import Popover from '@/shared/ui/Popover/Popover';
 import PopoverTrigger from '@/shared/ui/Popover/Trigger';
 
 const meta = {
@@ -20,7 +20,11 @@ export const Default: StoryObj<typeof Popover> = {
         label="Open Popover"
         className="border px-2 py-1 rounded hover:bg-gray-100"
       >
-        <button>Open</button>
+        {({ ref, onClick, ...rest }) => (
+          <button ref={ref} onClick={onClick} {...rest}>
+            Open
+          </button>
+        )}
       </PopoverTrigger>
       <PopoverContent popoverKey="trigger1">
         <div className="cursor-pointer hover:bg-gray-50">Popover Content</div>
