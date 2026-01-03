@@ -15,7 +15,7 @@ interface PopoverContentProps {
   className?: string;
 }
 
-export const PopoverContent = ({
+const PopoverContent = ({
   children,
   popoverKey,
   placement = 'top',
@@ -24,7 +24,7 @@ export const PopoverContent = ({
   const { activeKey, anchorEl } = usePopover();
 
   const triggerRef = anchorEl ?? null;
-  const isActive = activeKey === popoverKey && anchorEl === triggerRef;
+  const isActive = activeKey === popoverKey;
 
   const { refs, floatingStyles } = usePopoverPosition(triggerRef, isActive, placement);
 
@@ -48,3 +48,5 @@ export const PopoverContent = ({
       )
     : null;
 };
+
+export default PopoverContent;

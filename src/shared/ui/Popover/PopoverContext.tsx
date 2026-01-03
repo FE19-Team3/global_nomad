@@ -15,7 +15,7 @@ export const PopoverContext = createContext<PopoverContextType | undefined>(unde
 export const usePopover = () => {
   const context = useContext(PopoverContext);
   if (!context) {
-    throw new Error('usePopoverContext는 PopoverProvider 내부에서만 사용해야합니다.');
+    throw new Error('usePopover는 PopoverProvider 내부에서만 사용해야합니다.');
   }
 
   return context;

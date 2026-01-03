@@ -1,27 +1,30 @@
 'use client';
 
-import { useState, ReactNode } from 'react';
+import { useState, PropsWithChildren, useCallback } from 'react';
 
 import { PopoverContext } from './PopoverContext';
 
-export const PopoverProvider = ({ children }: { children: ReactNode }) => {
+const PopoverProvider = ({ children }: PropsWithChildren) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [activeKey, setActiveKey] = useState<string | null>(null);
 
-  const open = (key: string, anchor: HTMLElement) => {
+  const open = useCallback((key: string, anchor: HTMLElement) => {
     setActiveKey(key);
     setAnchorEl(anchor);
-  };
+  }, []);
 
-  const close = () => {
+  const close = useCallback(() => {
     setActiveKey(null);
     setAnchorEl(null);
-  };
+  }, []);
 
-  const toggle = (key: string, anchor: HTMLElement) => {
-    if (activeKey === key && anchorEl === anchor) close();
-    else open(key, anchor);
-  };
+  const toggle = useCallback(
+    (key: string, anchor: HTMLElement) => {
+      if (activeKey === key && anchorEl === anchor) close();
+      else open(key, anchor);
+    },
+    [activeKey, anchorEl, close, open],
+  );
 
   return (
     <PopoverContext.Provider value={{ anchorEl, activeKey, open, close, toggle }}>
@@ -29,3 +32,5 @@ export const PopoverProvider = ({ children }: { children: ReactNode }) => {
     </PopoverContext.Provider>
   );
 };
+
+export default PopoverProvider;
