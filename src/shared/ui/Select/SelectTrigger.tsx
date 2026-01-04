@@ -1,4 +1,5 @@
 'use client';
+import ChevronDownIcon from '@/shared/assets/icons/ChevronDownIcon.svg';
 import { cn } from '@/shared/lib/cn';
 
 import { styles } from './Select.styles';
@@ -18,9 +19,7 @@ export const SelectTrigger = ({ className, placeholder }: SelectTriggerProps) =>
     >
       <span className={value ? slots.value() : slots.placeholder()}>{value || placeholder}</span>
 
-      <svg className={slots.icon()} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-      </svg>
+      <ChevronDownIcon className={cn(slots.icon(), open && 'scale-x-[-1]')} />
     </button>
   );
 };

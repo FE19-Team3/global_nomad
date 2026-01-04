@@ -7,7 +7,7 @@ export const styles = tv({
       'relative flex h-12 w-full items-center justify-between rounded-full border border-gray-200 bg-white px-6 py-3 text-sm transition-all',
       'focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed',
     ],
-    icon: 'h-4 w-4 text-gray-400 transition-transform duration-200',
+    icon: 'h-3 w-3 text-gray-900 transition-transform duration-200 mt-0.5 ml-2',
     value: 'text-gray-900',
     placeholder: 'text-gray-400',
     content:
