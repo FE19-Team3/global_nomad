@@ -10,7 +10,7 @@ export const useField = (
     sanitize: SanitizeFn;
   },
 ) => {
-  const { validate, sanitize } = opts || {};
+  const { validate, sanitize } = opts;
   const [value, setValue] = useState(initial);
   const [touched, setTouched] = useState(false);
   const [error, setError] = useState<string | null>(null);
