@@ -1,9 +1,8 @@
+import LogoFont from '@/shared/assets/logo/logo_font.svg';
+import LogoImg from '@/shared/assets/logo/logo_img.svg';
 import Button from '@/shared/ui/Button/Button';
 import { HeaderAuth } from '@/widgets/header/ui/HeaderAuth';
 import { HeaderGuest } from '@/widgets/header/ui/HeaderGuest';
-
-import LogoFont from '@/shared/assets/images/logo/logo_font.svg';
-import LogoImg from '@/shared/assets/images/logo/logo_img.svg';
 
 export default function Page() {
   const mockUser = {
