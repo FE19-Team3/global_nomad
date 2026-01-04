@@ -9,13 +9,13 @@ import MoreIcon from '@/shared/assets/icons/icon-more.svg';
 import StarIcon from '@/shared/assets/icons/icon-star-xs.png';
 import Button from '@/shared/ui/Button/Button';
 
-interface ExperienceOverviewProps {
+interface ActivityOverviewProps {
   experience: Activity;
   onEdit?: (experience: Activity) => void;
   onDelete?: (experience: Activity) => void;
 }
 
-export const ExperienceOverview = ({ experience, onEdit, onDelete }: ExperienceOverviewProps) => {
+export const ActivityOverview = ({ experience, onEdit, onDelete }: ActivityOverviewProps) => {
   const { category, title, rating, reviewCount, address, description } = experience;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

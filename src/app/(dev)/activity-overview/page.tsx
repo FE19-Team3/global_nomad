@@ -1,5 +1,5 @@
 import type { Activity } from '@/entities/activity';
-import { ExperienceOverview } from '@/widgets/activity/activity-detail-header';
+import { ActivityOverview } from '@/widgets/activity/activity-detail-header';
 
 const MOCK_EXPERIENCE: Activity = {
   id: 1,
@@ -12,10 +12,12 @@ const MOCK_EXPERIENCE: Activity = {
   price: 0,
 };
 
-export default function ExperienceOverviewDemoPage() {
+const ActivityOverviewDemoPage = () => {
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-10">
-      <ExperienceOverview experience={MOCK_EXPERIENCE} />
+      <ActivityOverview experience={MOCK_EXPERIENCE} />
     </main>
   );
-}
+};
+
+export default ActivityOverviewDemoPage;

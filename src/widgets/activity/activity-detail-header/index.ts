@@ -1,1 +1,1 @@
-export { ExperienceOverview } from './ui/ExperienceOverview';
+export { ActivityOverview } from './ui/ActivityOverview';
