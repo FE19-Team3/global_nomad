@@ -1,31 +1,34 @@
-'use client';
-
+import { NotificationEntity } from '@/entities/notification/model/notification.type';
 import { timeAgo } from '@/shared/lib/timeAgo';
 
-import { Notification } from './NotificationModal';
-
 type Props = {
-  item: Notification;
+  item: NotificationEntity;
+  _onDelete?: (id: number) => void;
 };
 
-export default function NotificationCard({ item }: Props) {
-  const timeText = timeAgo(item.createdAt);
-
+const NotificationCard = ({ item, _onDelete }: Props) => {
   return (
-    <div className="rounded-lg border border-gray-200 p-3 bg-white cursor-pointer">
-      <div className="flex items-start gap-2">
-        {/* 읽음 표시 */}
-        <span
-          className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-            item.read ? 'bg-gray-300' : 'bg-blue-500'
-          }`}
-        />
+    <div className="px-6 py-4 bg-gray-50">
+      {/* 헤더 */}
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-base font-semibold text-gray-900">{item.title}</h3>
+        <span className="text-sm text-gray-400">{timeAgo(item.createdAt)}</span>
+      </div>
 
-        <div className="flex-1">
-          <p className="text-sm leading-5 text-gray-800">{item.content}</p>
-          <p className="text-xs text-gray-400 mt-1">{timeText}</p>
-        </div>
+      {/* 내용 */}
+      <div className="text-sm text-gray-700 leading-relaxed">
+        <p className="mb-1">{item.activityName}</p>
+        <p className="mb-1">({item.dateTime})</p>
+        <p>
+          예약이{' '}
+          <span className={item.type === 'confirmed' ? 'text-blue-600' : 'text-red-600'}>
+            {item.type === 'confirmed' ? '승인' : '거절'}
+          </span>
+          되었어요.
+        </p>
       </div>
     </div>
   );
-}
+};
+
+export default NotificationCard;

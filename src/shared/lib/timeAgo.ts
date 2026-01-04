@@ -10,7 +10,9 @@
  * "몇 달 전" ~ "몇 년 전" 까지 대응합니다.
  */
 
-export function timeAgo(dateString: string) {
+export function timeAgo(date: string | Date): string {
+  const dateString = date instanceof Date ? date.toISOString() : date;
+
   const diff = Date.now() - new Date(dateString).getTime();
 
   const sec = Math.floor(diff / 1000);

@@ -1,15 +1,11 @@
-export type NotificationApiItem = {
-  id: number;
-  teamId: string;
-  userId: number;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-};
+export type NotificationType = 'confirmed' | 'declined';
 
-export type NotificationApiResponse = {
-  cursorId: number;
-  notifications: NotificationApiItem[];
-  totalCount: number;
-};
+export interface NotificationEntity {
+  id: number;
+  type: NotificationType;
+  title: string;
+  activityName: string;
+  dateTime: string;
+  createdAt: Date;
+  raw: string;
+}

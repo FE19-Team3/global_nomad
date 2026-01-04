@@ -1,48 +1,61 @@
 'use client';
 
-import NotificationCard from './NotificationCard';
-// import IcClosed from '@/shared/assets/icons/icon_delete.svg';
+import { NotificationEntity } from '@/entities/notification/model/notification.type';
 
-export type Notification = {
-  id: string;
-  content: string;
-  createdAt: string;
-  read: boolean;
-};
+import NotificationCard from './NotificationCard';
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  items: Notification[];
+  items: NotificationEntity[];
+  _onDelete?: (id: number) => void;
 };
 
-const NotificationModal = ({ open, onClose, items }: Props) => {
+const NotificationModal = ({ open, onClose, items, _onDelete }: Props) => {
   if (!open) return null;
 
   return (
     <div
       className="
-        absolute top-full right-0 mt-2
-        w-[368px] h-[419px]
-        rounded-[10px]
-        border border-gray-200
-        bg-white shadow
+        fixed md:absolute
+        inset-0 md:inset-auto
+        md:top-full md:right-0 md:mt-2
+        w-full md:w-[368px] 
+        h-full md:h-auto md:max-h-[600px]
+        md:rounded-lg
+        border-0 md:border md:border-gray-200
+        bg-white md:shadow-lg
         flex flex-col
         overflow-hidden
         z-50
       "
     >
       {/* 헤더 */}
-      <div className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
-        <h2 className="text-lg font-semibold">알림 {items.length}개</h2>
-        <button onClick={onClose}>{/* <IcClosed className="w-4 h-4" /> */}X</button>
+      <div className="flex justify-between items-center px-6 py-5 border-b border-gray-200">
+        <h2 className="text-xl font-bold text-gray-900">알림 {items.length}개</h2>
+        <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M18 6L6 18M6 6L18 18"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
       </div>
 
       {/* 리스트 */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-        {items.map((item) => (
-          <NotificationCard key={item.id} item={item} />
-        ))}
+      <div className="flex-1 overflow-y-auto">
+        {items.length === 0 ? (
+          <div className="text-center text-gray-400 py-12">알림이 없습니다</div>
+        ) : (
+          <div className="divide-y divide-gray-100">
+            {items.map((item) => (
+              <NotificationCard key={item.id} item={item} _onDelete={_onDelete} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
