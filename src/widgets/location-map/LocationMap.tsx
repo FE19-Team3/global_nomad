@@ -5,7 +5,7 @@ import { LocationEntity } from '@/entities/location/model/types';
 import { useCoordinate } from '@/entities/location/model/useCoordinate';
 import { cn } from '@/shared/lib/cn';
 
-import { styles } from './LocationMatp.styles';
+import { styles } from './LocationMap.styles';
 
 interface LocationMapProps {
   location: LocationEntity;
