@@ -13,11 +13,6 @@ type Options = {
 export const useUploadImageToUrl = (options?: Options) => {
   return useMutation<string, Error, File>({
     mutationFn: uploadImageToUrl,
-    onSuccess: (url) => {
-      options?.onSuccess?.(url);
-    },
-    onError: (error) => {
-      options?.onError?.(error);
-    },
+    ...options,
   });
 };

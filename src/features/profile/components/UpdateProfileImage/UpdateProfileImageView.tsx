@@ -44,6 +44,7 @@ export const UpdateProfileImageView = ({
           onClick={onRemove}
           disabled={isPending}
           className="absolute top-2 right-1 hover:cursor-pointer"
+          aria-label="업로드한 이미지 삭제"
         >
           <XBtnIcon className="w-6 h-6" />
         </button>
