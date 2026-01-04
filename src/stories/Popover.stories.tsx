@@ -15,16 +15,8 @@ export default meta;
 export const Default: StoryObj<typeof Popover> = {
   render: (args) => (
     <Popover {...args}>
-      <PopoverTrigger
-        popoverKey="trigger1"
-        label="Open Popover"
-        className="border px-2 py-1 rounded hover:bg-gray-100"
-      >
-        {({ ref, onClick, ...rest }) => (
-          <button ref={ref} onClick={onClick} {...rest}>
-            Open
-          </button>
-        )}
+      <PopoverTrigger popoverKey="trigger1" label="Open Popover">
+        <div className="border px-2 py-1 rounded hover:bg-gray-100">Open</div>
       </PopoverTrigger>
       <PopoverContent popoverKey="trigger1">
         <div className="cursor-pointer hover:bg-gray-50">Popover Content</div>

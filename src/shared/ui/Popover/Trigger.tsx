@@ -1,47 +1,40 @@
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
+
+import { cn } from '@/shared/lib/cn';
 
 import { usePopover } from './PopoverContext';
 
 interface PopoverTriggerProps {
-  children: (
-    props: React.ButtonHTMLAttributes<HTMLButtonElement> & { ref: React.Ref<HTMLButtonElement> },
-  ) => React.ReactNode;
+  children: React.ReactNode;
   popoverKey: string;
   label?: string;
   className?: string;
-  onClick?: () => void;
 }
-const PopoverTrigger = ({
-  children,
-  popoverKey,
-  label,
-  className,
-  onClick,
-}: PopoverTriggerProps) => {
-  const triggerRef = useRef<HTMLButtonElement>(null);
+const PopoverTrigger = ({ children, className, popoverKey, label }: PopoverTriggerProps) => {
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
   const { activeKey, toggle } = usePopover();
 
   const isActive = activeKey === popoverKey;
 
-  const handleClick = useCallback(() => {
-    onClick?.();
+  const handleClick = () => {
+    // TODO: 키보드 접근성 추가(Esc)
     if (triggerRef.current) {
       toggle(popoverKey, triggerRef.current);
     }
-  }, [onClick, toggle, popoverKey]);
+  };
 
   return (
-    <>
-      {children({
-        ref: triggerRef,
-        role: 'button',
-        className: className,
-        'aria-label': label,
-        'aria-expanded': isActive,
-        'aria-haspopup': 'true',
-        onClick: handleClick,
-      })}
-    </>
+    <button
+      ref={triggerRef}
+      type="button"
+      aria-haspopup="true"
+      aria-expanded={isActive}
+      onClick={handleClick}
+      className={cn('cursor-pointer', className)}
+      aria-label={label}
+    >
+      {children}
+    </button>
   );
 };
 export default PopoverTrigger;
