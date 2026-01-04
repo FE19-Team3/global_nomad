@@ -2,7 +2,7 @@ import { tv } from 'tailwind-variants';
 
 export const styles = tv({
   slots: {
-    base: 'relative inline-block w-full',
+    base: 'relative inline-block w-full cursor-pointer',
     trigger: [
       'relative flex h-12 w-full items-center justify-between rounded-full border border-gray-200 bg-white px-6 py-3 text-sm transition-all',
       'focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed',
