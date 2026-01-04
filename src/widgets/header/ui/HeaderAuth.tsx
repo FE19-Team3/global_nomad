@@ -77,10 +77,7 @@ export const HeaderAuth = ({ user }: UserMenuProps) => {
 
       {/* **추후 수정** 팝오버 추가되면 사용하겠습니다*/}
       {isOpen && (
-        <div
-          className="absolute right-0 top-12 w-56 bg-white rounded-lg shadow-lg border py-2"
-          role="menu"
-        >
+        <div className="absolute right-0 top-12 w-56 bg-white rounded-lg shadow-lg border py-2">
           {/* 메뉴 아이템 */}
           <Button as="link" variant="text" href="/my-page" onClick={() => setIsOpen(false)}>
             <Button.Label>
