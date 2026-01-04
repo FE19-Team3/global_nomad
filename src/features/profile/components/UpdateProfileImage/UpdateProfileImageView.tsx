@@ -33,6 +33,7 @@ export const UpdateProfileImageView = ({
         type="button"
         onClick={onPickFile}
         className="absolute bottom-0 right-0 hover:cursor-pointer"
+        aria-label="프로필 이미지 변경"
       >
         <EditBtnIcon className="w-8 h-8" />
       </button>
