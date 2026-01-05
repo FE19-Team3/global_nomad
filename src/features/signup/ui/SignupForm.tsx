@@ -1,15 +1,19 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import EyeIcon from '@/shared/assets/images/icons/icon-eye.svg';
 import KakaoIcon from '@/shared/assets/images/icons/icon-kakao.svg';
+import { Email, Password } from '@/shared/schema/auth';
 import Button from '@/shared/ui/Button/Button';
 import Input from '@/shared/ui/Input/Input';
 
-import { signupSchema, type SignupFormValues } from '../model/signupSchema';
+type SignupFormValues = {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+};
 
 export const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,10 +22,11 @@ export const SignupForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm<SignupFormValues>({
-    resolver: zodResolver(signupSchema),
-    mode: 'onTouched',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: { email: '', password: '', passwordConfirm: '' },
   });
 
@@ -44,12 +49,18 @@ export const SignupForm = () => {
             이메일
           </label>
           <Input
-            {...register('email')}
+            {...register('email', {
+              required: '이메일을 입력해 주세요.',
+              validate: (value) =>
+                Email.safeParse(value).success || '올바른 이메일 형식을 입력해 주세요.',
+            })}
             id="signup-email"
+            type="email"
             placeholder="이메일을 입력해주세요"
             error={!!errors.email}
             errorMsg={errors.email?.message}
             size="md"
+            autoComplete="email"
           />
         </div>
 
@@ -60,13 +71,20 @@ export const SignupForm = () => {
           </label>
           <div className="relative">
             <Input
-              {...register('password')}
+              {...register('password', {
+                required: '비밀번호를 입력해 주세요.',
+                validate: (value) => {
+                  if (!Password.safeParse(value).success) return '8자 이상 입력해 주세요.';
+                  return true;
+                },
+              })}
               id="signup-password"
               type={showPassword ? 'text' : 'password'}
               placeholder="8자 이상 입력해 주세요"
               error={!!errors.password}
               errorMsg={errors.password?.message}
               size="md"
+              autoComplete="new-password"
             />
             <button
               type="button"
@@ -86,13 +104,17 @@ export const SignupForm = () => {
           </label>
           <div className="relative">
             <Input
-              {...register('passwordConfirm')}
+              {...register('passwordConfirm', {
+                required: '비밀번호 확인을 입력해 주세요.',
+                validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.',
+              })}
               id="signup-password-confirm"
               type={showConfirm ? 'text' : 'password'}
               placeholder="비밀번호를 한 번 더 입력해 주세요"
               error={!!errors.passwordConfirm}
               errorMsg={errors.passwordConfirm?.message}
               size="md"
+              autoComplete="new-password"
             />
             <button
               type="button"
