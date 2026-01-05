@@ -20,15 +20,18 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@floating-ui/react-dom": "^2.1.6",
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-query-devtools": "^5.91.1",
     "next": "16.0.10",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-hook-form": "^7.69.0",
+    "react-kakao-maps-sdk": "^1.2.0",
     "storybook": "^10.1.10",
     "tailwind-merge": "^3.4.0",
     "tailwind-variants": "^3.2.2",
+    "zod": "^4.3.4",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
@@ -36,6 +39,7 @@
     "@commitlint/config-conventional": "^20.2.0",
     "@eslint/js": "^9.39.2",
     "@storybook/addon-docs": "^10.1.10",
+    "@storybook/nextjs": "^10.1.11",
     "@storybook/nextjs-vite": "^10.1.10",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
@@ -51,6 +55,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-storybook": "^10.1.10",
+    "eslint-plugin-unused-imports": "^4.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",

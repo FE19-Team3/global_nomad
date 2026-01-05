@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { forwardRef, InputHTMLAttributes, ChangeEvent } from 'react';
 
 import { cn } from '@/shared/lib/cn';
@@ -12,6 +13,7 @@ export interface InputProps extends Omit<
 > {
   className?: string;
   disabled?: boolean;
+  error?: boolean;
   errorMsg?: string;
   icon?: string; // TODO: SVGIcon 컴포넌트 추가후, 타입 변경
   placeholder?: string;
@@ -28,6 +30,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     {
       className,
       disabled = false,
+      error = false,
       errorMsg = '',
       icon = '',
       placeholder,
@@ -35,7 +38,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       size = 'md',
       type = 'text',
       value,
-      variant,
+      variant = 'primary',
       onChange,
       ...rest
     },
@@ -51,7 +54,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       variant,
       radius,
       disabled,
-      error: !!errorMsg,
+      error: error,
       hasIcon: !!icon,
     });
 
@@ -59,8 +62,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className={container()}>
         {icon && (
           <div className={iconWrapper()}>
-            <img src="/file.svg" alt="아이콘" className="w-6 h-6" />{' '}
-            {/* TODO: SVGIcon 컴포넌트 추가 후, 형태 변경 */}
+            <Image src={icon} alt="아이콘" width={24} height={24} className="w-6 h-6" />
           </div>
         )}
         <input
@@ -73,7 +75,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           onChange={onChange}
           {...rest}
         />
-        {errorMsg && <span className={errorClass()}>{errorMsg}</span>}
+        {error && errorMsg && <span className={errorClass()}>{errorMsg}</span>}
       </div>
     );
   },

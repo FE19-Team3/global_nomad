@@ -7,6 +7,8 @@ export const TEXT_VARIANTS = {
   '11_B': 'text-[11px] leading-[1.3] font-[700]',
   '12_M': 'text-[12px] leading-[1.3] font-[500]',
   '12_B': 'text-[12px] leading-[1.3] font-[700]',
+  '13_M': 'text-[13px] leading-[1.3] font-[500]',
+  '13_B': 'text-[13px] leading-[1.3] font-[700]',
   '14_M': 'text-[14px] leading-[1.3] font-[500]',
   '14_B': 'text-[14px] leading-[1.3] font-[700]',
   '16_M': 'text-[16px] leading-[1.3] font-[500]',
@@ -15,13 +17,17 @@ export const TEXT_VARIANTS = {
   '18_B': 'text-[18px] leading-[1.3] font-[700]',
   '20_M': 'text-[20px] leading-[1.3] font-[500]',
   '20_B': 'text-[20px] leading-[1.3] font-[700]',
+  '24_M': 'text-[24px] leading-[1.3] font-[500]',
+  '24_B': 'text-[24px] leading-[1.3] font-[700]',
+  '32_M': 'text-[32px] leading-[1.3] font-[500]',
+  '32_B': 'text-[32px] leading-[1.3] font-[700]',
   '14_body_M': 'text-[14px] leading-[1.8] font-[500]',
   '16_body_M': 'text-[16px] leading-[1.8] font-[500]',
   '18_body_B': 'text-[18px] leading-[1.4] font-[700]',
   '20_body_B': 'text-[20px] leading-[1.6] font-[700]',
 } as const;
 
-type Size = 11 | 12 | 13 | 14 | 16 | 18 | 20;
+type Size = 11 | 12 | 13 | 14 | 16 | 18 | 20 | 24 | 32;
 type BodySize = 14 | 16 | 18 | 20;
 type Weight = 'M' | 'B';
 type Line = 'tight' | 'body';
@@ -79,6 +85,10 @@ type TextComponent = TextBaseComponent & {
   B18: TextBaseComponent;
   M20: TextBaseComponent;
   B20: TextBaseComponent;
+  M24: TextBaseComponent;
+  B24: TextBaseComponent;
+  M32: TextBaseComponent;
+  B32: TextBaseComponent;
 
   Body: typeof TextBody;
   Body14: TextBaseComponent;
@@ -116,6 +126,10 @@ export const Text = Object.assign(TextRoot, {
   B18: shorthand(18, 'B'),
   M20: shorthand(20, 'M'),
   B20: shorthand(20, 'B'),
+  M24: shorthand(24, 'M'),
+  B24: shorthand(24, 'B'),
+  M32: shorthand(32, 'M'),
+  B32: shorthand(32, 'B'),
   Body: TextBody,
   Body14: bodyShorthand(14, 'M'),
   Body16: bodyShorthand(16, 'M'),

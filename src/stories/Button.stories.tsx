@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
+import IC_Close from '@/shared/assets/images/modal/modal-close.svg';
 import Button from '@/shared/ui/Button/Button';
 import { Text } from '@/shared/ui/Text';
 
@@ -89,7 +90,7 @@ export const Badge: Story = {
   render: () => (
     <Button variant="badge" radius="full" className="px-4 py-2.5" iconSize="md">
       <Button.Icon>
-        <img src="/file.svg" alt="파일" />
+        <IC_Close />
       </Button.Icon>
       <Button.Label>
         <Text.M16>음악 · 예술</Text.M16>
@@ -103,7 +104,7 @@ export const BadgeSelected: Story = {
   render: () => (
     <Button variant="badge" radius="full" selected className="px-4 py-2.5" iconSize="md">
       <Button.Icon>
-        <img src="/file.svg" alt="파일" />
+        <IC_Close />
       </Button.Icon>
       <Button.Label>
         <Text.B16>음악 · 예술</Text.B16>
@@ -139,7 +140,7 @@ export const IconOnly: Story = {
   render: () => (
     <Button variant="icon" iconOnly>
       <Button.Icon>
-        <img src="/file.svg" alt="파일" />
+        <IC_Close />
       </Button.Icon>
     </Button>
   ),
@@ -159,7 +160,7 @@ export const WithIcon: Story = {
   render: () => (
     <Button variant="tertiary" size="md" iconSize="md">
       <Button.Icon>
-        <img src="/file.svg" alt="파일" />
+        <IC_Close />
       </Button.Icon>
       <Button.Label>tertiary</Button.Label>
     </Button>
@@ -171,7 +172,7 @@ export const SelectableWithIcon: Story = {
   render: () => (
     <Button variant="tertiary" size="md" iconSize="md" selected>
       <Button.Icon>
-        <img src="/file.svg" alt="파일" />
+        <IC_Close />
       </Button.Icon>
       <Button.Label>tertiary</Button.Label>
     </Button>
