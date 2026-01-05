@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { InfiniteScrollTrigger } from '@/shared/ui/InfinitesScrollTrigger/InfiniteScrollTrigger';
 
-const InfiniteScrollExample = () => {
+export default function InfiniteScrollExample() {
   const [count, setCount] = useState(10);
   const [hasNext, setHasNext] = useState(true);
 
@@ -27,6 +27,4 @@ const InfiniteScrollExample = () => {
       <InfiniteScrollTrigger onIntersect={loadMore} disabled={!hasNext} />
     </div>
   );
-};
-
-export default InfiniteScrollExample;
+}

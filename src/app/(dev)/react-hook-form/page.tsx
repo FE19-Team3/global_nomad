@@ -16,7 +16,7 @@ const SampleForm = () => {
   });
 
   const onSubmit = (data: FormValues) => {
-    alert(data.email);
+    console.log(data);
   };
 
   return (

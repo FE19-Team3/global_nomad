@@ -57,7 +57,7 @@ const ReviewModal = () => {
         onClick={() =>
           openConfirm({
             message: '정말 등록하시겠습니까?',
-            onConfirm: () => alert('등록!'),
+            onConfirm: () => console.log('등록!'),
           })
         }
       >
@@ -83,7 +83,7 @@ const ModalTest = () => {
         onClick={() =>
           openConfirm({
             message: '정말 삭제하시겠습니까?',
-            onConfirm: () => alert('삭제됨'),
+            onConfirm: () => console.log('삭제됨'),
           })
         }
         className="border px-4 py-2 rounded"

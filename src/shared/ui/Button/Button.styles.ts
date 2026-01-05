@@ -4,7 +4,7 @@ export const styles = tv({
   slots: {
     root: 'inline-flex items-center justify-center select-none cursor-pointer',
     label: 'shrink-0',
-    icon: 'shrink-0 flex items-center justify-center',
+    icon: 'shrink-0',
   },
 
   variants: {
