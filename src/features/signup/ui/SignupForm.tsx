@@ -1,11 +1,14 @@
+// TODO: zod 머지 후 검증 처리 코드 제거
+
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import EyeIcon from '@/shared/assets/images/icons/icon-eye.svg';
-import KakaoIcon from '@/shared/assets/images/icons/icon-kakao.svg';
-import { Email, Nickname, Password } from '@/shared/schema/auth';
+import KakaoIcon from '@/shared/assets/images/icons/icon_kakao.png';
+import EyeIcon from '@/shared/assets/images/icons/visibility_off.svg';
+import { Email, Password } from '@/shared/schema/auth';
 import Button from '@/shared/ui/Button/Button';
 import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
@@ -26,7 +29,7 @@ export const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     formState: { errors, isValid },
   } = useForm<SignupFormValues>({
     mode: 'onChange',
@@ -70,7 +73,6 @@ export const SignupForm = () => {
           <Input
             {...register('nickname', {
               required: '닉네임을 입력해 주세요.',
-              validate: (v) => Nickname.safeParse(v).success || '닉네임을 입력해주세요.',
             })}
             id="signup-nickname"
             placeholder="닉네임을 입력해주세요"
@@ -111,14 +113,15 @@ export const SignupForm = () => {
 
         {/* 비밀번호 확인 */}
         <div className="flex flex-col gap-3">
-          <Label htmlFor="signup-confirm" textSize="16_M">
+          <Label htmlFor="signup-password-confirm" textSize="16_M">
             비밀번호 확인
           </Label>
           <div className="relative">
             <Input
               {...register('passwordConfirm', {
                 required: '비밀번호 확인을 입력해 주세요.',
-                validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.',
+                validate: (value) =>
+                  value === getValues('password') || '비밀번호가 일치하지 않습니다.',
               })}
               id="signup-password-confirm"
               type={showConfirm ? 'text' : 'password'}
@@ -152,7 +155,7 @@ export const SignupForm = () => {
 
         <Button variant="secondary" size="full" className="gap-3 border-gray-200">
           <Button.Icon>
-            <KakaoIcon className="w-6 h-6 text-gray-900" />
+            <Image src={KakaoIcon} width={24} height={24} alt="카카오 아이콘" />
           </Button.Icon>
           <Button.Label className="text-gray-600">카카오 회원가입</Button.Label>
         </Button>

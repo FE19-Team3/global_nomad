@@ -1,6 +1,7 @@
+import Button from '@/shared/ui/Button/Button';
+
 import InVisible from '@/shared/assets/images/visibility_off.svg';
 import Visible from '@/shared/assets/images/visibility_on.svg';
-import Button from '@/shared/ui/Button/Button';
 
 interface VisibleButtonProps {
   isVisible: boolean;

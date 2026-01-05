@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { SignupForm } from '@/features/signup';
+import { SignupForm } from '@/features/signup/ui/SignupForm';
 import Logo from '@/shared/assets/images/logoWithText.png';
 
 const SignupPage = () => {
