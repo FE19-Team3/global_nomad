@@ -2,12 +2,12 @@
 
 import { FormEvent } from 'react';
 
+import { useToggle } from '@/shared/hooks/useToggle';
 import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
 import { LabeledInput } from '@/widgets/mypage/ProfileEditForm/ui/LabeledInput';
 
 import { useField } from '../hooks/useField';
-import { useToggle } from '../hooks/useToggle';
 import {
   noSpaces,
   validateConfirmPassword,

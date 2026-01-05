@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 
-import InvisibleIcon from '@/shared/assets/icons/InvisibleIcon.svg';
-import VisibleIcon from '@/shared/assets/icons/VisibleIcon.svg';
+import InvisibleIcon from '@/shared/assets/images/visibility_off.svg';
+import VisibleIcon from '@/shared/assets/images/visibility_on.svg';
 import { cn } from '@/shared/lib/cn';
 
 type PasswordToggleButtonProps = {
