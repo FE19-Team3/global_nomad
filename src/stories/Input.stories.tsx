@@ -11,7 +11,7 @@ const meta = {
     className: { control: { type: 'text' } },
     disabled: { control: { type: 'boolean' } },
     errorMsg: { control: { type: 'text' } },
-    icon: { control: { type: 'boolean' } }, // TODO: SVGIcon 컴포넌트 추가 이후 수정
+    icon: { control: { type: 'boolean' } },
     placeholder: {
       control: { type: 'text' },
     },
