@@ -19,6 +19,7 @@ export const HeadcountSelector = ({
   onChange,
   min = 1,
   max = 100,
+  label,
   className,
 }: HeadcountSelectorProps) => {
   const handleDecrement = () => {
@@ -31,6 +32,8 @@ export const HeadcountSelector = ({
 
   return (
     <div
+      role="group"
+      aria-label={label}
       className={cn(
         'flex items-center justify-between w-full max-w-35 h-10 border border-gray-200 rounded-full overflow-hidden',
         className,
