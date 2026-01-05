@@ -27,7 +27,8 @@
 
   --color-red: 255 39 39;
   --font-sans:
-    var(--font-pretendard), Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    var(--font-pretendard, pretendard), Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
 }
 
 :root[data-theme='dark'] {
