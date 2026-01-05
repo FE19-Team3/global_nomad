@@ -17,9 +17,9 @@ const RadioExample = () => {
 
   return (
     <Radio name="namespace-example" selectedValue={selected} onChange={setSelected}>
-      <Radio.Item value="all" label="전체 보기" />
-      <Radio.Item value="active" label="진행 중" />
-      <Radio.Item value="done" label="완료" />
+      <Radio.Item value="all" label="13:00 ~ 14:00" />
+      <Radio.Item value="active" label="14:00 ~ 15:00" />
+      <Radio.Item value="done" label="15:00 ~ 16:00" />
     </Radio>
   );
 };
