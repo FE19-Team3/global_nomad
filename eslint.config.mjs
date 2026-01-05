@@ -9,6 +9,7 @@ import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import storybook from "eslint-plugin-storybook";
 import boundaries from 'eslint-plugin-boundaries';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 const eslintConfig = defineConfig([
   // Base ESLint recommended rules
@@ -37,6 +38,7 @@ const eslintConfig = defineConfig([
       prettier,
       storybook,
       boundaries,
+      'unused-imports': unusedImports,
     },
     languageOptions: {
       parser: typescriptParser,
@@ -163,6 +165,9 @@ const eslintConfig = defineConfig([
           patterns: ['@/shared/lib/internal/*'],
         },
       ],
+
+      // 사용하지 않는 import 삭제
+      'unused-imports/no-unused-imports': 'error',
     },
   },
 
