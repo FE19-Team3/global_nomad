@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 
-import { HeadcountSelector } from '@/widgets/detail/HeadcountSelector';
+import { HeadcountSelector } from '@/widgets/headcount-selector';
 
 const meta = {
-  title: 'Widgets/Detail/HeadcountSelector',
+  title: 'Widgets/headcount-selector',
   component: HeadcountSelector,
   tags: ['autodocs'],
   argTypes: {
