@@ -70,6 +70,7 @@ export const SignupForm = () => {
             />
             <button
               type="button"
+              aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
               className="absolute right-4 top-4 text-gray-400 z-10"
               onClick={() => setShowPassword(!showPassword)}
             >
@@ -85,7 +86,7 @@ export const SignupForm = () => {
           </label>
           <div className="relative">
             <Input
-              {...register('passwordConfirm')} // 여기도 마찬가지입니다
+              {...register('passwordConfirm')}
               id="signup-password-confirm"
               type={showConfirm ? 'text' : 'password'}
               placeholder="비밀번호를 한 번 더 입력해 주세요"
