@@ -41,7 +41,7 @@ const PopoverContent = ({
           // eslint-disable-next-line react-hooks/refs
           ref={refs.setFloating}
           style={floatingStyles}
-          className={cn('m-1 z-50 rounded-md border bg-white shadow-sm', className)}
+          className={cn('m-1 z-50 rounded-lg bg-white shadow-sm overflow-hidden', className)}
           onClick={(e) => e.stopPropagation()}
         >
           {children}
