@@ -22,7 +22,7 @@ export interface InputProps extends Omit<
   type?: 'text' | 'password' | 'email';
   value?: string;
   variant?: 'primary' | 'secondary';
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(

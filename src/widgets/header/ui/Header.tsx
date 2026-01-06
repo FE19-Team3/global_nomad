@@ -17,9 +17,9 @@ export const Header = () => {
       <div className="max-w-[1520px] mx-auto h-full flex items-center justify-between px-4">
         {/* 로고 */}
         <Button as="link" href="/" variant="icon" iconOnly>
-          <LogoImg />
+          <LogoImg className="w-7" />
           <div className="ml-3">
-            <LogoFont />
+            <LogoFont className="w-34" />
           </div>
         </Button>
         {/* 로그인 여부에 따라 분기 */}
