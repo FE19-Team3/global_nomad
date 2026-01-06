@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { OauthProviderEnum } from '@/shared/schema/enums';
 import { Url, NonEmptyString } from '@/shared/schema/primitives';
 
-export const Email = z.email();
+export const Email = z.string().email();
 
 export const Password = z.string().min(8);
 
