@@ -9,11 +9,8 @@ import Label from '@/shared/ui/Label';
 import VisibleButton from './VisibleButton';
 
 const LoginForm = () => {
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [isCapsLockOn, setIsCapsLockOn] = useState(false);
-  const [authError] = useState<string | null>(null); // TODO: 로그인 api 함수 작성 시, 해당 함수에서 정의
 
   // TODO: 로그인 api 연결
   const handleSubmit = () => {
@@ -31,7 +28,7 @@ const LoginForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-5 w-full max-w-160 mx-6"
+      className="flex flex-col gap-5 w-full max-w-160"
       onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
@@ -39,13 +36,7 @@ const LoginForm = () => {
     >
       <div className="flex flex-col gap-2.5">
         <Label htmlFor="email">이메일</Label>
-        <Input
-          id="email"
-          value={emailValue}
-          placeholder="이메일을 입력해 주세요."
-          onChange={(e) => setEmailValue(e.target.value)}
-          error={!!authError}
-        />
+        <Input id="email" placeholder="이메일을 입력해 주세요." />
       </div>
       <div className="flex flex-col gap-2.5">
         <Label htmlFor="password">비밀번호</Label>
@@ -53,10 +44,7 @@ const LoginForm = () => {
           <Input
             id="password"
             type={isVisible ? 'text' : 'password'}
-            value={passwordValue}
             placeholder="비밀번호를 입력해 주세요."
-            error={!!authError}
-            onChange={(e) => setPasswordValue(e.target.value)}
             onKeyDown={handlePasswordKeyEvent}
             onKeyUp={handlePasswordKeyEvent}
           />
@@ -73,12 +61,13 @@ const LoginForm = () => {
           )}
         </div>
       </div>
-      {authError && <p className="text-sm text-red-500">{authError}</p>}
+      {/* 에러 예시 */}
+      {/* {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>} */}
       <Button
         variant="primary"
         size="full"
         type="submit"
-        disabled={!emailValue || !passwordValue || !!authError}
+        // disabled={!isValid}
       >
         <Button.Label>로그인하기</Button.Label>
       </Button>

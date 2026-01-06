@@ -43,7 +43,7 @@ export const SignupForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full max-w-160 mx-auto p-6">
+    <div className="flex flex-col items-center w-full max-w-160">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-5">
         {/* 이메일 */}
         <div className="flex flex-col gap-3">
