@@ -37,7 +37,9 @@ export const styles = tv({
       true: { input: 'bg-gray-100 cursor-not-allowed opacity-50' },
     },
     error: {
-      true: { input: 'border border-red-500' },
+      true: {
+        input: 'border-red-500 focus:border-red-500',
+      },
     },
     hasIcon: {
       true: { input: '' },

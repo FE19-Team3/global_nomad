@@ -2,9 +2,12 @@
 
 import { useState } from 'react';
 
+import { LoginFormValues } from '@/shared/schema/auth';
 import Button from '@/shared/ui/Button/Button';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
+
+import { useLoginForm } from '../../model/useLoginForm';
 
 import VisibleButton from './VisibleButton';
 
@@ -12,9 +15,15 @@ const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isCapsLockOn, setIsCapsLockOn] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useLoginForm();
+
   // TODO: 로그인 api 연결
-  const handleSubmit = () => {
-    alert('로그인');
+  const handleLogin = (data: LoginFormValues) => {
+    console.log(data);
   };
 
   const handleVisiblity = () => {
@@ -27,26 +36,28 @@ const LoginForm = () => {
   };
 
   return (
-    <form
-      className="flex flex-col gap-5 w-full max-w-160"
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}
-    >
+    <form className="flex flex-col gap-5 w-full max-w-160" onSubmit={handleSubmit(handleLogin)}>
       <div className="flex flex-col gap-2.5">
         <Label htmlFor="email">이메일</Label>
-        <Input id="email" placeholder="이메일을 입력해 주세요." />
+        <Input
+          id="email"
+          placeholder="이메일을 입력해 주세요."
+          {...register('email')}
+          error={!!errors.email}
+        />
       </div>
+      {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
       <div className="flex flex-col gap-2.5">
         <Label htmlFor="password">비밀번호</Label>
         <div className="relative">
           <Input
             id="password"
             type={isVisible ? 'text' : 'password'}
+            {...register('password')}
             placeholder="비밀번호를 입력해 주세요."
             onKeyDown={handlePasswordKeyEvent}
             onKeyUp={handlePasswordKeyEvent}
+            error={!!errors.password}
           />
           <VisibleButton isVisible={isVisible} onClick={handleVisiblity} />
           {isCapsLockOn && (
@@ -62,13 +73,8 @@ const LoginForm = () => {
         </div>
       </div>
       {/* 에러 예시 */}
-      {/* {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>} */}
-      <Button
-        variant="primary"
-        size="full"
-        type="submit"
-        // disabled={!isValid}
-      >
+      {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+      <Button variant="primary" size="full" type="submit" disabled={!isValid}>
         <Button.Label>로그인하기</Button.Label>
       </Button>
     </form>
