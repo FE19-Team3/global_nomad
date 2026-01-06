@@ -1,6 +1,23 @@
 import { TimeoutError } from '@/shared/api';
 import { createApiError, isApiError } from '@/shared/api';
 
+const hasName = (e: unknown): e is { name: string } => {
+  return (
+    typeof e === 'object' &&
+    e !== null &&
+    'name' in e &&
+    typeof (e as { name?: unknown }).name === 'string'
+  );
+};
+
+const isAbortError = (e: unknown): boolean => {
+  if (typeof DOMException !== 'undefined' && e instanceof DOMException) {
+    return e.name === 'AbortError';
+  }
+
+  return hasName(e) && e.name === 'AbortError';
+};
+
 export const toApiError = (e: unknown) => {
   if (isApiError(e)) return e;
 
@@ -12,15 +29,26 @@ export const toApiError = (e: unknown) => {
     });
   }
 
-  if (e instanceof TypeError && e.message.includes('fetch')) {
+  if (isAbortError(e)) {
+    return createApiError({
+      status: 499,
+      message: '요청이 취소되었습니다.',
+      details: { meta: { kind: 'abort' } },
+    });
+  }
+
+  if (e instanceof TypeError) {
     return createApiError({
       status: 502,
       message: '서버에 연결할 수 없습니다.',
     });
   }
 
+  const message = e instanceof Error ? e.message : String(e);
+
   return createApiError({
     status: 500,
     message: '서버에서 알 수 없는 오류가 발생했습니다.',
+    details: { meta: { originalMessage: message } },
   });
 };

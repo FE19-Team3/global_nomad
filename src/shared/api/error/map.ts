@@ -14,6 +14,8 @@ export function mapStatusToCode(status: number): ErrorCode {
       return 'CONFLICT';
     case 429:
       return 'RATE_LIMITED';
+    case 499:
+      return 'ABORTED';
     case 502:
     case 503:
     case 504:
