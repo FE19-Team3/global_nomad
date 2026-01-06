@@ -9,13 +9,7 @@ export const responseToApiError = async (res: Response): Promise<ApiError> => {
 
   if (parsed.kind === 'json') {
     const coerced = coerceApiError(parsed.data);
-    if (coerced) {
-      return createApiError({
-        status,
-        message: coerced.message,
-        details: coerced.details,
-      });
-    }
+    if (coerced) return coerced;
   }
 
   return createApiError({
