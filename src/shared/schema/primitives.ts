@@ -1,19 +1,19 @@
 import { z } from 'zod';
 
-// 백엔드 $double 숫자 id 사용
 export const Id = z.number();
 
-// ISO 8601 DateTime ex)2025-01-01T12:00:00Z
-export const ISODateTime = z.iso.datetime();
+export const ISODateTime = z.string().datetime();
 
 // YYYY-MM-DD
-export const DateYMD = z.iso.date();
+export const DateYMD = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD 형식이어야 합니다.');
 
 // HH:MM:SS
-export const TimeHM = z.iso.time();
+// 마찬가지로 정규표현식을 사용합니다.
+export const TimeHM = z.string().regex(/^\d{2}:\d{2}:\d{2}$/, 'HH:MM:SS 형식이어야 합니다.');
 
 // URL
-export const Url = z.url();
+// Zod 3에서는 string().url()을 사용합니다.
+export const Url = z.string().url();
 
 // 공백 불가 문자열
 export const NonEmptyString = z.string().trim().min(1);
