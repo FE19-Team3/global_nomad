@@ -66,21 +66,20 @@ const MyActivites = () => {
         </section>
       </div>
 
-      <div>
+      <fieldset>
+        <legend className="text-b-16 block mb-2">예약 가능한 시간대</legend>
         <ReservationScheduleSection />
-      </div>
+      </fieldset>
 
-      <div className="mt-4">
-        <section>
-          <Label className="text-b-16 block mb-2">메인 이미지 등록</Label> <UploadMainImage />
-        </section>
-      </div>
+      <fieldset className="mt-4">
+        <legend className="text-b-16 block mb-2">메인 이미지 등록</legend>
+        <UploadMainImage />
+      </fieldset>
 
-      <div className="mt-4">
-        <section>
-          <Label className="text-b-16 block mb-2">소개 이미지 등록</Label> <UploadIntroImage />
-        </section>
-      </div>
+      <fieldset className="mt-4">
+        <legend className="text-b-16 block mb-2">소개 이미지 등록</legend>
+        <UploadIntroImage />
+      </fieldset>
 
       <div className="flex justify-center">
         <Button variant="primary" size="sm" className="mx-auto block">

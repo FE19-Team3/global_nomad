@@ -6,70 +6,74 @@ import { Select } from '@/shared/ui/Select';
 const ReservationScheduleSection = () => {
   return (
     <div>
+      <div className="grid grid-cols-[1fr_140px_12px_140px_44px] gap-2 mb-2">
+        <Label htmlFor="date" className="text-m-16 text-gray-800">
+          날짜
+        </Label>
+        <p className="text-m-16 text-gray-800">시작 시간</p>
+        <div />
+        <p className="text-m-16 text-gray-800">종료 시간</p>
+        <div />
+      </div>
+
       {/* 입력 영역 */}
-      <div className="flex items-end gap-2">
-        <div className="flex-1">
-          <Label className="text-xs mb-2 block text-gray-500">날짜</Label>
-          <Input type="date" placeholder="yy/mm/dd" />
-        </div>
-        <div className="flex items-center gap-1 w-100">
-          <Select.Root>
-            <Select.Trigger variant="input-like" placeholder="12:00" />
-            <Select.Content>
-              <Select.Item value="12:00">12:00</Select.Item>
-              <Select.Item value="13:00">13:00</Select.Item>
-            </Select.Content>
-          </Select.Root>
-          -
-          <Select.Root>
-            <Select.Trigger variant="input-like" placeholder="12:00" />
-            <Select.Content>
-              <Select.Item value="13:00">13:00</Select.Item>
-              <Select.Item value="14:00">14:00</Select.Item>
-            </Select.Content>
-          </Select.Root>
-        </div>
+      <div className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2 mb-4">
+        <Input id="date" type="date" placeholder="yy/mm/dd" />
+
+        <Select.Root>
+          <Select.Trigger variant="input-like" placeholder="00:00" />
+          <Select.Content>
+            <Select.Item value="12:00">12:00</Select.Item>
+            <Select.Item value="13:00">13:00</Select.Item>
+          </Select.Content>
+        </Select.Root>
+
+        <span className="text-center text-gray-400">-</span>
+
+        <Select.Root>
+          <Select.Trigger variant="input-like" placeholder="00:00" />
+          <Select.Content>
+            <Select.Item value="12:00">12:00</Select.Item>
+            <Select.Item value="13:00">13:00</Select.Item>
+          </Select.Content>
+        </Select.Root>
+
         <button
           type="button"
-          className="bg-primary text-white w-11 h-11 rounded-full mb-1 flex items-center justify-center text-2xl hover:bg-primary"
+          className="bg-primary text-white w-11 h-11 rounded-[12px] flex items-center justify-center text-2xl hover:opacity-90"
         >
           +
         </button>
       </div>
 
-      <Divider className="my-5" />
+      <Divider className="my-6 border-gray-100" />
 
       {/* 등록된 리스트 영역 */}
       <div className="flex flex-col gap-4">
         {Array.from({ length: 2 }).map((_, index) => (
-          <div key={index} className="flex items-center gap-2">
-            <div className="flex-1">
-              <Input
-                disabled
-                value={index === 0 ? '2026. 01. 23.' : '2026. 01. 24.'}
-                className="bg-gray-50"
-              />
-            </div>
-            <div className="flex items-center gap-1 w-100">
-              <Select.Root disabled>
-                <Select.Trigger variant="input-like" placeholder="12:00" />
-                <Select.Content>
-                  <Select.Item value="12:00">12:00</Select.Item>
-                  <Select.Item value="13:00">13:00</Select.Item>
-                </Select.Content>
-              </Select.Root>
-              -
-              <Select.Root disabled>
-                <Select.Trigger variant="input-like" placeholder="13:00" />
-                <Select.Content>
-                  <Select.Item value="13:00">13:00</Select.Item>
-                  <Select.Item value="14:00">14:00</Select.Item>
-                </Select.Content>
-              </Select.Root>
-            </div>
+          <div
+            key={index}
+            className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2"
+          >
+            <Input
+              disabled
+              value={index === 0 ? '2026. 01. 23.' : '2026. 01. 24.'}
+              className="bg-gray-50 border-none"
+            />
+
+            <Select.Root disabled>
+              <Select.Trigger variant="input-like" placeholder="12:00" />
+            </Select.Root>
+
+            <span className="text-center text-gray-400">-</span>
+
+            <Select.Root disabled>
+              <Select.Trigger variant="input-like" placeholder="13:00" />
+            </Select.Root>
+
             <button
               type="button"
-              className="bg-gray-50 text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
+              className="bg-gray-100 text-gray-400 w-11 h-11 rounded-[12px] flex items-center justify-center text-2xl hover:bg-gray-200"
             >
               -
             </button>
