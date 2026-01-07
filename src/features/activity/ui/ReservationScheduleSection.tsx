@@ -29,7 +29,10 @@ const ReservationScheduleSection = () => {
             </Select.Content>
           </Select.Root>
         </div>
-        <button className="bg-primary text-white w-11 h-11 rounded-full mb-1 flex items-center justify-center text-2xl hover:bg-primary">
+        <button
+          type="button"
+          className="bg-primary text-white w-11 h-11 rounded-full mb-1 flex items-center justify-center text-2xl hover:bg-primary"
+        >
           +
         </button>
       </div>
@@ -64,7 +67,10 @@ const ReservationScheduleSection = () => {
                 </Select.Content>
               </Select.Root>
             </div>
-            <button className="bg-gray-50 text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200">
+            <button
+              type="button"
+              className="bg-gray-50 text-black w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
+            >
               -
             </button>
           </div>

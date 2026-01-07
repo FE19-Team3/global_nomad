@@ -19,8 +19,4 @@ export const styles = tv({
       true: { textarea: 'border border-red-500' },
     },
   },
-  defaultVariants: {
-    variant: 'primary',
-    radius: 'md',
-  },
 });
