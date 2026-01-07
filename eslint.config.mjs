@@ -10,6 +10,7 @@ import prettierConfig from 'eslint-config-prettier';
 import storybook from "eslint-plugin-storybook";
 import boundaries from 'eslint-plugin-boundaries';
 import unusedImports from 'eslint-plugin-unused-imports';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 const eslintConfig = defineConfig([
   // Base ESLint recommended rules
@@ -34,6 +35,7 @@ const eslintConfig = defineConfig([
     files: ['**/*.{ts,tsx}'],
     plugins: {
       '@typescript-eslint': typescriptEslint,
+      'react-hooks': reactHooks,
       import: importPlugin,
       prettier,
       storybook,
@@ -69,6 +71,8 @@ const eslintConfig = defineConfig([
       ],
     },
     rules: {
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
       'react-hooks/refs': 'off',
       // Prettier integration
       'prettier/prettier': 'error',
