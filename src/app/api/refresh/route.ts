@@ -29,7 +29,10 @@ export async function POST() {
 
     const { accessToken, refreshToken: newRefreshToken } = await res.json();
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({
+      success: true,
+      accessToken: newRefreshToken,
+    });
 
     // access token 갱신
     response.cookies.set('accessToken', accessToken, {
@@ -37,7 +40,7 @@ export async function POST() {
       secure: true,
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60,
+      maxAge: 60 * 60, //1시간
     });
 
     // refresh token이 새로 오면 교체 (rotation)
@@ -47,7 +50,7 @@ export async function POST() {
         secure: true,
         sameSite: 'lax',
         path: '/',
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: 60 * 60 * 24 * 7, //7일
       });
     }
 
