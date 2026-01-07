@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { OauthProviderEnum } from '@/shared/schema/enums';
+import { OauthProviderEnumSchema } from '@/shared/schema/enums';
 import { Url, NonEmptyString } from '@/shared/schema/primitives';
 
 export const Email = z
@@ -31,4 +31,4 @@ export const OauthToken = z.union([
 
 export const RedirectUri = Url;
 
-export const OauthProvider = OauthProviderEnum;
+export const OauthProvider = OauthProviderEnumSchema;
