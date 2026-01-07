@@ -4,7 +4,7 @@ export const styles = tv({
   slots: {
     base: 'relative inline-block w-full cursor-pointer',
     trigger: [
-      'relative flex h-12 w-full items-center justify-between rounded-full border border-gray-200 bg-white px-6 py-3 text-sm transition-all',
+      'relative flex w-full items-center justify-between border border-gray-200 bg-white px-6 py-3 text-sm transition-all',
       'focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed',
     ],
     icon: 'h-3 w-3 text-gray-900 transition-transform duration-200 mt-0.5 ml-2',
@@ -19,6 +19,15 @@ export const styles = tv({
     ],
   },
   variants: {
+    variant: {
+      original: {
+        trigger: 'border-gray-200 focus:border-blue-500 h-12 px-6 rounded-full',
+      },
+      'input-like': {
+        trigger:
+          'border-gray-100 shadow-[0px_2px_6px_0px_#00000005] focus:border-gray-500 h-13.5 px-5 rounded-xl',
+      },
+    },
     isOpen: {
       true: {
         icon: 'rotate-180',
@@ -34,5 +43,8 @@ export const styles = tv({
         item: 'cursor-not-allowed opacity-40 grayscale-[0.5]',
       },
     },
+  },
+  defaultVariants: {
+    variant: 'original',
   },
 });
