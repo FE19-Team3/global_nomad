@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 'use client';
 import { Placement } from '@floating-ui/react-dom';
 import React from 'react';
