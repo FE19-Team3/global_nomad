@@ -20,6 +20,7 @@ export const LoginSchema = z.object({
   password: Password,
 });
 
+// 객체를 “어떻게 보겠다”는 타입 설명서
 export type LoginFormValues = z.infer<typeof LoginSchema>;
 
 export const OauthToken = z.union([
