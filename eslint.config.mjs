@@ -10,17 +10,12 @@ import prettierConfig from 'eslint-config-prettier';
 import storybook from "eslint-plugin-storybook";
 import boundaries from 'eslint-plugin-boundaries';
 import unusedImports from 'eslint-plugin-unused-imports';
-import reactHooks from 'eslint-plugin-react-hooks';
 
 const eslintConfig = defineConfig([
-  // Base ESLint recommended rules
   js.configs.recommended,
-
-  // Next.js configs (must come first to avoid plugin redefinition)
   ...nextVitals,
   ...nextTs,
 
-  // Global ignores
   globalIgnores([
     '.next/**',
     'out/**',
@@ -30,12 +25,10 @@ const eslintConfig = defineConfig([
     'dist/**',
   ]),
 
-  // Additional plugins and rules for TypeScript files
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {
       '@typescript-eslint': typescriptEslint,
-      'react-hooks': reactHooks,
       import: importPlugin,
       prettier,
       storybook,
@@ -47,20 +40,14 @@ const eslintConfig = defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
+        ecmaFeatures: { jsx: true },
         project: './tsconfig.json',
       },
     },
     settings: {
       'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-        },
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
+        typescript: { alwaysTryTypes: true },
+        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
       },
       'boundaries/elements': [
         { type: 'shared', pattern: 'src/shared/**' },
@@ -73,82 +60,34 @@ const eslintConfig = defineConfig([
     rules: {
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react-hooks/refs': 'off',
-      // Prettier integration
+
       'prettier/prettier': 'error',
       ...prettierConfig.rules,
-
-      // Airbnb-style rules
-      // React rules (extending Next.js defaults)
-      'react/prop-types': 'off', // Using TypeScript for prop validation
-      'react/jsx-filename-extension': [
-        'error',
-        { extensions: ['.tsx', '.jsx'] },
-      ],
+      'react/prop-types': 'off',
+      'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
       'react/jsx-props-no-spreading': 'off',
-      'react/require-default-props': 'off', // TypeScript handles this
-      'react/function-component-definition': [
-        'warn',
-        {
-          namedComponents: 'arrow-function',
-          unnamedComponents: 'arrow-function',
-        },
-      ],
-
-      // Import rules
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          js: 'never',
-          jsx: 'never',
-          ts: 'never',
-          tsx: 'never',
-        },
-      ],
+      'react/require-default-props': 'off',
+      'react/function-component-definition': 'off',
+      'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
       'import/prefer-default-export': 'off',
-      'import/no-unresolved': 'off', // TypeScript handles this
+      'import/no-unresolved': 'off',
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-          ],
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
+          alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-
-      // TypeScript rules
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-        },
-      ],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-
-      // General rules
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'no-unused-vars': 'off', // Use TypeScript version instead
+      'no-unused-vars': 'off',
       'prefer-const': 'error',
       'no-var': 'error',
-
-      // Storybook rules
       ...storybook.configs.recommended.rules,
-
-      // 레이어 단방향 의존성 강제
       'boundaries/element-types': [
         'error',
         {
@@ -162,39 +101,18 @@ const eslintConfig = defineConfig([
           ],
         },
       ],
-
-      // internal 직접 import 금지
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: ['@/shared/lib/internal/*'],
-        },
-      ],
-
-      // 사용하지 않는 import 삭제
+      'no-restricted-imports': ['error', { patterns: ['@/shared/lib/internal/*'] }],
       'unused-imports/no-unused-imports': 'error',
     },
   },
-
-  // Additional plugins and rules for JavaScript files
   {
     files: ['**/*.{js,jsx}'],
-    plugins: {
-      import: importPlugin,
-      prettier,
-    },
+    plugins: { import: importPlugin, prettier },
     rules: {
       'prettier/prettier': 'error',
       ...prettierConfig.rules,
       'react/jsx-filename-extension': ['error', { extensions: ['.jsx'] }],
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          js: 'never',
-          jsx: 'never',
-        },
-      ],
+      'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never' }],
       'import/prefer-default-export': 'off',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
