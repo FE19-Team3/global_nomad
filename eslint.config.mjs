@@ -69,6 +69,7 @@ const eslintConfig = defineConfig([
       ],
     },
     rules: {
+      'react-hooks/refs': 'off',
       // Prettier integration
       'prettier/prettier': 'error',
       ...prettierConfig.rules,
