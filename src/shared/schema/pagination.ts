@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { MethodEnum } from '@/shared/schema/enums';
+import { MethodEnumSchema } from '@/shared/schema/enums';
 
 export const PageQuery = z.object({
   page: z.number().default(1),
@@ -22,5 +22,5 @@ export const KeywordQuery = z.object({
 });
 
 export const MethodQuery = z.object({
-  method: MethodEnum,
+  method: MethodEnumSchema,
 });

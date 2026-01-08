@@ -9,7 +9,7 @@ type ModalState = {
   stack: ModalType[];
 
   openBaseModal: (payload: { content: React.ReactNode; showCloseButton?: boolean }) => void;
-  openAlert: (payload: { message: string }) => void;
+  openAlert: (payload: string | { message: string }) => void;
   openConfirm: (payload: { message: string; onConfirm?: () => void }) => void;
 
   closeTop: () => void;
@@ -24,10 +24,13 @@ export const useModalStore = create<ModalState>((set) => ({
       stack: [...state.stack, { type: 'base', content, showCloseButton }],
     })),
 
-  openAlert: ({ message }) =>
-    set((state) => ({
-      stack: [...state.stack, { type: 'alert', message }],
-    })),
+  openAlert: (payload) =>
+    set((state) => {
+      const message = typeof payload === 'string' ? payload : payload.message;
+      return {
+        stack: [...state.stack, { type: 'alert', message }],
+      };
+    }),
 
   openConfirm: ({ message, onConfirm }) =>
     set((state) => ({
