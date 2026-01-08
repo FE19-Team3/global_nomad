@@ -7,7 +7,7 @@ import { LoginFormValues, LoginSchema } from '@/shared/schema/auth';
 
 export const useLoginForm = () => {
   const form = useForm<LoginFormValues>({
-    resolver: zodResolver(LoginSchema as any),
+    resolver: zodResolver(LoginSchema),
     mode: 'onChange',
   });
 
