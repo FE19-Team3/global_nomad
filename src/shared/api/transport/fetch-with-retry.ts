@@ -35,13 +35,13 @@ const calculateDelay = (
   return Math.floor(delay);
 };
 
-const cancelResponseBody = async (response: Response) => {
+const cancelResponseBody = async (res: Response) => {
   try {
-    if (response.body && !response.bodyUsed) {
-      await response.body.cancel();
+    if (res.body && !res.bodyUsed) {
+      await res.body.cancel();
     }
   } catch (e) {
-    console.warn('Failed to cancel response body:', e);
+    console.warn('Failed to cancel res body:', e);
   }
 };
 
@@ -58,20 +58,20 @@ export const fetchWithRetry = async (
 
   for (let attempt = 0; attempt <= config.maxRetries; attempt++) {
     try {
-      const response = await fetchWithTimeout(url, options, timeoutMs);
+      const res = await fetchWithTimeout(url, options, timeoutMs);
 
-      if (!config.retryOn.includes(response.status)) {
-        return response;
+      if (!config.retryOn.includes(res.status)) {
+        return res;
       }
 
       if (attempt === config.maxRetries) {
-        return response;
+        return res;
       }
 
-      await cancelResponseBody(response);
-      lastResponse = response;
+      await cancelResponseBody(res);
+      lastResponse = res;
 
-      const retryAfter = response.headers.get('Retry-After');
+      const retryAfter = res.headers.get('Retry-After');
       const waitTime = retryAfter
         ? parseInt(retryAfter, 10) * 1000
         : calculateDelay(attempt, config);

@@ -1,5 +1,5 @@
-import { TimeoutError } from '@/shared/api';
 import { createApiError, isApiError } from '@/shared/api';
+import { TimeoutError } from '@/shared/api/transport';
 
 const hasName = (e: unknown): e is { name: string } => {
   return (

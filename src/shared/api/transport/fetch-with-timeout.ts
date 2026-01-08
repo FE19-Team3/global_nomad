@@ -51,13 +51,13 @@ export const fetchWithTimeout = async (
   try {
     const combinedSignal = combineSignals([options.signal, timeoutController.signal]);
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       ...options,
       signal: combinedSignal,
     });
 
     clearTimeout(timeoutId);
-    return response;
+    return res;
   } catch (error) {
     clearTimeout(timeoutId);
     throw error;
