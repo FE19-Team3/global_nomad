@@ -66,7 +66,7 @@ const MyActivites = () => {
         </section>
       </div>
 
-      <div className="mb-4 flex flex-col gap-6">
+      <div className="mb-4 flex flex-col gap-8">
         <fieldset>
           <legend className="text-b-16 block mb-3">예약 가능한 시간대</legend>
           <ReservationScheduleSection />
