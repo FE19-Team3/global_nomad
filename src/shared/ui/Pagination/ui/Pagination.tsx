@@ -28,6 +28,7 @@ export const Pagination = ({
   return (
     <nav aria-label="페이지 이동" className={slots.container()}>
       <button
+        type="button"
         className={cn(slots.button(), slots.arrowButton())}
         disabled={isFirstPage}
         onClick={() => goTo(currentPage - 1)}
@@ -49,6 +50,7 @@ export const Pagination = ({
         );
       })}
       <button
+        type="button"
         className={cn(slots.button(), slots.arrowButton())}
         disabled={isLastPage}
         onClick={() => goTo(currentPage + 1)}
