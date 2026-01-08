@@ -6,18 +6,23 @@ import { type RetryConfig } from '@/shared/api/transport';
 import { buildHeaders } from './headers';
 import { type Query } from './url';
 
-type RequestJsonWithSchema<T> = RequestCoreOption & { schema: ZodType<T> };
-type RequestJsonWithoutSchema = RequestCoreOption & { schema?: undefined };
-type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-
-type RequestCoreOption = {
-  method: Method;
+type Method = 'GET' | 'POST' | 'DELETE' | 'PATCH';
+type BaseOptions = {
   path: string;
   query?: Query;
   init?: RequestInit;
   timeoutMs?: number;
   retryConfig?: RetryConfig;
 };
+
+type RequestCoreOption = BaseOptions & {
+  method: Method;
+};
+
+type CommonArgs = BaseOptions;
+
+type RequestJsonWithSchema<T> = RequestCoreOption & { schema: ZodType<T> };
+type RequestJsonWithoutSchema = RequestCoreOption & { schema?: undefined };
 
 export type RequesterEnv = {
   resolveUrl: (path: string, query?: Query) => string;
@@ -78,8 +83,23 @@ export const createRequestCore = (env: RequesterEnv) => {
     }
   };
 
+  const get = <T>(options: CommonArgs & { schema: ZodType<T> }): Promise<T> =>
+    requestJson<T>({ ...options, method: 'GET' });
+
+  const post = <T>(options: CommonArgs & { schema: ZodType<T> }): Promise<T> =>
+    requestJson<T>({ ...options, method: 'POST' });
+
+  const patch = <T>(options: CommonArgs & { schema: ZodType<T> }): Promise<T> =>
+    requestJson<T>({ ...options, method: 'PATCH' });
+
+  const del = (options: CommonArgs): Promise<void> => requestVoid({ ...options, method: 'DELETE' });
+
   return {
     requestJson,
     requestVoid,
+    get,
+    post,
+    patch,
+    del,
   };
 };

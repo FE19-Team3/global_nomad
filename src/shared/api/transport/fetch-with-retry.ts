@@ -1,4 +1,4 @@
-import { fetchWithTimeout } from '@/shared/api';
+import { fetchWithTimeout } from '@/shared/api/transport';
 
 export type RetryConfig = {
   maxRetries?: number;
@@ -47,7 +47,7 @@ const cancelResponseBody = async (res: Response) => {
 
 export const fetchWithRetry = async (
   url: string,
-  options: RequestInit = {},
+  init: RequestInit = {},
   timeoutMs: number = 5000,
   retryConfig: RetryConfig = {},
 ): Promise<Response> => {
@@ -58,7 +58,7 @@ export const fetchWithRetry = async (
 
   for (let attempt = 0; attempt <= config.maxRetries; attempt++) {
     try {
-      const res = await fetchWithTimeout(url, options, timeoutMs);
+      const res = await fetchWithTimeout(url, init, timeoutMs);
 
       if (!config.retryOn.includes(res.status)) {
         return res;

@@ -38,7 +38,7 @@ const combineSignals = (signals: (AbortSignal | undefined | null)[]): AbortSigna
 
 export const fetchWithTimeout = async (
   url: string,
-  options: RequestInit = {},
+  init: RequestInit = {},
   timeoutMs: number = 5000,
 ): Promise<Response> => {
   const timeoutController = new AbortController();
@@ -49,10 +49,10 @@ export const fetchWithTimeout = async (
   }, timeoutMs);
 
   try {
-    const combinedSignal = combineSignals([options.signal, timeoutController.signal]);
+    const combinedSignal = combineSignals([init.signal, timeoutController.signal]);
 
     const res = await fetch(url, {
-      ...options,
+      ...init,
       signal: combinedSignal,
     });
 
