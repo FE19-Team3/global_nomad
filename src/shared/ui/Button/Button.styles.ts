@@ -179,9 +179,4 @@ export const styles = tv({
       },
     },
   ],
-
-  defaultVariants: {
-    variant: 'primary',
-    radius: 'md',
-  },
 });

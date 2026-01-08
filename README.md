@@ -47,7 +47,7 @@ src/
 │  │  │  └─ page.tsx
 │  │  ├─ reservations/
 │  │  │  └─ page.tsx
-│  │  ├─ experiences/
+│  │  ├─ my-activites/
 │  │  │  └─ page.tsx
 │  │  └─ booking-status/
 │  │     └─ page.tsx
