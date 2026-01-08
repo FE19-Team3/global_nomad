@@ -1,6 +1,6 @@
 import { createApiError } from '@/shared/api';
 
-type Query = Record<string, string | number>;
+export type Query = Record<string, string | number>;
 
 const getBaseUrl = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
