@@ -40,7 +40,7 @@ const ReservationScheduleSection = () => {
 
         <button
           type="button"
-          className="bg-primary text-white w-11 h-11 rounded-xl flex items-center justify-center text-2xl hover:opacity-90"
+          className="bg-primary text-white w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:opacity-90"
         >
           +
         </button>
@@ -73,7 +73,7 @@ const ReservationScheduleSection = () => {
 
             <button
               type="button"
-              className="bg-gray-100 text-gray-400 w-11 h-11 rounded-xl flex items-center justify-center text-2xl hover:bg-gray-200"
+              className="bg-gray-100 text-gray-400 w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
             >
               -
             </button>
