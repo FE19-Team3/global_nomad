@@ -7,10 +7,13 @@ import { buildHeaders } from './headers';
 import { type Query } from './url';
 
 type Method = 'GET' | 'POST' | 'DELETE' | 'PATCH';
+type Body = unknown | FormData | string;
+
 type BaseOptions = {
   path: string;
   query?: Query;
-  init?: RequestInit;
+  body?: Body;
+  init?: Omit<RequestInit, 'body' | 'method'>;
   timeoutMs?: number;
   retryConfig?: RetryConfig;
 };
@@ -41,6 +44,7 @@ export const createRequestCore = (env: RequesterEnv) => {
     path,
     query,
     init,
+    body,
     timeoutMs,
     retryConfig,
   }: RequestCoreOption): Promise<Response> => {
@@ -52,6 +56,11 @@ export const createRequestCore = (env: RequesterEnv) => {
       ...(init ?? {}),
       method,
     };
+
+    if (body !== undefined && method !== 'GET' && method !== 'DELETE') {
+      mergedInit.body =
+        body instanceof FormData || typeof body === 'string' ? body : JSON.stringify(body);
+    }
 
     mergedInit.headers = buildHeaders(mergedInit, accessToken);
 
@@ -94,6 +103,9 @@ export const createRequestCore = (env: RequesterEnv) => {
 
   const del = (options: CommonArgs): Promise<void> => requestVoid({ ...options, method: 'DELETE' });
 
+  const upload = <T>(options: CommonArgs & { body: FormData; schema: ZodType<T> }): Promise<T> =>
+    requestJson<T>({ ...options, method: 'POST' });
+
   return {
     requestJson,
     requestVoid,
@@ -101,5 +113,6 @@ export const createRequestCore = (env: RequesterEnv) => {
     post,
     patch,
     del,
+    upload,
   };
 };
