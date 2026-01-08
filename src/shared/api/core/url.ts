@@ -2,7 +2,7 @@ import { createApiError } from '@/shared/api';
 
 export type Query = Record<string, string | number>;
 
-const getBaseUrl = () => {
+export const getBaseUrl = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const teamId = process.env.NEXT_PUBLIC_TEAM_ID;
 
@@ -16,8 +16,8 @@ const getBaseUrl = () => {
   return `${baseUrl}/${teamId}`;
 };
 
-export const buildUrl = (path: string, query?: Query) => {
-  let url = getBaseUrl().replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '');
+export const buildUrl = (base: string, path: string, query?: Query) => {
+  let url = base.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '');
 
   if (query && Object.keys(query).length > 0) {
     const search = new URLSearchParams();
