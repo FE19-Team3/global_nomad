@@ -13,7 +13,7 @@ export function middleware(req: NextRequest) {
 
   // 로그인 안 한 상태 + 보호 페이지 접근
   if (!accessToken && isProtectedRoute) {
-    return NextResponse.redirect(new URL('/login', req.url));
+    return NextResponse.redirect(new URL('/login', req.nextUrl));
   }
 
   // 로그인 한 상태 + 로그인, 회원가입 페이지 접근
