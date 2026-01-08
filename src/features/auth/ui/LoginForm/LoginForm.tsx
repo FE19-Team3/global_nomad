@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 
-import { LoginFormValues } from '@/shared/schema/auth';
 import Button from '@/shared/ui/Button/Button';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
 
 import { useLoginForm } from '../../model/useLoginForm';
+import { useLoginSubmit } from '../../model/useLoginSubmit';
 
 import VisibleButton from './VisibleButton';
 
@@ -18,13 +18,10 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useLoginForm();
 
-  // TODO: 로그인 api 연결
-  const handleLogin = (data: LoginFormValues) => {
-    console.log(data);
-  };
+  const handleLogin = useLoginSubmit();
 
   const handleVisiblity = () => {
     setIsVisible(!isVisible);
@@ -74,7 +71,7 @@ const LoginForm = () => {
       </div>
       {/* 에러 예시 */}
       {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
-      <Button variant="primary" size="full" type="submit" disabled={!isValid}>
+      <Button variant="primary" size="full" type="submit" disabled={!isValid || isSubmitting}>
         <Button.Label>로그인하기</Button.Label>
       </Button>
     </form>
