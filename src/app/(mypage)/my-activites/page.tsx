@@ -17,11 +17,11 @@ const MyActivites = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4 flex flex-col gap-4">
-      <Text.B18 as="h2" className="mb-6">
+    <form onSubmit={handleSubmit} className="mb-4 flex flex-col">
+      <Text.B18 as="h2" className="mb-8">
         내 체험 등록
       </Text.B18>
-      <div className="mb-4 flex flex-col gap-4">
+      <div className="mb-8 flex flex-col gap-6">
         <section>
           <Label htmlFor="title" className="text-b-16 block mb-2">
             제목
@@ -66,20 +66,22 @@ const MyActivites = () => {
         </section>
       </div>
 
-      <fieldset>
-        <legend className="text-b-16 block mb-2">예약 가능한 시간대</legend>
-        <ReservationScheduleSection />
-      </fieldset>
+      <div className="mb-8 flex flex-col gap-6">
+        <fieldset>
+          <legend className="text-b-16 block mb-3">예약 가능한 시간대</legend>
+          <ReservationScheduleSection />
+        </fieldset>
 
-      <fieldset className="mt-4">
-        <legend className="text-b-16 block mb-2">메인 이미지 등록</legend>
-        <UploadMainImage />
-      </fieldset>
+        <fieldset>
+          <legend className="text-b-16 block mb-3">메인 이미지 등록</legend>
+          <UploadMainImage />
+        </fieldset>
 
-      <fieldset className="mt-4">
-        <legend className="text-b-16 block mb-2">소개 이미지 등록</legend>
-        <UploadIntroImage />
-      </fieldset>
+        <fieldset>
+          <legend className="text-b-16 block mb-2">소개 이미지 등록</legend>
+          <UploadIntroImage />
+        </fieldset>
+      </div>
 
       <div className="flex justify-center">
         <Button variant="primary" size="sm" className="mx-auto block">
