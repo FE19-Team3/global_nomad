@@ -1,5 +1,3 @@
-// TODO: zod 머지 후 검증 처리 코드 제거
-
 'use client';
 
 import Image from 'next/image';
@@ -7,7 +5,6 @@ import { useState } from 'react';
 
 import KakaoIcon from '@/shared/assets/icons/ic_kakao.png';
 import EyeIcon from '@/shared/assets/icons/ic_visibility_off.svg';
-import { SignupFormValues } from '@/shared/schema/auth';
 import Button from '@/shared/ui/Button/Button';
 import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
@@ -15,6 +12,7 @@ import Label from '@/shared/ui/Label';
 import Text from '@/shared/ui/Text';
 
 import { useSignupForm } from '../model/useSignupForm';
+import { useSignupSubmit } from '../model/useSignupSubmit';
 
 export const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,13 +21,10 @@ export const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useSignupForm();
 
-  const handleSignup = (data: SignupFormValues) => {
-    // TODO: api 연결
-    console.warn('가입 데이터:', data);
-  };
+  const handleSignup = useSignupSubmit();
 
   return (
     <div className="flex flex-col items-center w-full max-w-160">
@@ -115,7 +110,13 @@ export const SignupForm = () => {
           </div>
         </div>
 
-        <Button type="submit" variant="primary" size="full" disabled={!isValid} className="mt-2">
+        <Button
+          type="submit"
+          variant="primary"
+          size="full"
+          disabled={!isValid || isSubmitting}
+          className="mt-2"
+        >
           <Button.Label>회원가입하기</Button.Label>
         </Button>
       </form>
