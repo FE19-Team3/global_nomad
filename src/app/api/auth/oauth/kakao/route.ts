@@ -2,14 +2,40 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getBaseUrl } from '@/shared/api/core/url';
 
-const getRedirectPath = (flow: string | null) => {
-  if (flow === 'signup') return '/signup';
+const getRedirectPath = (_flow: string | null) => {
   return '/main';
 };
 
 const getErrorRedirectPath = (flow: string | null) => {
   if (flow === 'signup') return '/signup?error=oauth';
   return '/login?error=oauth';
+};
+
+const createAuthRedirectResponse = (
+  req: NextRequest,
+  redirectPath: string,
+  accessToken: string,
+  refreshToken: string,
+) => {
+  const response = NextResponse.redirect(new URL(redirectPath, req.url));
+  const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax' as const,
+    path: '/',
+  };
+
+  response.cookies.set('accessToken', accessToken, {
+    ...cookieOptions,
+    maxAge: 60 * 60,
+  });
+
+  response.cookies.set('refreshToken', refreshToken, {
+    ...cookieOptions,
+    maxAge: 60 * 60 * 24 * 7,
+  });
+
+  return response;
 };
 
 const KAKAO_TOKEN_URL = 'https://kauth.kakao.com/oauth/token';
@@ -80,25 +106,7 @@ export const GET = async (req: NextRequest) => {
 
         if (signUpRes.ok) {
           const { accessToken, refreshToken } = await signUpRes.json();
-          const response = NextResponse.redirect(new URL('/main', req.url));
-
-          response.cookies.set('accessToken', accessToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'lax',
-            path: '/',
-            maxAge: 60 * 60,
-          });
-
-          response.cookies.set('refreshToken', refreshToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'lax',
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7,
-          });
-
-          return response;
+          return createAuthRedirectResponse(req, '/main', accessToken, refreshToken);
         }
 
         const signUpError = await signUpRes.text();
@@ -116,25 +124,7 @@ export const GET = async (req: NextRequest) => {
 
           if (retrySignInRes.ok) {
             const { accessToken, refreshToken } = await retrySignInRes.json();
-            const response = NextResponse.redirect(new URL('/main', req.url));
-
-            response.cookies.set('accessToken', accessToken, {
-              httpOnly: true,
-              secure: true,
-              sameSite: 'lax',
-              path: '/',
-              maxAge: 60 * 60,
-            });
-
-            response.cookies.set('refreshToken', refreshToken, {
-              httpOnly: true,
-              secure: true,
-              sameSite: 'lax',
-              path: '/',
-              maxAge: 60 * 60 * 24 * 7,
-            });
-
-            return response;
+            return createAuthRedirectResponse(req, '/main', accessToken, refreshToken);
           }
         }
 
@@ -147,25 +137,7 @@ export const GET = async (req: NextRequest) => {
 
     const { accessToken, refreshToken } = await res.json();
     // 로그인 성공이면 쿠키 굳히고 화면 이동
-    const response = NextResponse.redirect(new URL(getRedirectPath(state), req.url));
-
-    response.cookies.set('accessToken', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60,
-    });
-
-    response.cookies.set('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7,
-    });
-
-    return response;
+    return createAuthRedirectResponse(req, getRedirectPath(state), accessToken, refreshToken);
   } catch {
     return NextResponse.redirect(new URL(getErrorRedirectPath(state), req.url));
   }

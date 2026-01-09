@@ -159,7 +159,7 @@ export const SignupForm = () => {
           variant="secondary"
           size="full"
           className="gap-3 border-gray-200"
-          onClick={() => (window.location.href = getKakaoAuthUrl({ flow: 'login' }))}
+          onClick={() => (window.location.href = getKakaoAuthUrl({ flow: 'signup' }))}
         >
           <Button.Icon>
             <Image src={KakaoIcon} width={24} height={24} alt="카카오 아이콘" />
