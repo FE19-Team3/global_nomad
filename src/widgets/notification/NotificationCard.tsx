@@ -1,31 +1,36 @@
 import { NotificationEntity } from '@/entities/notification/model/notification.type';
 import { timeAgo } from '@/shared/lib/timeAgo';
+import Text from '@/shared/ui/Text';
+
+import { notificationCardStyles } from './NotificationModal.styles';
 
 type Props = {
   item: NotificationEntity;
   _onDelete?: (id: number) => void;
 };
 
-const NotificationCard = ({ item, _onDelete }: Props) => {
+const NotificationCard = ({ item }: Props) => {
+  const styles = notificationCardStyles({ type: item.type });
+
   return (
-    <div className="px-6 py-4 bg-gray-50">
+    <div className={styles.root()}>
       {/* 헤더 */}
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-base font-semibold text-gray-900">{item.title}</h3>
-        <span className="text-sm text-gray-400">{timeAgo(item.createdAt)}</span>
+      <div className={styles.header()}>
+        <Text.B14 className="text-gray-950">{item.title}</Text.B14>
+        <Text.M12 className="text-gray-400">{timeAgo(item.createdAt)}</Text.M12>
       </div>
 
       {/* 내용 */}
-      <div className="text-sm text-gray-700 leading-relaxed">
-        <p className="mb-1">{item.activityName}</p>
-        <p className="mb-1">({item.dateTime})</p>
-        <p>
+      <div className="text-gray-800">
+        <Text.Body14>{item.activityName}</Text.Body14>
+        <Text.Body14>({item.dateTime})</Text.Body14>
+        <Text.Body14>
           예약이{' '}
-          <span className={item.type === 'confirmed' ? 'text-blue-600' : 'text-red-600'}>
+          <span className={item.type === 'confirmed' ? styles.confirmed() : styles.rejected()}>
             {item.type === 'confirmed' ? '승인' : '거절'}
           </span>
           되었어요.
-        </p>
+        </Text.Body14>
       </div>
     </div>
   );
