@@ -4,23 +4,17 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 import KakaoIcon from '@/shared/assets/images/icons/icon_kakao.png';
 import EyeIcon from '@/shared/assets/images/icons/visibility_off.svg';
-import { Email, Password } from '@/shared/schema/auth';
+import { SignupFormValues } from '@/shared/schema/auth';
 import Button from '@/shared/ui/Button/Button';
 import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
 import Text from '@/shared/ui/Text';
 
-type SignupFormValues = {
-  email: string;
-  nickname: string;
-  password: string;
-  passwordConfirm: string;
-};
+import { useSignupForm } from '../model/useSignupForm';
 
 export const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,33 +23,24 @@ export const SignupForm = () => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors, isValid },
-  } = useForm<SignupFormValues>({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: { email: '', nickname: '', password: '', passwordConfirm: '' },
-  });
+  } = useSignupForm();
 
-  const onSubmit = (data: SignupFormValues) => {
+  const handleSignup = (data: SignupFormValues) => {
     // TODO: api 연결
     console.warn('가입 데이터:', data);
   };
 
   return (
     <div className="flex flex-col items-center w-full max-w-160">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-5">
+      <form onSubmit={handleSubmit(handleSignup)} className="w-full space-y-5">
         {/* 이메일 */}
         <div className="flex flex-col gap-3">
           <Label htmlFor="signup-email" textSize="16_M">
             이메일
           </Label>
           <Input
-            {...register('email', {
-              required: '이메일을 입력해 주세요.',
-              validate: (value) =>
-                Email.safeParse(value).success || '올바른 이메일 형식을 입력해 주세요.',
-            })}
+            {...register('email')}
             id="signup-email"
             type="email"
             placeholder="이메일을 입력해주세요"
@@ -71,11 +56,11 @@ export const SignupForm = () => {
             닉네임
           </Label>
           <Input
-            {...register('nickname', {
-              required: '닉네임을 입력해 주세요.',
-            })}
+            {...register('nickname')}
             id="signup-nickname"
             placeholder="닉네임을 입력해주세요"
+            error={!!errors.nickname}
+            errorMsg={errors.nickname?.message}
           />
         </div>
 
@@ -86,13 +71,7 @@ export const SignupForm = () => {
           </Label>
           <div className="relative">
             <Input
-              {...register('password', {
-                required: '비밀번호를 입력해 주세요.',
-                validate: (value) => {
-                  if (!Password.safeParse(value).success) return '8자 이상 입력해 주세요.';
-                  return true;
-                },
-              })}
+              {...register('password')}
               id="signup-password"
               type={showPassword ? 'text' : 'password'}
               placeholder="8자 이상 입력해 주세요"
@@ -118,11 +97,7 @@ export const SignupForm = () => {
           </Label>
           <div className="relative">
             <Input
-              {...register('passwordConfirm', {
-                required: '비밀번호 확인을 입력해 주세요.',
-                validate: (value) =>
-                  value === getValues('password') || '비밀번호가 일치하지 않습니다.',
-              })}
+              {...register('passwordConfirm')}
               id="signup-password-confirm"
               type={showConfirm ? 'text' : 'password'}
               placeholder="비밀번호를 한 번 더 입력해 주세요"
