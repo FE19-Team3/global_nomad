@@ -12,7 +12,6 @@ export const checkboxStyles = tv({
       transition-colors
     `,
     icon: 'w-4 h-4 shrink-0',
-    label: 'text-sm font-medium',
     input: 'absolute opacity-0 pointer-events-none',
   },
 

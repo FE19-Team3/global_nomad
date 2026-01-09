@@ -3,6 +3,7 @@
 import { ChangeEvent, ReactNode, useId } from 'react';
 
 import { cn } from '@/shared/lib/cn';
+import { Text } from '@/shared/ui/Text';
 
 import { checkboxStyles } from './styles';
 
@@ -50,7 +51,9 @@ export const Checkbox = ({ checked, onChange, label, icon, disabled = false }: C
         </span>
       )}
 
-      <span className={styles.label()}>{label}</span>
+      <Text.M16>
+        <span>{label}</span>
+      </Text.M16>
     </label>
   );
 };
