@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { getKakaoAuthUrl } from '@/features/auth/kakaoAuth';
 import KakaoIcon from '@/shared/assets/images/icons/icon_kakao.png';
 import EyeIcon from '@/shared/assets/images/icons/visibility_off.svg';
 import { Email, Password } from '@/shared/schema/auth';
@@ -39,7 +40,7 @@ export const SignupForm = () => {
 
   const onSubmit = (data: SignupFormValues) => {
     // TODO: api 연결
-    console.warn('가입 데이터:', data);
+    void data;
   };
 
   return (
@@ -153,7 +154,13 @@ export const SignupForm = () => {
           </Text.M16>
         </div>
 
-        <Button variant="secondary" size="full" className="gap-3 border-gray-200">
+        <Button
+          type="button"
+          variant="secondary"
+          size="full"
+          className="gap-3 border-gray-200"
+          onClick={() => (window.location.href = getKakaoAuthUrl({ flow: 'login' }))}
+        >
           <Button.Icon>
             <Image src={KakaoIcon} width={24} height={24} alt="카카오 아이콘" />
           </Button.Icon>
