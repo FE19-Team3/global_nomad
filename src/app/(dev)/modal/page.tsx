@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 
+import StarIcon from '@/shared/assets/icons/ic_modal_star.svg';
 import { useModalStore } from '@/shared/stores/useModalStore';
 import Text from '@/shared/ui/Text';
-
-import StarIcon from '@/shared/assets/images/modal/ic_modal_star.svg';
 
 const ReviewModal = () => {
   const { openConfirm } = useModalStore();
