@@ -9,4 +9,15 @@ export const clientApi = createRequestCore({
   defaultInit: {
     credentials: 'include',
   },
+  onError: (error) => {
+    if (typeof window === 'undefined') return;
+
+    if (error.status !== 401 && error.status !== 403) return;
+
+    const currentPath = window.location.pathname;
+    if (currentPath === '/login' || currentPath === '/signup') return;
+
+    const target = error.status === 401 ? '/login?error=unauthorized' : '/login?error=forbidden';
+    window.location.href = target;
+  },
 });
