@@ -1,6 +1,5 @@
 import type { ZodType } from 'zod';
 
-import type { ApiError } from '@/shared/api';
 import { parseJsonResponse, responseToApiError, toApiError } from '@/shared/api';
 import { type RetryConfig } from '@/shared/api/transport';
 
@@ -37,7 +36,6 @@ export type RequesterEnv = {
     extras?: { timeoutMs?: number; retryConfig?: RetryConfig },
   ) => Promise<Response>;
   defaultInit?: RequestInit;
-  onError?: (error: ApiError) => void;
 };
 
 export const createRequestCore = (env: RequesterEnv) => {
@@ -83,7 +81,6 @@ export const createRequestCore = (env: RequesterEnv) => {
       return await parseJsonResponse(res, { schema: options.schema });
     } catch (e) {
       const apiError = toApiError(e);
-      env.onError?.(apiError);
       throw apiError;
     }
   }
@@ -93,7 +90,6 @@ export const createRequestCore = (env: RequesterEnv) => {
       await requestRaw(options);
     } catch (e) {
       const apiError = toApiError(e);
-      env.onError?.(apiError);
       throw apiError;
     }
   };
