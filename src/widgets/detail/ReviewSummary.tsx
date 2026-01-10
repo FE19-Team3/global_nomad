@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import Text from '@/shared/ui/Text';
 
-import IC_Star from '@/shared/assets/images/ic_srar_on.png';
+import IC_Star from '@/shared/assets/icons/ic_srar_on.png';
 
 const MAX_VALUE = {
   average: 5,
