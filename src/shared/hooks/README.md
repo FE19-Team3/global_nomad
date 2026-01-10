@@ -24,7 +24,7 @@ type field = {
 ## 간단 사용법
 
 ```ts
-const { mutate, isPending } = useUploadImageToUrl(type, options: {
+const { mutate, isPending } = useUploadImageToUrl(type, {
     onSuccess: (url) => {
       // 성공시 행동 로직
     },

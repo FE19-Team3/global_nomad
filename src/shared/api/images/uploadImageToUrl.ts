@@ -14,7 +14,5 @@ export const uploadImageToUrl = async (file: File, type: ImageUploadType): Promi
     schema: imageUrlSchema,
   });
 
-  const validateRes = imageUrlSchema.parse(res);
-  const url = validateRes.profileImageUrl || validateRes.activityImageUrl!;
-  return url;
+  return res.profileImageUrl ?? res.activityImageUrl!;
 };
