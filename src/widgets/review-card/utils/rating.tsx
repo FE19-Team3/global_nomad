@@ -1,4 +1,4 @@
-import RatingStar from '@/shared/assets/icons/RatingStar.svg';
+import RatingStar from '@/shared/assets/icons/ic_rating_star.svg';
 import { cn } from '@/shared/lib/cn';
 
 export const renderStars = (rating: number, max = 5) => {

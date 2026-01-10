@@ -2,9 +2,10 @@
 import Image from 'next/image';
 import { useState, FormEvent } from 'react';
 
-import Icon from '@/shared/assets/images/icon_search.png';
 import Button from '@/shared/ui/Button/Button';
 import Input from '@/shared/ui/Input/Input';
+
+import Icon from '@/shared/assets/images/ic_search.png';
 
 const SearchForm = () => {
   const [value, setValue] = useState('');

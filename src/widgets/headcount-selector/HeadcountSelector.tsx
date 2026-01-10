@@ -1,9 +1,10 @@
 'use client';
 
-import AddIcon from '@/shared/assets/images/icons/icon-add.svg';
-import MinusIcon from '@/shared/assets/images/icons/icon-minus.svg';
+import MinusIcon from '@/shared/assets/icons/ic_minus.svg';
 import { cn } from '@/shared/lib/cn';
 import Text from '@/shared/ui/Text';
+
+import AddIcon from '@/shared/assets/icons/ic-add.svg';
 
 interface HeadcountSelectorProps {
   count: number;

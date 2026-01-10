@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 
-import ChevronDownIcon from '@/shared/assets/icons/ChevronDownIcon.svg';
+import ChevronDownIcon from '@/shared/assets/icons/ic_chevr_on_down.svg';
 import { cn } from '@/shared/lib/cn';
 
 import { useDropdown } from './DropdownContext';

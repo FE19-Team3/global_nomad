@@ -1,4 +1,4 @@
-import ImageDelete from '@/shared/assets/images/icons/icon-image-delete.svg';
+import ImageDelete from '@/shared/assets/icons/ic_image_delete.svg';
 
 const UploadIntroImage = () => {
   return (
