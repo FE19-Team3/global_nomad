@@ -8,7 +8,6 @@ export const uploadImageToUrl = async (file: File, type: ImageUploadType): Promi
   fd.append('image', file);
 
   const path = type === 'profile' ? '/users/me/image' : '/activities/image';
-
   const res = await clientApi.upload({
     path,
     body: fd,
