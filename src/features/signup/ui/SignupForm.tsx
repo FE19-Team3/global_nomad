@@ -5,8 +5,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import KakaoIcon from '@/shared/assets/images/icons/icon_kakao.png';
-import EyeIcon from '@/shared/assets/images/icons/visibility_off.svg';
+import KakaoIcon from '@/shared/assets/icons/ic_kakao.png';
+import EyeIcon from '@/shared/assets/icons/ic_visibility_off.svg';
 import { SignupFormValues } from '@/shared/schema/auth';
 import Button from '@/shared/ui/Button/Button';
 import Divider from '@/shared/ui/Divider/Divider';

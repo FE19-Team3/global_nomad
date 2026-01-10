@@ -2,7 +2,7 @@
 
 import { type ReactNode, useEffect } from 'react';
 
-import CloseIcon from '@/shared/assets/images/modal/modal-close.svg';
+import CloseIcon from '@/shared/assets/icons/ic_modal_close.svg';
 
 interface BaseModalProps {
   isOpen: boolean;

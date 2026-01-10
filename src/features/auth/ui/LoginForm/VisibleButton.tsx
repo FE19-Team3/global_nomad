@@ -1,5 +1,5 @@
-import InVisible from '@/shared/assets/images/icons/visibility_off.svg';
-import Visible from '@/shared/assets/images/icons/visibility_on.svg';
+import InVisible from '@/shared/assets/icons/ic_visibility_off.svg';
+import Visible from '@/shared/assets/icons/ic_visibility_on.svg';
 import Button from '@/shared/ui/Button/Button';
 
 interface VisibleButtonProps {

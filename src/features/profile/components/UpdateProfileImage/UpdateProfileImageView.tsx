@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
-import EditBtnIcon from '@/shared/assets/icons/EditBtnIcon.svg';
-import XBtnIcon from '@/shared/assets/icons/XBtnIcon.svg';
+import XBtnIcon from '@/shared/assets/icons/ic_close_btn_gray.svg';
+import EditBtnIcon from '@/shared/assets/icons/ic_edit_btn.svg';
 
 type Props = {
   displayImage: string;

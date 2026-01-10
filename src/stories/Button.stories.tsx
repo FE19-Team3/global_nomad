@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import IC_Close from '@/shared/assets/images/modal/modal-close.svg';
+import IC_Close from '@/shared/assets/icons/ic_modal_close.svg';
 import Button from '@/shared/ui/Button/Button';
 import { Text } from '@/shared/ui/Text';
 
