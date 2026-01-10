@@ -42,7 +42,6 @@ export async function POST(req: NextRequest): Promise<Response> {
     });
 
     const url = res.profileImageUrl ?? res.activityImageUrl;
-    if (!url) throw createApiError({ status: 500, message: '이미지 URL이 없습니다.' });
 
     return NextResponse.json(url);
   } catch (e) {
