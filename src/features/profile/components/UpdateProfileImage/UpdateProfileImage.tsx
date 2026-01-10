@@ -18,7 +18,7 @@ export const UpdateProfileImage = ({ currentImageUrl, onImageUpdate }: UpdatePro
 
   const { ref: fileInputRef, open: openFilePicker, reset: resetFileInput } = useFileInput();
 
-  const { mutate, isPending } = useUploadImageToUrl({
+  const { mutate, isPending } = useUploadImageToUrl('profile', {
     onSuccess: (url) => {
       setUploadedUrl(url);
       onImageUpdate(url);

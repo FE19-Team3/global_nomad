@@ -1,4 +1,21 @@
-export const uploadImageToUrl = async (file: File): Promise<string> => {
-  await new Promise((resolve) => setTimeout(resolve, 700)); // 업로드 느낌으로 잠깐 대기
-  return URL.createObjectURL(file); // 임시 URL 반환
+import { imageUrlSchema } from '@/shared/types/updateImage';
+import type { ImageUploadType } from '@/shared/types/updateImage';
+
+import { clientApi } from '../client';
+
+export const uploadImageToUrl = async (file: File, type: ImageUploadType): Promise<string> => {
+  const fd = new FormData();
+  fd.append('image', file);
+
+  const path = type === 'profile' ? '/users/me/image' : '/activities/image';
+
+  const res = await clientApi.upload({
+    path,
+    body: fd,
+    schema: imageUrlSchema,
+  });
+
+  const validateRes = imageUrlSchema.parse(res);
+  const url = validateRes.profileImageUrl || validateRes.activityImageUrl!;
+  return url;
 };
