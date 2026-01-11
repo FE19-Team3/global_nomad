@@ -24,7 +24,6 @@ export const LabeledInput = ({
   ...rest
 }: LabeledInputProps) => {
   const id = useId();
-  const voidFn = () => {};
 
   return (
     <div className="flex flex-col relative">
@@ -41,7 +40,6 @@ export const LabeledInput = ({
         type={type}
         value={value}
         variant={variant}
-        onChange={voidFn}
         {...rest}
       />
       {children}
