@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 
-import InvisibleIcon from '@/shared/assets/images/visibility_off.svg';
-import VisibleIcon from '@/shared/assets/images/visibility_on.svg';
+import InvisibleIcon from '@/shared/assets/icons/ic_visibility_off.svg';
+import VisibleIcon from '@/shared/assets/icons/ic_visibility_on.svg';
 import { cn } from '@/shared/lib/cn';
 
 type PasswordToggleButtonProps = {
@@ -26,7 +26,7 @@ const PasswordToggleBtn = ({ visible, onToggle, className }: PasswordToggleButto
       )}
       aria-label={visible ? '비밀번호 숨기기' : '비밀번호 보이기'}
     >
-      {visible ? <VisibleIcon className="w-5 h-5" /> : <InvisibleIcon className="w-5 h-5" />}
+      {visible ? <VisibleIcon className="w-4 h-4" /> : <InvisibleIcon className="w-4 h-4" />}
     </button>
   );
 };

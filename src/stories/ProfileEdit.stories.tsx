@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import ProfileEditForm from '@/widgets/mypage/ProfileEditForm/ui/ProfileEditForm';
+import { ProfileEditForm } from '@/widgets/mypage/ProfileEditForm/form/ProfileEdit.form';
 
 const meta: Meta<typeof ProfileEditForm> = {
   title: 'mypage/ProfileEditForm/ProfileEditForm',
@@ -24,10 +24,9 @@ export const Default: Story = {
   args: {
     nickname: 'nick',
     email: 'nick@example.com',
-    profileUrl: 'https://example.com/profile.png',
     onCancel: () => alert('cancel'),
-    onSubmit: (nickname, password, profileUrl) => {
-      alert(`submit\nnickname=${nickname}\npassword=${password}\nprofileUrl=${profileUrl}`);
+    onSubmit: (values: { nickname: string; password: string }) => {
+      alert(`submit\nnickname=${values.nickname}\npassword=${values.password}`);
     },
   },
 };
