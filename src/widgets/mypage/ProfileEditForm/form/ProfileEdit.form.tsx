@@ -1,60 +1,39 @@
 'use client';
 
-import { FormEvent } from 'react';
-
 import { useToggle } from '@/shared/hooks/useToggle';
 import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
 import { LabeledInput } from '@/widgets/mypage/ProfileEditForm/ui/LabeledInput';
 
-import { useField } from '../hooks/useField';
-import {
-  noSpaces,
-  validateConfirmPassword,
-  validateNickname,
-  validatePassword,
-} from '../lib/validators';
+import { useProfileEditForm } from '../hooks/useProfileEditForm';
+import PasswordToggleBtn from '../ui/PasswordToggleBtn';
 
-import PasswordToggleBtn from './PasswordToggleBtn';
+import { mapFormToSubmitValues } from './ProfileEdit.mapper';
 
 interface ProfileEditFormProps {
   nickname: string;
   email: string;
-  profileUrl: string;
   // 취소하기 동작 논의 필요
   onCancel: () => void;
-  onSubmit: (nickname: string, password: string, profileUrl: string) => void;
+  onSubmit: (values: { nickname: string; password: string }) => void;
 }
 
-const ProfileEditForm = ({
-  nickname,
-  email,
-  profileUrl = '',
-  onCancel,
-  onSubmit,
-}: ProfileEditFormProps) => {
-  const user = useField(nickname, { validate: validateNickname, sanitize: noSpaces });
-  const pw = useField('', { validate: validatePassword, sanitize: noSpaces });
-  const cpw = useField('', { sanitize: noSpaces });
-
+export const ProfileEditForm = ({ nickname, email, onCancel, onSubmit }: ProfileEditFormProps) => {
+  const form = useProfileEditForm(nickname);
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors, isValid: canSubmit },
+  } = form;
   const [pwVisible, togglePwVisible] = useToggle();
   const [cpwVisible, toggleCpwVisible] = useToggle();
 
-  const onBlurConfirm = () => {
-    cpw.setTouched(true);
-    cpw.setError(validateConfirmPassword(pw.value, cpw.value));
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    onSubmit(user.value, pw.value, profileUrl);
-  };
-
-  const hasError = user.error || pw.error || cpw.error;
-  const canSubmit = !hasError;
-
   return (
-    <form className="flex flex-col gap-6 w-94 md:w-186" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col gap-6 w-94 md:w-186"
+      onSubmit={handleSubmit((values) => onSubmit(mapFormToSubmitValues(values)))}
+    >
       <div className="flex flex-col py-2 gap-1">
         <Text.B18 as="h2">내 정보</Text.B18>
         <Text.M14 as="span" className="text-gray-500">
@@ -65,11 +44,10 @@ const ProfileEditForm = ({
       <LabeledInput
         label="닉네임"
         type="text"
-        error={!!user.error}
-        errorMsg={user.error ?? ''}
-        value={user.value}
-        onChange={user.onChange}
-        onBlur={user.onBlur}
+        error={!!errors.nickname}
+        errorMsg={errors.nickname?.message ?? ''}
+        value={watch('nickname')}
+        {...register('nickname')}
       />
 
       <LabeledInput label="이메일" type="text" value={email} disabled />
@@ -78,11 +56,10 @@ const ProfileEditForm = ({
         label="비밀번호"
         type={pwVisible ? 'text' : 'password'}
         placeholder="8자 이상 입력해주세요"
-        error={!!pw.error}
-        errorMsg={pw.error ?? ''}
-        value={pw.value}
-        onChange={pw.onChange}
-        onBlur={pw.onBlur}
+        error={!!errors.password}
+        errorMsg={errors.password?.message ?? ''}
+        value={watch('password')}
+        {...register('password')}
       >
         <PasswordToggleBtn visible={pwVisible} onToggle={togglePwVisible} />
       </LabeledInput>
@@ -91,11 +68,10 @@ const ProfileEditForm = ({
         label="비밀번호 확인"
         type={cpwVisible ? 'text' : 'password'}
         placeholder="비밀번호를 한 번 더 입력해 주세요"
-        error={!!cpw.error}
-        errorMsg={cpw.error ?? ''}
-        value={cpw.value}
-        onChange={cpw.onChange}
-        onBlur={onBlurConfirm}
+        error={!!errors.confirmPassword}
+        errorMsg={errors.confirmPassword?.message ?? ''}
+        value={watch('confirmPassword')}
+        {...register('confirmPassword')}
       >
         <PasswordToggleBtn visible={cpwVisible} onToggle={toggleCpwVisible} />
       </LabeledInput>
@@ -117,5 +93,3 @@ const ProfileEditForm = ({
     </form>
   );
 };
-
-export default ProfileEditForm;

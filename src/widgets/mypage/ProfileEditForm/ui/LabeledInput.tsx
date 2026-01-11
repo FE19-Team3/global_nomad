@@ -1,13 +1,12 @@
 'use client';
 
-import { ChangeEvent, useId } from 'react';
+import { useId } from 'react';
 
 import Input from '@/shared/ui/Input/Input';
 import type { InputProps } from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
 
 interface LabeledInputProps extends Omit<InputProps, 'onChange'> {
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
 }
 
@@ -16,7 +15,6 @@ export const LabeledInput = ({
   className,
   disabled,
   error,
-  onChange,
   errorMsg,
   placeholder,
   type,
@@ -43,7 +41,7 @@ export const LabeledInput = ({
         type={type}
         value={value}
         variant={variant}
-        onChange={onChange ? onChange : voidFn}
+        onChange={voidFn}
         {...rest}
       />
       {children}
