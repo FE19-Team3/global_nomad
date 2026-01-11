@@ -36,7 +36,7 @@ export const toApiError = (e: unknown) => {
     return createApiError({
       status: 400,
       message: '입력값을 확인해주세요.',
-      details: { meta: { fieldErrors, formErrors } },
+      details: { fieldErrors, meta: { formErrors } },
     });
   }
 
