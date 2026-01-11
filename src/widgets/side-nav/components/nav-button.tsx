@@ -10,7 +10,6 @@ type NavButtonProps = {
   value: string;
   selected?: boolean;
   href: string;
-  ariaCurrent?: 'page' | undefined;
 };
 
 export const NavButton = ({ children, value, selected, href }: NavButtonProps) => {
