@@ -1,3 +1,5 @@
+import { ZodError } from 'zod';
+
 import { createApiError, isApiError } from '@/shared/api';
 import { TimeoutError } from '@/shared/api/transport';
 
@@ -26,6 +28,15 @@ export const toApiError = (e: unknown) => {
       status: 504,
       message: e.message,
       details: { meta: { timeoutMs: e.timeoutMs, url: e.url } },
+    });
+  }
+
+  if (e instanceof ZodError) {
+    const { fieldErrors, formErrors } = e.flatten();
+    return createApiError({
+      status: 400,
+      message: '입력값을 확인해주세요.',
+      details: { meta: { fieldErrors, formErrors } },
     });
   }
 

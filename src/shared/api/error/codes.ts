@@ -8,6 +8,7 @@ export const ERROR_CODES = [
   'UPSTREAM_ERROR',
   'INTERNAL_ERROR',
   'ABORTED',
+  'TIMEOUT',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];
