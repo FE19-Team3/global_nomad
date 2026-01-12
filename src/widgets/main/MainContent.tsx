@@ -30,7 +30,7 @@ const MOCK_ACTIVITIES = [
 
 const MainContent = () => {
   return (
-    <div className="flex flex-col justify-center max-w-330">
+    <main className="flex-1 mx-auto w-full max-w-350 px-6 py-26 md:px-10">
       <div className="mb-11">
         <MainHero />
       </div>
@@ -62,7 +62,7 @@ const MainContent = () => {
           </div>
         </section>
       </div>
-    </div>
+    </main>
   );
 };
 
