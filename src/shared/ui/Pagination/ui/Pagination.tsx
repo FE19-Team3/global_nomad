@@ -1,3 +1,4 @@
+import ArrowLeftIcon from '@/shared/assets/icons/ic_allow_left.svg';
 import ArrowRightIcon from '@/shared/assets/icons/ic_arrow_right.svg';
 import { cn } from '@/shared/lib/cn';
 
@@ -5,8 +6,6 @@ import { PaginationProps, PAGE_SIZE_MAP } from '../model/types';
 import { getVisiblePages } from '../util/getVisiblePages';
 
 import { paginationStyles } from './Pagination.styles';
-
-import ArrowLeftIcon from '@/shared/assets/icons/ic_allow_left_icon.svg';
 
 export const Pagination = ({
   currentPage,
