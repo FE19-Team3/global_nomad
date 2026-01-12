@@ -95,19 +95,12 @@ const MyActivites = () => {
             <Label htmlFor="description" className="text-b-16 block mb-2">
               설명
             </Label>
-            <Controller
-              control={control}
-              name="description"
-              render={({ field }) => (
-                <Textarea
-                  id="description"
-                  placeholder="체험에 대한 설명을 입력해 주세요"
-                  value={field.value}
-                  onChange={field.onChange}
-                  error={!!errors.description}
-                  errorMsg={errors.description?.message}
-                />
-              )}
+            <Textarea
+              id="description"
+              placeholder="체험에 대한 설명을 입력해 주세요"
+              error={!!errors.description}
+              errorMsg={errors.description?.message}
+              {...register('description')}
             />
           </section>
           <section>

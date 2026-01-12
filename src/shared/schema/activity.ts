@@ -10,10 +10,18 @@ export const createActivityScheduleSchema = z
     startTime: z.string().regex(timePattern, '시작 시간을 선택해 주세요.'),
     endTime: z.string().regex(timePattern, '종료 시간을 선택해 주세요.'),
   })
-  .refine((value) => toMinutes(value.endTime) > toMinutes(value.startTime), {
-    path: ['endTime'],
-    message: '종료 시간이 시작 시간보다 늦어야 합니다.',
-  });
+  .refine(
+    (value) => {
+      const startMinutes = toMinutes(value.startTime);
+      const endMinutes = toMinutes(value.endTime);
+      if (startMinutes === null || endMinutes === null) return false;
+      return endMinutes > startMinutes;
+    },
+    {
+      path: ['endTime'],
+      message: '종료 시간이 시작 시간보다 늦어야 합니다.',
+    },
+  );
 
 export const createActivityApiRequestSchema = z.object({
   title: z.string().min(1, '제목을 입력해 주세요.'),
