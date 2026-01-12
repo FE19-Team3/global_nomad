@@ -1,13 +1,10 @@
 import { z } from 'zod';
 
+import { toMinutes } from '@/shared/lib/time';
+
 const timePattern = /^\d{2}:\d{2}$/;
 
-const toMinutes = (time: string) => {
-  const [hours, minutes] = time.split(':').map(Number);
-  return hours * 60 + minutes;
-};
-
-const ScheduleSchema = z
+export const createActivityScheduleSchema = z
   .object({
     date: z.string().min(1, '날짜를 선택해 주세요.'),
     startTime: z.string().regex(timePattern, '시작 시간을 선택해 주세요.'),
@@ -29,7 +26,7 @@ export const createActivityApiRequestSchema = z.object({
       message: '가격은 0보다 큰 숫자만 입력해 주세요.',
     }),
   address: z.string().min(1, '주소를 입력해 주세요.'),
-  schedules: z.array(ScheduleSchema).min(1, '예약 시간을 1개 이상 추가해 주세요.'),
+  schedules: z.array(createActivityScheduleSchema).min(1, '예약 시간을 1개 이상 추가해 주세요.'),
   bannerImageUrl: z.string().url().or(z.literal('')).optional(),
   subImageUrls: z.array(z.string().url()).optional(),
 });

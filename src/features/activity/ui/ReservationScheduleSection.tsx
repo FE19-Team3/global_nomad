@@ -3,7 +3,11 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '@/shared/assets/icons/ic_add.svg';
 import MinusIcon from '@/shared/assets/icons/ic_minus.svg';
-import type { CreateActivityFormValues } from '@/shared/schema/activity';
+import { toMinutes } from '@/shared/lib/time';
+import {
+  createActivityScheduleSchema,
+  type CreateActivityFormValues,
+} from '@/shared/schema/activity';
 import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
@@ -26,12 +30,6 @@ const ReservationScheduleSection = () => {
     [],
   );
 
-  const toMinutes = (time: string) => {
-    const [hours, minutes] = time.split(':').map(Number);
-    if (Number.isNaN(hours) || Number.isNaN(minutes)) return null;
-    return hours * 60 + minutes;
-  };
-
   const formatDate = (value: string) => {
     const [y, m, d] = value.split('-');
     if (!y || !m || !d) return value;
@@ -52,24 +50,14 @@ const ReservationScheduleSection = () => {
   };
 
   const handleAdd = () => {
-    if (!date || !startTime || !endTime) {
-      setDraftError('날짜와 시간을 모두 선택해 주세요.');
+    const parsed = createActivityScheduleSchema.safeParse({ date, startTime, endTime });
+    if (!parsed.success) {
+      const message = parsed.error.issues[0]?.message ?? '입력값을 확인해 주세요.';
+      setDraftError(message);
       return;
     }
 
-    const startMinutes = toMinutes(startTime);
-    const endMinutes = toMinutes(endTime);
-    if (startMinutes === null || endMinutes === null) {
-      setDraftError('시간 형식이 올바르지 않습니다.');
-      return;
-    }
-
-    if (endMinutes <= startMinutes) {
-      setDraftError('종료 시간이 시작 시간보다 늦어야 합니다.');
-      return;
-    }
-
-    append({ date, startTime, endTime });
+    append(parsed.data);
     clearErrors('schedules');
     setDraftError('');
     resetDraft();
