@@ -20,7 +20,7 @@ import Textarea from '@/shared/ui/Textarea/Textarea';
 
 const MyActivites = () => {
   const form = useForm<CreateActivityFormValues>({
-    resolver: zodResolver(createActivityApiRequestSchema as unknown as never),
+    resolver: zodResolver(createActivityApiRequestSchema),
     mode: 'onChange',
     defaultValues: {
       title: '',
