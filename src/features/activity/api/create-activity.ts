@@ -1,5 +1,5 @@
+import { createActivityApiResponseSchema } from '@/entities/activity';
 import { clientApi } from '@/shared/api/client';
-import { createActivityApiResponseSchema } from '@/shared/schema/activity';
 
 export type CreateActivityPayload = {
   title: string;
