@@ -1,0 +1,174 @@
+/* ===== HEADER ===== */
+.datepicker-calendar .fc-toolbar-title {
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+/* 헤더 전체 하단 여백 축소 */
+.fc.datepicker-calendar .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 10px !important;
+}
+
+/* 헤더 버튼 */
+.datepicker-calendar .fc-prev-button,
+.datepicker-calendar .fc-next-button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: black;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+.datepicker-calendar .fc-button:hover {
+  background-color: var(--color-blue-50);
+  color: black;
+}
+.datepicker-calendar .fc-button:focus,
+.datepicker-calendar .fc-button:active,
+.datepicker-calendar .fc-button:focus-visible {
+  background-color: transparent !important;
+  color: black !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.datepicker-calendar .fc-button .fc-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+.datepicker-calendar .fc-icon::before {
+  line-height: 1;
+}
+
+/* ===== REMOVE BORDER ===== */
+.datepicker-calendar .fc-scrollgrid,
+.datepicker-calendar .fc-scrollgrid td,
+.datepicker-calendar .fc-scrollgrid th,
+.datepicker-calendar .fc-col-header-cell {
+  border: none;
+}
+
+/* ===== DAYS ===== */
+.datepicker-calendar .fc-col-header-cell-cushion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-gray-950);
+  padding: 8px 0;
+}
+.datepicker-calendar .fc-day-sun {
+  color: var(--color-red-500);
+}
+.datepicker-calendar .fc-day-sat {
+  color: var(--color-blue-500);
+}
+
+/* ===== DATE DEFAULT ===== */
+.datepicker-calendar .fc-daygrid-day {
+  padding: 4px;
+}
+
+/* ----- 달력 한 칸 ----- */
+.datepicker-calendar .fc-daygrid-day-frame {
+  display: relative;
+  height: 40px;
+  max-width: 40px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: default;
+  /* border: 1px solid red; */
+}
+/* ----- 오늘 날짜 ----- */
+.datepicker-calendar .fc-day-today .fc-daygrid-day-frame {
+  background-color: var(--color-blue-100);
+}
+
+/* ----- 선택 가능 날짜 ----- */
+/* .datepicker-calendar .fc-daygrid-day.selectable-date .fc-daygrid-day-frame {
+  background-color: var(--color-blue-50);
+} */
+.datepicker-calendar .fc-daygrid-day.selectable-date .fc-daygrid-day-frame:hover {
+  background-color: var(--color-blue-50);
+  cursor: pointer;
+}
+/* ----- 선택한 날짜 ----- */
+.datepicker-calendar .fc-daygrid-day.fc-day-selected .fc-daygrid-day-frame {
+  background-color: var(--color-blue-400);
+}
+.datepicker-calendar .fc-daygrid-day.fc-day-selected .fc-daygrid-day-frame:hover {
+  background-color: var(--color-blue-400);
+}
+
+/* ----- 숫자 frame ----- */
+.datepicker-calendar .fc-daygrid-day-top {
+  display: flex;
+  width: full;
+  height: 40px;
+  justify-content: center;
+  /* border: 1px solid green; */
+}
+/* ----- 숫자 ----- */
+.datepicker-calendar .fc-daygrid-day .fc-daygrid-day-number {
+  display: flex;
+  align-items: center;
+  height: full;
+  font-weight: 500;
+}
+/* ----- 숫자 selected ----- */
+.datepicker-calendar .fc-daygrid-day.fc-day-selected .fc-daygrid-day-number {
+  color: white;
+}
+/* ----- 선택 불가능 숫자 ----- */
+.datepicker-calendar .fc-daygrid-day.not-selectable-date .fc-daygrid-day-number {
+  color: #9ca3af;
+}
+
+/* ===== event ===== */
+.datepicker-calendar .fc-daygrid-day-events {
+  display: absolute;
+  top: -110%;
+  left: 75%;
+  width: fit-content;
+  height: fit-content;
+}
+.datepicker-calendar .fc-daygrid-day .fc-event,
+.datepicker-calendar .fc-daygrid-day .fc-h-event {
+  background-color: var(--color-green-400);
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: none;
+}
+
+@media (max-width: 360px) {
+  .datepicker-calendar .fc-daygrid-day-events {
+    left: 70%;
+  }
+  .datepicker-calendar .fc-daygrid-day .fc-event,
+  .datepicker-calendar .fc-daygrid-day .fc-h-event {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* ===== 기본 스타일 제거 ===== */
+/* ----- 선택한 날짜 하이라이트 ----- */
+.datepicker-calendar .fc-highlight {
+  background-color: transparent !important;
+}
+/* ----- 오늘 날짜 ----- */
+.datepicker-calendar .fc-day-today {
+  background-color: transparent !important;
+}

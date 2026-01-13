@@ -22,7 +22,15 @@ export const ModalProvider = () => {
             showCloseButton={modal.type === 'base' && modal.showCloseButton}
           >
             {modal.type === 'base' && modal.content}
-            {modal.type === 'alert' && <AlertDialog message={modal.message} onClose={closeTop} />}
+            {modal.type === 'alert' && (
+              <AlertDialog
+                message={modal.message}
+                onClose={() => {
+                  modal.onClose?.();
+                  closeTop();
+                }}
+              />
+            )}
             {modal.type === 'confirm' && (
               <ConfirmDialog
                 message={modal.message}

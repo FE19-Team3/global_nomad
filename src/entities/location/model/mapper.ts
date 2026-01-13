@@ -1,10 +1,21 @@
-import { LocationEntity } from '@/entities/location/model/types';
+import { z } from 'zod';
 
-export const toLocationEntity = (serverData: any): LocationEntity => {
-  return {
-    lat: serverData.latitude,
-    lng: serverData.longitude,
-    address: serverData.address || '',
-    placeName: serverData.title || '',
-  };
+import { LocationSchema, LocationEntity } from './schema';
+
+const ServerLocationSchema = z.object({
+  latitude: z.number(),
+  longitude: z.number(),
+  address: z.string().optional(),
+  title: z.string().optional(),
+});
+
+export const toLocationEntity = (serverData: unknown): LocationEntity => {
+  const parsed = ServerLocationSchema.parse(serverData);
+
+  return LocationSchema.parse({
+    lat: parsed.latitude,
+    lng: parsed.longitude,
+    address: parsed.address ?? '',
+    placeName: parsed.title,
+  });
 };

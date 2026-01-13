@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
+import { z } from 'zod';
+
+const KakaoAddressResultSchema = z.object({
+  x: z.string(),
+  y: z.string(),
+});
 
 export const useCoordinate = (address: string) => {
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
@@ -17,9 +23,17 @@ export const useCoordinate = (address: string) => {
 
       geocoder.addressSearch(address, (result, status) => {
         if (status === window.kakao.maps.services.Status.OK) {
+          // result[0] 검증
+          const parsed = KakaoAddressResultSchema.safeParse(result[0]);
+
+          if (!parsed.success) {
+            setIsError(true);
+            return;
+          }
+
           setCoords({
-            lat: parseFloat(result[0].y),
-            lng: parseFloat(result[0].x),
+            lat: parseFloat(parsed.data.y),
+            lng: parseFloat(parsed.data.x),
           });
         } else {
           setIsError(true);

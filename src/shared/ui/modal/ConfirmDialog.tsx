@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import ConfirmIcon from '@/shared/assets/images/modal/modal-warning.png';
+import ConfirmIcon from '@/shared/assets/icons/ic_modal_warning.png';
 import Text from '@/shared/ui/Text';
 
 const ConfirmDialog = ({

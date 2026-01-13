@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { getKakaoAuthUrl } from '@/features/auth/kakaoAuth';
-import KakaoIcon from '@/shared/assets/images/icons/icon_kakao.png';
+import KakaoIcon from '@/shared/assets/icons/ic_kakao.png';
 import Button from '@/shared/ui/Button/Button';
 import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
