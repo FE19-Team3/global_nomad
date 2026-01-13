@@ -10,7 +10,7 @@ type Props = {
 
 export default async function ActivityDetailPage({ params }: Props) {
   try {
-    const { id } = await params;
+    const { id } = params;
 
     const activityId = Number(id);
     const { data } = await getActivityDetail(activityId);
