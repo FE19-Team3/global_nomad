@@ -1,8 +1,12 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 
+import { getKakaoAuthUrl } from '@/features/auth/kakaoAuth';
+import KakaoIcon from '@/shared/assets/icons/ic_kakao.png';
 import Button from '@/shared/ui/Button/Button';
+import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
 
@@ -74,6 +78,33 @@ const LoginForm = () => {
       <Button variant="primary" size="full" type="submit" disabled={!isValid || isSubmitting}>
         <Button.Label>로그인하기</Button.Label>
       </Button>
+
+      <div className="w-full mt-3">
+        <div className="relative flex items-center justify-center mb-8">
+          <Divider className="absolute" />
+          <p className="text-m16 relative bg-white px-4 text-gray-600">or</p>
+        </div>
+
+        <Button
+          type="button"
+          variant="secondary"
+          size="full"
+          className="gap-3 border-gray-200"
+          onClick={() => (window.location.href = getKakaoAuthUrl({ flow: 'login' }))}
+        >
+          <Button.Icon>
+            <Image src={KakaoIcon} width={24} height={24} alt="카카오 아이콘" />
+          </Button.Icon>
+          <Button.Label className="text-gray-600">카카오 로그인</Button.Label>
+        </Button>
+      </div>
+
+      <div className="mt-8 text-m-16 text-gray-400 text-center">
+        이미 회원이신가요?{' '}
+        <Button as="link" href="/signup" variant="text">
+          <Button.Label className="text-gray-400 underline">회원가입하기</Button.Label>
+        </Button>
+      </div>
     </form>
   );
 };

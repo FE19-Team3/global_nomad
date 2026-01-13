@@ -3,6 +3,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { getKakaoAuthUrl } from '@/features/auth/kakaoAuth';
+import { useSignupForm } from '@/features/signup/model/useSignupForm';
+import { useSignupSubmit } from '@/features/signup/model/useSignupSubmit';
 import KakaoIcon from '@/shared/assets/icons/ic_kakao.png';
 import EyeIcon from '@/shared/assets/icons/ic_visibility_off.svg';
 import Button from '@/shared/ui/Button/Button';
@@ -10,9 +13,6 @@ import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
 import Text from '@/shared/ui/Text';
-
-import { useSignupForm } from '../model/useSignupForm';
-import { useSignupSubmit } from '../model/useSignupSubmit';
 
 export const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -129,7 +129,13 @@ export const SignupForm = () => {
           </Text.M16>
         </div>
 
-        <Button variant="secondary" size="full" className="gap-3 border-gray-200">
+        <Button
+          type="button"
+          variant="secondary"
+          size="full"
+          className="gap-3 border-gray-200"
+          onClick={() => (window.location.href = getKakaoAuthUrl({ flow: 'signup' }))}
+        >
           <Button.Icon>
             <Image src={KakaoIcon} width={24} height={24} alt="카카오 아이콘" />
           </Button.Icon>
