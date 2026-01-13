@@ -1,6 +1,4 @@
-import type { ZodType } from 'zod';
-
-import { parseJsonResponse, responseToApiError, toApiError } from '@/shared/api';
+import { parseJsonResponse, responseToApiError, toApiError, type SchemaParser } from '@/shared/api';
 import { type RetryConfig } from '@/shared/api/transport';
 
 import { buildHeaders } from './headers';
@@ -24,7 +22,7 @@ type RequestCoreOption = BaseOptions & {
 
 type CommonArgs = BaseOptions;
 
-type RequestJsonWithSchema<T> = RequestCoreOption & { schema: ZodType<T> };
+type RequestJsonWithSchema<T> = RequestCoreOption & { schema: SchemaParser<T> };
 type RequestJsonWithoutSchema = RequestCoreOption & { schema?: undefined };
 
 export type RequesterEnv = {
@@ -74,7 +72,7 @@ export const createRequestCore = (env: RequesterEnv) => {
   async function requestJson(options: RequestJsonWithoutSchema): Promise<unknown>;
 
   async function requestJson<T>(
-    options: RequestCoreOption & { schema?: ZodType<T> },
+    options: RequestCoreOption & { schema?: SchemaParser<T> },
   ): Promise<T | unknown> {
     try {
       const res = await requestRaw(options);
@@ -92,19 +90,20 @@ export const createRequestCore = (env: RequesterEnv) => {
     }
   };
 
-  const get = <T>(options: CommonArgs & { schema: ZodType<T> }): Promise<T> =>
+  const get = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<T> =>
     requestJson<T>({ ...options, method: 'GET' });
 
-  const post = <T>(options: CommonArgs & { schema: ZodType<T> }): Promise<T> =>
+  const post = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<T> =>
     requestJson<T>({ ...options, method: 'POST' });
 
-  const patch = <T>(options: CommonArgs & { schema: ZodType<T> }): Promise<T> =>
+  const patch = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<T> =>
     requestJson<T>({ ...options, method: 'PATCH' });
 
   const del = (options: CommonArgs): Promise<void> => requestVoid({ ...options, method: 'DELETE' });
 
-  const upload = <T>(options: CommonArgs & { body: FormData; schema: ZodType<T> }): Promise<T> =>
-    requestJson<T>({ ...options, method: 'POST' });
+  const upload = <T>(
+    options: CommonArgs & { body: FormData; schema: SchemaParser<T> },
+  ): Promise<T> => requestJson<T>({ ...options, method: 'POST' });
 
   return {
     requestJson,

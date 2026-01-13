@@ -34,10 +34,12 @@ export async function POST() {
       accessToken: newRefreshToken,
     });
 
+    const isSecure = process.env.NODE_ENV === 'production';
+
     // access token 갱신
     response.cookies.set('accessToken', accessToken, {
       httpOnly: true,
-      secure: true,
+      secure: isSecure,
       sameSite: 'lax',
       path: '/',
       maxAge: 60 * 60, //1시간
@@ -47,7 +49,7 @@ export async function POST() {
     if (newRefreshToken) {
       response.cookies.set('refreshToken', newRefreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: isSecure,
         sameSite: 'lax',
         path: '/',
         maxAge: 60 * 60 * 24 * 7, //7일

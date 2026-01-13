@@ -1,13 +1,13 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
+import { createZodResolver } from '@/shared/lib/createZodResolver';
 import { SignupFormValues, SignupSchema } from '@/shared/schema/auth';
 
 export const useSignupForm = () => {
   const form = useForm<SignupFormValues>({
-    resolver: zodResolver(SignupSchema),
+    resolver: createZodResolver(SignupSchema),
     mode: 'onChange',
     defaultValues: { email: '', nickname: '', password: '', passwordConfirm: '' },
   });
