@@ -12,7 +12,7 @@
 }
 /* 헤더 전체 하단 여백 축소 */
 .fc.calendar-comp-calendar .fc-toolbar.fc-header-toolbar {
-  margin-bottom: 10px !important;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
 }
@@ -37,19 +37,6 @@
   align-items: center;
   justify-content: center;
   box-shadow: none;
-}
-.calendar-comp-calendar .fc-button:hover {
-  background-color: var(--color-blue-50);
-  color: black;
-}
-.calendar-comp-calendar .fc-button:focus,
-.calendar-comp-calendar .fc-button:active,
-.calendar-comp-calendar .fc-button:focus-visible {
-  background-color: transparent !important;
-  color: black !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
 }
 .calendar-comp-calendar .fc-button .fc-icon {
   font-size: 12px;
@@ -221,10 +208,22 @@
 }
 
 /* ===== REMOVE DEFAULT STYLES ===== */
+/* 기본 스타일의 경우 important를 넣지 않으면 사라지지 않아 !important가 추가되었습니다. */
 .calendar-comp-calendar .fc-highlight {
   background-color: transparent !important;
 }
 
 .calendar-comp-calendar .fc-day-today {
   background-color: transparent !important;
+}
+
+.calendar-comp-calendar .fc-button:hover,
+.calendar-comp-calendar .fc-button:focus,
+.calendar-comp-calendar .fc-button:active,
+.calendar-comp-calendar .fc-button:focus-visible {
+  background-color: var(--color-blue-50) !important;
+  color: black !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }

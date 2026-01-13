@@ -289,13 +289,6 @@ const CalendarComp = ({ onDateSelect, activityId }: CalendarCompProps) => {
     calendarInstanceRef.current.setOption('events', createEvents());
   }, [reservationData, currentYear, currentMonth]);
 
-  // 이벤트 업데이트
-  useEffect(() => {
-    if (calendarInstanceRef.current) {
-      calendarInstanceRef.current.setOption('events', createEvents());
-    }
-  }, [reservationData]);
-
   return (
     <div
       className="calendar-comp-calendar lg:w-160 lg:h-204 md:w-120 md:h-204 w-full h-fit border"
