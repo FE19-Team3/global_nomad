@@ -27,7 +27,7 @@ export const ModalProvider = () => {
                 message={modal.message}
                 onClose={() => {
                   modal.onClose?.();
-                  closeTop;
+                  closeTop();
                 }}
               />
             )}
