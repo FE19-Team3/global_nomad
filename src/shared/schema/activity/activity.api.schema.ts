@@ -1,7 +1,20 @@
 import { z } from 'zod';
 
-import { ActivitySubImageSchema } from './activity-image.schema';
-import { ActivityScheduleSchema } from './activity-schedule.schema';
+const ActivityApiScheduleTimeSchema = z.object({
+  id: z.number(),
+  startTime: z.string(),
+  endTime: z.string(),
+});
+
+const ActivityApiScheduleSchema = z.object({
+  date: z.string(),
+  times: z.array(ActivityApiScheduleTimeSchema),
+});
+
+const ActivityApiSubImageSchema = z.object({
+  id: z.number(),
+  imageUrl: z.string(),
+});
 
 export const createActivityApiResponseSchema = z.object({
   id: z.number(),
@@ -16,8 +29,8 @@ export const createActivityApiResponseSchema = z.object({
   reviewCount: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
-  subImages: z.array(ActivitySubImageSchema),
-  schedules: z.array(ActivityScheduleSchema),
+  subImages: z.array(ActivityApiSubImageSchema),
+  schedules: z.array(ActivityApiScheduleSchema),
 });
 
 export type CreateActivityApiResponse = z.infer<typeof createActivityApiResponseSchema>;
