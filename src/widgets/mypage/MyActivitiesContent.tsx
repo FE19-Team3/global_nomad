@@ -1,19 +1,13 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider } from 'react-hook-form';
 
-import { useCreateActivity } from '@/features/activity/model/useCreateActivity';
+import { useActivityForm } from '@/features/activity/hooks/useActivityForm';
+import { useFormGuard } from '@/features/activity/hooks/useFormGuard';
 import ReservationScheduleSection from '@/features/activity/ui/ReservationScheduleSection';
 import UploadIntroImage from '@/features/activity/ui/UploadIntroImage';
 import UploadMainImage from '@/features/activity/ui/UploadMainImage';
-import {
-  createActivityApiRequestSchema,
-  type CreateActivityFormValues,
-} from '@/shared/schema/activity';
-import { useModalStore } from '@/shared/stores/useModalStore';
+import { ActivityCategoryValues } from '@/shared/schema/activity';
 import Button from '@/shared/ui/Button/Button';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
@@ -21,77 +15,15 @@ import { Select } from '@/shared/ui/Select';
 import { Text } from '@/shared/ui/Text';
 import Textarea from '@/shared/ui/Textarea/Textarea';
 
-const MyActivites = () => {
-  const form = useForm<CreateActivityFormValues>({
-    resolver: zodResolver(createActivityApiRequestSchema),
-    mode: 'onChange',
-    defaultValues: {
-      title: '',
-      category: '',
-      description: '',
-      price: '',
-      address: '',
-      schedules: [],
-      bannerImageUrl: '',
-      subImageUrls: [],
-    },
-  });
+const MyActivitiesContent = () => {
+  const { form, handleSubmit, isPending } = useActivityForm();
 
   const {
     register,
     control,
     formState: { errors, isSubmitting, isDirty },
-    reset,
   } = form;
-  const { mutate: createActivity, isPending } = useCreateActivity();
-  const { openConfirm, openAlert } = useModalStore();
-  const router = useRouter();
-  const allowLeaveRef = useRef(false);
-  const hasGuardRef = useRef(false);
-
-  const handleSubmit = form.handleSubmit((data) => {
-    createActivity(
-      {
-        ...data,
-        bannerImageUrl: data.bannerImageUrl || undefined,
-        subImageUrls: data.subImageUrls ?? [],
-      },
-      {
-        onSuccess: () => {
-          reset();
-          openAlert('체험 등록이 완료되었습니다.');
-        },
-      },
-    );
-  });
-
-  useEffect(() => {
-    if (!isDirty || hasGuardRef.current) return;
-    const pushGuard = () => {
-      window.history.pushState({ guard: true }, '', window.location.href);
-      hasGuardRef.current = true;
-    };
-    pushGuard();
-  }, [isDirty]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      if (!isDirty || allowLeaveRef.current) return;
-
-      openConfirm({
-        message: '저장되지 않았습니다. 정말 뒤로 가시겠습니까?',
-        onConfirm: () => {
-          allowLeaveRef.current = true;
-          router.back();
-        },
-      });
-
-      window.history.pushState({ guard: true }, '', window.location.href);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, [isDirty, openConfirm, router]);
+  useFormGuard(isDirty);
 
   return (
     <FormProvider {...form}>
@@ -121,12 +53,11 @@ const MyActivites = () => {
                 <Select.Root value={field.value} onValueChange={field.onChange}>
                   <Select.Trigger variant="input-like" placeholder="카테고리를 선택해 주세요" />
                   <Select.Content>
-                    <Select.Item value="문화 예술">문화 예술</Select.Item>
-                    <Select.Item value="식음료">식음료</Select.Item>
-                    <Select.Item value="스포츠">스포츠</Select.Item>
-                    <Select.Item value="투어">투어</Select.Item>
-                    <Select.Item value="관광">관광</Select.Item>
-                    <Select.Item value="웰빙">웰빙</Select.Item>
+                    {ActivityCategoryValues.map((category) => (
+                      <Select.Item key={category} value={category}>
+                        {category}
+                      </Select.Item>
+                    ))}
                   </Select.Content>
                 </Select.Root>
               )}
@@ -207,4 +138,4 @@ const MyActivites = () => {
   );
 };
 
-export default MyActivites;
+export default MyActivitiesContent;

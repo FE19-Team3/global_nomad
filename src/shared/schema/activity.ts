@@ -4,9 +4,23 @@ import { toMinutes } from '@/shared/lib/time';
 
 const timePattern = /^\d{2}:\d{2}$/;
 
+export const ActivityCategoryValues = [
+  '문화 · 예술',
+  '식음료',
+  '스포츠',
+  '투어',
+  '관광',
+  '웰빙',
+] as const;
+
+export type ActivityCategory = (typeof ActivityCategoryValues)[number];
+
 export const createActivityScheduleSchema = z
   .object({
-    date: z.string().min(1, '날짜를 선택해 주세요.'),
+    date: z
+      .string()
+      .min(1, '날짜를 선택해 주세요.')
+      .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식을 확인해 주세요.'),
     startTime: z.string().regex(timePattern, '시작 시간을 선택해 주세요.'),
     endTime: z.string().regex(timePattern, '종료 시간을 선택해 주세요.'),
   })
@@ -25,7 +39,13 @@ export const createActivityScheduleSchema = z
 
 export const createActivityApiRequestSchema = z.object({
   title: z.string().min(1, '제목을 입력해 주세요.'),
-  category: z.string().min(1, '카테고리를 선택해 주세요.'),
+  category: z
+    .string()
+    .min(1, '카테고리를 선택해 주세요.')
+    .refine(
+      (value) => !value || ActivityCategoryValues.includes(value as ActivityCategory),
+      '카테고리명이 올바르지 않습니다.',
+    ),
   description: z.string().min(1, '설명을 입력해 주세요.'),
   price: z
     .string()
@@ -40,38 +60,3 @@ export const createActivityApiRequestSchema = z.object({
 });
 
 export type CreateActivityFormValues = z.infer<typeof createActivityApiRequestSchema>;
-
-const ActivityScheduleTimeSchema = z.object({
-  id: z.number(),
-  startTime: z.string(),
-  endTime: z.string(),
-});
-
-const ActivityScheduleSchema = z.object({
-  date: z.string(),
-  times: z.array(ActivityScheduleTimeSchema),
-});
-
-const ActivitySubImageSchema = z.object({
-  id: z.number(),
-  imageUrl: z.string(),
-});
-
-export const createActivityApiResponseSchema = z.object({
-  id: z.number(),
-  userId: z.number(),
-  title: z.string(),
-  description: z.string(),
-  category: z.string(),
-  price: z.number(),
-  address: z.string(),
-  bannerImageUrl: z.string(),
-  rating: z.number(),
-  reviewCount: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  subImages: z.array(ActivitySubImageSchema),
-  schedules: z.array(ActivityScheduleSchema),
-});
-
-export type CreateActivityApiResponse = z.infer<typeof createActivityApiResponseSchema>;

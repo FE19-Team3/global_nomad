@@ -20,9 +20,10 @@ export const POST = async (req: NextRequest) => {
     });
 
     const response = NextResponse.json({ success: true }, { status: 200 });
+    const isSecure = process.env.NODE_ENV === 'production';
     const cookieOptions = {
       httpOnly: true,
-      secure: true,
+      secure: isSecure,
       sameSite: 'lax' as const,
       path: '/',
     };

@@ -8,12 +8,14 @@ import { useFileInput } from '@/shared/hooks/useFileInput';
 import { useUploadImageToUrl } from '@/shared/hooks/useUploadImageToUrl';
 import { validateImageFile } from '@/shared/lib/validateImageFile';
 import type { CreateActivityFormValues } from '@/shared/schema/activity';
+import { useModalStore } from '@/shared/stores/useModalStore';
 
 const UploadMainImage = () => {
   const { setValue, watch } = useFormContext<CreateActivityFormValues>();
   const bannerImageUrl = watch('bannerImageUrl') ?? '';
   const { ref: fileInputRef, open: openFilePicker, reset: resetFileInput } = useFileInput();
   const prevUrlRef = useRef<string>('');
+  const { openAlert } = useModalStore();
 
   const { mutate, isPending } = useUploadImageToUrl({
     onSuccess: (url) => {
@@ -21,7 +23,7 @@ const UploadMainImage = () => {
     },
     onError: (e) => {
       console.error('메인 이미지 업로드 실패:', e);
-      alert('이미지 업로드에 실패했습니다.');
+      openAlert('이미지 업로드에 실패했습니다.');
     },
   });
 
@@ -48,7 +50,7 @@ const UploadMainImage = () => {
 
     const validation = validateImageFile(file);
     if (!validation.ok) {
-      alert(validation.error);
+      openAlert(validation.error);
       resetFileInput();
       return;
     }

@@ -18,9 +18,10 @@ const createAuthRedirectResponse = (
   refreshToken: string,
 ) => {
   const response = NextResponse.redirect(new URL(redirectPath, req.url));
+  const isSecure = process.env.NODE_ENV === 'production';
   const cookieOptions = {
     httpOnly: true,
-    secure: true,
+    secure: isSecure,
     sameSite: 'lax' as const,
     path: '/',
   };
@@ -91,6 +92,7 @@ export const GET = async (req: NextRequest) => {
     });
 
     if (!res.ok) {
+      await res.text();
       if (res.status === 403) {
         // 미가입이면 카카오 닉네임으로 자동 회원가입 시도
         const nickname = (await getKakaoNickname(code)) ?? 'kakao_user';
@@ -126,12 +128,12 @@ export const GET = async (req: NextRequest) => {
             const { accessToken, refreshToken } = await retrySignInRes.json();
             return createAuthRedirectResponse(req, '/main', accessToken, refreshToken);
           }
+          await retrySignInRes.text();
         }
 
         return NextResponse.redirect(new URL(getErrorRedirectPath(state), req.url));
       }
 
-      await res.text();
       return NextResponse.redirect(new URL(getErrorRedirectPath(state), req.url));
     }
 
