@@ -3,9 +3,9 @@ import { mapToActivityDetail } from '@/features/activity/activity-detail/lib/map
 import { isApiError } from '@/shared/api';
 
 type Props = {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 };
 
 export default async function ActivityDetailPage({ params }: Props) {
