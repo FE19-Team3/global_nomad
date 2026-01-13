@@ -3,7 +3,7 @@ import type { ActivityDetailResponse } from '@/shared/schema/activity/activityDe
 import type { ActivityDetail } from '../model/activity-detail.types';
 
 export function mapToActivityDetail(dto: ActivityDetailResponse): ActivityDetail {
-  const schedules = dto.schedules.map((s: any) => {
+  const schedules = dto.schedules.map((s) => {
     if ('startTime' in s) {
       return {
         date: s.date,
