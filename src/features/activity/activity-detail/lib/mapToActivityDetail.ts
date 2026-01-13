@@ -2,9 +2,18 @@ import type { ActivityDetailResponse } from '@/shared/schema/activity/activit-de
 
 import type { ActivityDetail } from '../model/activity-detail.types';
 
+function isLegacySchedule(s: ActivityDetailResponse['schedules'][number]): s is {
+  id: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+} {
+  return 'startTime' in s;
+}
+
 export function mapToActivityDetail(dto: ActivityDetailResponse): ActivityDetail {
   const schedules = dto.schedules.map((s) => {
-    if ('startTime' in s) {
+    if (isLegacySchedule(s)) {
       return {
         date: s.date,
         times: [

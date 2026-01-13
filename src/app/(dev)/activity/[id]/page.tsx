@@ -27,7 +27,7 @@ export default async function ActivityDetailPage({ params }: Props) {
 
         <section>
           <h2>이미지</h2>
-          {activity.subImages.map((img) => (
+          {activity.subImages.map((img: { id: number; imageUrl: string }) => (
             <img key={img.id} src={img.imageUrl} alt="" />
           ))}
         </section>
