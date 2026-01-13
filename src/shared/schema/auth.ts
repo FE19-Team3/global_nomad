@@ -72,3 +72,14 @@ export const OauthToken = z.union([
 export const RedirectUri = Url;
 
 export const OauthProvider = OauthProviderEnumSchema;
+
+export const OauthKakaoSignupRequestSchema = z.object({
+  nickname: Nickname,
+  token: OauthToken,
+  redirectUri: RedirectUri,
+});
+
+export const OauthSignupResponseSchema = z.object({
+  accessToken: z.string().min(1),
+  refreshToken: z.string().min(1),
+});

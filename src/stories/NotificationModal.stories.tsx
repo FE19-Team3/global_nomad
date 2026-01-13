@@ -81,16 +81,16 @@ const mockNotifications: NotificationEntity[] = [
 export const Default: Story = {
   args: {
     open: true,
-    onClose: () => console.log('close'),
+    onClose: () => console.warn('close'),
     items: mockNotifications,
-    _onDelete: (id) => console.log('delete:', id),
+    _onDelete: (id) => console.warn('delete:', id),
   },
 };
 
 export const Empty: Story = {
   args: {
     open: true,
-    onClose: () => console.log('close'),
+    onClose: () => console.warn('close'),
     items: [],
   },
 };
@@ -98,7 +98,7 @@ export const Empty: Story = {
 export const Few: Story = {
   args: {
     open: true,
-    onClose: () => console.log('close'),
+    onClose: () => console.warn('close'),
     items: mockNotifications.slice(0, 2),
   },
 };
