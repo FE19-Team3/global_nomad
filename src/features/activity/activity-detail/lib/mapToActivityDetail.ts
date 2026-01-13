@@ -1,4 +1,4 @@
-import type { ActivityDetailResponse } from '@/shared/schema/activity/activityDetailResponse.schema';
+import type { ActivityDetailResponse } from '@/shared/schema/activity/activit-detail-response.schema';
 
 import type { ActivityDetail } from '../model/activity-detail.types';
 
