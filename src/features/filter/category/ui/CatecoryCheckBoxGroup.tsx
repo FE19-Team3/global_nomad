@@ -1,12 +1,13 @@
 'use client';
 
+import { useState } from 'react';
+
 import ArtIcon from '@/shared/assets/icons/ic_art.svg';
 import BusIcon from '@/shared/assets/icons/ic_bus.svg';
 import FoodIcon from '@/shared/assets/icons/ic_food.svg';
 import TourIcon from '@/shared/assets/icons/ic_tour.svg';
 import WellbeingIcon from '@/shared/assets/icons/ic_wellbeing.svg';
 import { Checkbox } from '@/shared/ui/CheckBox/Checkbox';
-import { useState } from 'react';
 
 const categories = [
   { label: '문화·예술', icon: <ArtIcon /> },
