@@ -1,3 +1,5 @@
+//테스트
+
 import { z } from 'zod';
 
 export const activityDetailSchema = z.object({
