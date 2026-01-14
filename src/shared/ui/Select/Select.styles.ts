@@ -12,7 +12,7 @@ export const styles = tv({
     placeholder: 'text-gray-400',
     content:
       'absolute z-50 mt-2 w-full min-w-max overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl animate-in fade-in zoom-in-95 duration-150',
-    viewport: 'max-h-60 overflow-y-auto p-1',
+    viewport: 'max-h-60 overflow-y-auto p-1 custom-scrollbar',
     item: [
       'cursor-pointer rounded-xl px-4 py-2.5 text-sm text-gray-700 transition-colors',
       'hover:bg-gray-50 active:bg-gray-100',
