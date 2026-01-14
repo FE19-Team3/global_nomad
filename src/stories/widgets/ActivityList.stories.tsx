@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import { ActivityList } from '@/widgets/activity/activity-list';
-import type { Activity } from '@/widgets/activity/types';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 
 const baseActivity = {
-  description: '스토리북용 체험 설명입니다.',
   category: '투어',
   address: '서울특별시 강남구 테헤란로 427',
   bannerImageUrl:
     'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
-  subImages: [],
-  schedules: [],
-} satisfies Omit<Activity, 'id' | 'title' | 'rating' | 'reviewCount' | 'price' | 'imageUrl'>;
+} satisfies Omit<
+  ActivityCardItem,
+  'id' | 'title' | 'rating' | 'reviewCount' | 'price' | 'imageUrl'
+>;
 
-const MOCK_ACTIVITIES: Activity[] = [
+const MOCK_ACTIVITIES: ActivityCardItem[] = [
   {
     id: 1,
     title: '피오르 체험',

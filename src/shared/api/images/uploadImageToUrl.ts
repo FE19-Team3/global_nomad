@@ -1,4 +1,15 @@
+import { clientApi } from '@/shared/api/client';
+import { uploadActivityImageResponseSchema } from '@/shared/schema/activity';
+
 export const uploadImageToUrl = async (file: File): Promise<string> => {
-  await new Promise((resolve) => setTimeout(resolve, 700)); // 업로드 느낌으로 잠깐 대기
-  return URL.createObjectURL(file); // 임시 URL 반환
+  const form = new FormData();
+  form.append('image', file);
+
+  const response = await clientApi.upload({
+    path: '/activities/image',
+    body: form,
+    schema: uploadActivityImageResponseSchema,
+  });
+
+  return response.activityImageUrl ?? response.imageUrl ?? response.url ?? '';
 };

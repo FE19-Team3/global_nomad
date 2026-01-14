@@ -1,2 +1,2 @@
-export type { Activity } from '@/entities/activity';
+export type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 export { ActivityCard } from './ui/ActivityCard';

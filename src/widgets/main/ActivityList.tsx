@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-import type { Activity } from '@/entities/activity';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 
 import { ActivityCard } from './ActivityCard';
 
 interface ActivityListProps {
-  activities?: Activity[];
+  activities?: ActivityCardItem[];
   limit?: number;
 }
 

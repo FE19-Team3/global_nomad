@@ -1,5 +1,5 @@
-import type { Activity } from '@/entities/activity';
 import Text from '@/shared/ui/Text';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 import { ActivityList } from '@/widgets/main';
 import MainHero from '@/widgets/main/MainHero';
 
@@ -7,16 +7,16 @@ import PopularSection from './PopularSection';
 
 // TODO: 실제 데이터로 교체
 const BASE_ACTIVITY = {
-  description: '메인 페이지 목업 데이터입니다.',
   category: '투어',
   address: '서울특별시 강남구 테헤란로 427',
   bannerImageUrl:
     'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
-  subImages: [],
-  schedules: [],
-} satisfies Omit<Activity, 'id' | 'title' | 'rating' | 'reviewCount' | 'price' | 'imageUrl'>;
+} satisfies Omit<
+  ActivityCardItem,
+  'id' | 'title' | 'rating' | 'reviewCount' | 'price' | 'imageUrl'
+>;
 
-const MOCK_ACTIVITIES: Activity[] = [
+const MOCK_ACTIVITIES: ActivityCardItem[] = [
   {
     id: 1,
     title: '함께 배우면 즐거운 스트릿 댄스',

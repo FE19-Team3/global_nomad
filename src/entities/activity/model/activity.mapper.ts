@@ -1,8 +1,8 @@
 import type { CreateActivityApiResponse } from '@/shared/schema/activity';
 
-import type { Activity } from './activity.types';
+import type { ActivityDetail } from './activity-detail.types';
 
-export const mapActivityFromApi = (api: CreateActivityApiResponse): Activity => ({
+export const mapActivityFromApi = (api: CreateActivityApiResponse): ActivityDetail => ({
   ...api,
   schedules: api.schedules.flatMap((schedule) =>
     schedule.times.map((time) => ({

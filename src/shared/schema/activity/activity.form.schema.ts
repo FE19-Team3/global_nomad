@@ -1,19 +1,9 @@
 import { z } from 'zod';
 
+import { ActivityCategoryValues, type ActivityCategory } from '@/shared/constants/activity';
 import { toMinutes } from '@/shared/lib/time';
 
 const timePattern = /^\d{2}:\d{2}$/;
-
-export const ActivityCategoryValues = [
-  '문화 · 예술',
-  '식음료',
-  '스포츠',
-  '투어',
-  '관광',
-  '웰빙',
-] as const;
-
-export type ActivityCategory = (typeof ActivityCategoryValues)[number];
 
 export const createActivityScheduleSchema = z
   .object({
