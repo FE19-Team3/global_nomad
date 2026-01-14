@@ -3,11 +3,17 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import NoImageIcon from '@/shared/assets/icons/ic_no_image.svg';
-import type { Activity } from '@/widgets/activity/types';
+import StarIcon from '@/shared/assets/icons/ic_star_on.png';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 
-import StarIcon from '@/shared/assets/icons/ic_star_sm.png';
-
-export const ActivityCard = ({ id, title, rating, reviewCount, price, imageUrl }: Activity) => {
+export const ActivityCard = ({
+  id,
+  title,
+  rating,
+  reviewCount,
+  price,
+  imageUrl,
+}: ActivityCardItem) => {
   const [hasImage, setHasImage] = useState(Boolean(imageUrl));
   const ratingText = typeof rating === 'number' ? rating.toFixed(1) : '-';
   const reviewText = typeof reviewCount === 'number' ? reviewCount : 0;

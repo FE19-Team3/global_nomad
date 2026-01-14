@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return Response.json(safeData, { status: 201 });
+    return Response.json(safeData.data, { status: 201 });
   } catch (e) {
     const apiError = toApiError(e);
 

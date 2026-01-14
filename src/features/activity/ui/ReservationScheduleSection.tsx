@@ -1,12 +1,72 @@
+import { useMemo, useState } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+
+import PlusIcon from '@/shared/assets/icons/ic_add.svg';
+import MinusIcon from '@/shared/assets/icons/ic_minus.svg';
+import { toMinutes } from '@/shared/lib/time';
+import {
+  createActivityScheduleSchema,
+  type CreateActivityFormValues,
+} from '@/shared/schema/activity';
 import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
 import { Select } from '@/shared/ui/Select';
 
 const ReservationScheduleSection = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const { control, clearErrors, formState } = useFormContext<CreateActivityFormValues>();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'schedules',
+  });
+
+  const [date, setDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [draftError, setDraftError] = useState('');
+
+  const timeOptions = useMemo(
+    () => Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, '0')}:00`),
+    [],
+  );
+
+  const formatDate = (value: string) => {
+    const [y, m, d] = value.split('-');
+    if (!y || !m || !d) return value;
+    return `${y}. ${m}. ${d}.`;
   };
+
+  const canAdd = (() => {
+    if (!date || !startTime || !endTime) return false;
+    const startMinutes = toMinutes(startTime);
+    const endMinutes = toMinutes(endTime);
+    if (startMinutes === null || endMinutes === null) return false;
+    return endMinutes > startMinutes;
+  })();
+
+  const resetDraft = () => {
+    setStartTime('');
+    setEndTime('');
+  };
+
+  const handleAdd = () => {
+    const parsed = createActivityScheduleSchema.safeParse({ date, startTime, endTime });
+    if (!parsed.success) {
+      const message = parsed.error.issues[0]?.message ?? '입력값을 확인해 주세요.';
+      setDraftError(message);
+      return;
+    }
+
+    append(parsed.data);
+    clearErrors('schedules');
+    setDraftError('');
+    resetDraft();
+  };
+
+  const scheduleError =
+    typeof formState.errors.schedules?.message === 'string'
+      ? formState.errors.schedules.message
+      : '';
 
   return (
     <div>
@@ -20,69 +80,99 @@ const ReservationScheduleSection = () => {
         <div />
       </div>
 
-      {/* 입력 영역 */}
-      <form
-        className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2 mb-4"
-        onSubmit={handleSubmit}
-      >
-        <Input id="date" type="date" placeholder="yy/mm/dd" />
+      <div className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2 mb-4">
+        <Input
+          id="date"
+          type="date"
+          placeholder="yy/mm/dd"
+          value={date}
+          onChange={(e) => {
+            setDate(e.target.value);
+            if (draftError) setDraftError('');
+          }}
+        />
 
-        <Select.Root>
+        <Select.Root
+          value={startTime}
+          onValueChange={(value) => {
+            setStartTime(value);
+            if (draftError) setDraftError('');
+          }}
+        >
           <Select.Trigger variant="input-like" placeholder="00:00" />
           <Select.Content>
-            <Select.Item value="12:00">12:00</Select.Item>
-            <Select.Item value="13:00">13:00</Select.Item>
+            {timeOptions.map((time) => (
+              <Select.Item key={time} value={time}>
+                {time}
+              </Select.Item>
+            ))}
           </Select.Content>
         </Select.Root>
 
         <span className="text-center text-gray-400">-</span>
 
-        <Select.Root>
+        <Select.Root
+          value={endTime}
+          onValueChange={(value) => {
+            setEndTime(value);
+            if (draftError) setDraftError('');
+          }}
+        >
           <Select.Trigger variant="input-like" placeholder="00:00" />
           <Select.Content>
-            <Select.Item value="12:00">12:00</Select.Item>
-            <Select.Item value="13:00">13:00</Select.Item>
+            {timeOptions.map((time) => (
+              <Select.Item key={time} value={time}>
+                {time}
+              </Select.Item>
+            ))}
           </Select.Content>
         </Select.Root>
 
         <button
-          type="submit"
-          className="cursor-pointer bg-primary text-white w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:opacity-90"
+          type="button"
+          disabled={!canAdd}
+          onClick={handleAdd}
+          className="cursor-pointer bg-primary text-white w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:opacity-90 disabled:cursor-not-allowed disabled:bg-primary"
         >
-          +
+          <PlusIcon className="text-white" />
         </button>
-      </form>
+      </div>
+      {draftError && <p className="mb-4 text-m-14 text-red-500">{draftError}</p>}
+      {scheduleError && <p className="mb-4 text-m-14 text-red-500">{scheduleError}</p>}
 
       <Divider className="my-6 border-gray-100" />
 
-      {/* 등록된 리스트 영역 */}
       <div className="flex flex-col gap-4">
-        {Array.from({ length: 2 }).map((_, index) => (
-          <dl key={index} className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2">
+        {fields.map((field, index) => (
+          <dl
+            key={field.id}
+            className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2"
+          >
             <dt className="sr-only">날짜</dt>
-            <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 focus:outline-none transition-all duration-150 border border-gray-100 bg-white shadow-[0px_2px_6px_0px_#00000005] focus:border-gray-500 h-13.5 px-5 rounded-xl">
-              {index === 0 ? '2026. 01. 23.' : '2026. 01. 24.'}
+            <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+              {formatDate(field.date)}
             </dd>
 
             <dt className="sr-only">시작 시간</dt>
-            <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 focus:outline-none transition-all duration-150 border border-gray-100 bg-white shadow-[0px_2px_6px_0px_#00000005] focus:border-gray-500 h-13.5 px-5 rounded-xl">
-              12:00
+            <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+              {field.startTime}
             </dd>
 
             <dt className="sr-only">구분</dt>
             <dd className="text-center text-gray-400">-</dd>
 
             <dt className="sr-only">종료 시간</dt>
-            <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 focus:outline-none transition-all duration-150 border border-gray-100 bg-white shadow-[0px_2px_6px_0px_#00000005] focus:border-gray-500 h-13.5 px-5 rounded-xl">
-              13:00
+            <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+              {field.endTime}
             </dd>
 
             <button
               type="button"
               aria-label="예약 시간 삭제"
+              onClick={() => remove(index)}
               className="cursor-pointer bg-gray-100 text-gray-400 w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
             >
-              -
+              <MinusIcon className="text-black" />
             </button>
           </dl>
         ))}

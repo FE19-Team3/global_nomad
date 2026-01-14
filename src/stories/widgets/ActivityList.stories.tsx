@@ -1,9 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import { ActivityList } from '@/widgets/activity/activity-list';
-import type { Activity } from '@/widgets/activity/types';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 
-const MOCK_ACTIVITIES: Activity[] = [
+const baseActivity = {
+  category: '투어',
+  address: '서울특별시 강남구 테헤란로 427',
+  bannerImageUrl:
+    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
+} satisfies Omit<
+  ActivityCardItem,
+  'id' | 'title' | 'rating' | 'reviewCount' | 'price' | 'imageUrl'
+>;
+
+const MOCK_ACTIVITIES: ActivityCardItem[] = [
   {
     id: 1,
     title: '피오르 체험',
@@ -12,6 +22,7 @@ const MOCK_ACTIVITIES: Activity[] = [
     price: 42800,
     imageUrl:
       'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
+    ...baseActivity,
   },
   {
     id: 2,
@@ -21,6 +32,7 @@ const MOCK_ACTIVITIES: Activity[] = [
     price: 217000,
     imageUrl:
       'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+    ...baseActivity,
   },
   {
     id: 3,
@@ -30,6 +42,7 @@ const MOCK_ACTIVITIES: Activity[] = [
     price: 6000,
     imageUrl:
       'https://images.unsplash.com/photo-1473186578172-c141e6798cf4?auto=format&fit=crop&w=1200&q=80',
+    ...baseActivity,
   },
   {
     id: 4,
@@ -39,6 +52,7 @@ const MOCK_ACTIVITIES: Activity[] = [
     price: 35000,
     imageUrl:
       'https://images.unsplash.com/photo-1508264165352-258859e62245?auto=format&fit=crop&w=1200&q=80',
+    ...baseActivity,
   },
   {
     id: 5,
@@ -48,6 +62,7 @@ const MOCK_ACTIVITIES: Activity[] = [
     price: 42800,
     imageUrl:
       'https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=1200&q=80',
+    ...baseActivity,
   },
   {
     id: 6,
@@ -55,6 +70,7 @@ const MOCK_ACTIVITIES: Activity[] = [
     rating: 4.2,
     reviewCount: 12,
     price: 12000,
+    ...baseActivity,
   },
 ];
 

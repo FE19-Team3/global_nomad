@@ -9,11 +9,12 @@ import { SignupRequest, SignupResponse } from '@/shared/schema/auth';
 import { useModalStore } from '@/shared/stores/useModalStore';
 
 const signup = async (data: SignupRequest) => {
-  return clientApi.post({
+  const response = await clientApi.post({
     path: 'users',
     body: data,
     schema: SignupResponse,
   });
+  return response.data;
 };
 
 export function useSignupSubmit() {
