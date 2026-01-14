@@ -18,8 +18,9 @@ export function mapStatusToCode(status: number): ErrorCode {
       return 'ABORTED';
     case 502:
     case 503:
-    case 504:
       return 'UPSTREAM_ERROR';
+    case 504:
+      return 'TIMEOUT';
     default:
       return 'INTERNAL_ERROR';
   }
