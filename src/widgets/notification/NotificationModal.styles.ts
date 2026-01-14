@@ -17,7 +17,7 @@ export const notificationModalStyles = tv({
     header: 'flex items-center justify-between px-6 py-5 border-b border-gray-100',
     title: 'text-xl font-bold text-gray-900',
     closeButton: 'text-gray-400 hover:text-gray-600 transition',
-    list: 'flex-1 overflow-y-auto',
+    list: 'flex-1 overflow-y-auto custom-scrollbar',
     empty: 'py-12 text-center text-gray-400',
   },
 });
