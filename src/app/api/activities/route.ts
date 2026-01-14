@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return Response.json(response, { status: 201 });
+    return Response.json(response.data, { status: 201 });
   } catch (e) {
     return respondError(toApiError(e));
   }

@@ -25,6 +25,12 @@ type CommonArgs = BaseOptions;
 type RequestJsonWithSchema<T> = RequestCoreOption & { schema: SchemaParser<T> };
 type RequestJsonWithoutSchema = RequestCoreOption & { schema?: undefined };
 
+type ResponseType<T> = {
+  data: T;
+  status: number;
+  headers: Headers;
+};
+
 export type RequesterEnv = {
   resolveUrl: (path: string, query?: Query) => string;
   getAccessToken?: () => Promise<string | undefined>;
@@ -68,15 +74,16 @@ export const createRequestCore = (env: RequesterEnv) => {
     return res;
   };
 
-  async function requestJson<T>(options: RequestJsonWithSchema<T>): Promise<T>;
-  async function requestJson(options: RequestJsonWithoutSchema): Promise<unknown>;
+  async function requestJson<T>(options: RequestJsonWithSchema<T>): Promise<ResponseType<T>>;
+  async function requestJson(options: RequestJsonWithoutSchema): Promise<ResponseType<unknown>>;
 
   async function requestJson<T>(
     options: RequestCoreOption & { schema?: SchemaParser<T> },
-  ): Promise<T | unknown> {
+  ): Promise<ResponseType<T> | ResponseType<unknown>> {
     try {
       const res = await requestRaw(options);
-      return await parseJsonResponse(res, { schema: options.schema });
+      const data = await parseJsonResponse(res, { schema: options.schema });
+      return { data, status: res.status, headers: res.headers };
     } catch (e) {
       throw toApiError(e);
     }
@@ -90,20 +97,20 @@ export const createRequestCore = (env: RequesterEnv) => {
     }
   };
 
-  const get = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<T> =>
+  const get = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<ResponseType<T>> =>
     requestJson<T>({ ...options, method: 'GET' });
 
-  const post = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<T> =>
+  const post = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<ResponseType<T>> =>
     requestJson<T>({ ...options, method: 'POST' });
 
-  const patch = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<T> =>
+  const patch = <T>(options: CommonArgs & { schema: SchemaParser<T> }): Promise<ResponseType<T>> =>
     requestJson<T>({ ...options, method: 'PATCH' });
 
   const del = (options: CommonArgs): Promise<void> => requestVoid({ ...options, method: 'DELETE' });
 
   const upload = <T>(
     options: CommonArgs & { body: FormData; schema: SchemaParser<T> },
-  ): Promise<T> => requestJson<T>({ ...options, method: 'POST' });
+  ): Promise<ResponseType<T>> => requestJson<T>({ ...options, method: 'POST' });
 
   return {
     requestJson,

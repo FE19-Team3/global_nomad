@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
     const body = await req.json();
     const parsed = OauthKakaoSignupRequestSchema.parse(body);
 
-    const { accessToken, refreshToken } = await serverApi.post({
+    const { data } = await serverApi.post({
       path: '/oauth/sign-up/kakao',
       body: parsed,
       schema: OauthSignupResponseSchema,
@@ -18,6 +18,7 @@ export const POST = async (req: NextRequest) => {
         retryOn: [],
       },
     });
+    const { accessToken, refreshToken } = data;
 
     const response = NextResponse.json({ success: true }, { status: 200 });
     const isSecure = process.env.NODE_ENV === 'production';

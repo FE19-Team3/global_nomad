@@ -11,5 +11,6 @@ export const uploadImageToUrl = async (file: File): Promise<string> => {
     schema: uploadActivityImageResponseSchema,
   });
 
-  return response.activityImageUrl ?? response.imageUrl ?? response.url ?? '';
+  const data = response.data;
+  return data.activityImageUrl ?? data.imageUrl ?? data.url ?? '';
 };

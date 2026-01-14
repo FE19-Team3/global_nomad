@@ -17,9 +17,10 @@ export type CreateActivityPayload = {
 };
 
 export const createActivity = async (payload: CreateActivityPayload) => {
-  return clientApi.post({
+  const response = await clientApi.post({
     path: '/activities',
     body: payload,
     schema: createActivityApiResponseSchema,
   });
+  return response.data;
 };
