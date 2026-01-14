@@ -1,12 +1,13 @@
 'use client';
 
 import { NotificationEntity } from '@/entities/notification/model/notification.type';
-import IC_Close from '@/shared/assets/icons/icon_delete.svg';
 import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
 
 import NotificationCard from './NotificationCard';
 import { notificationModalStyles } from './NotificationModal.styles';
+
+import IC_Close from '@/shared/assets/icons/icon_delete.svg';
 
 type Props = {
   open: boolean;
