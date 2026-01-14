@@ -34,3 +34,15 @@ export const createActivityApiResponseSchema = z.object({
 });
 
 export type CreateActivityApiResponse = z.infer<typeof createActivityApiResponseSchema>;
+
+export const uploadActivityImageResponseSchema = z
+  .object({
+    imageUrl: z.string().url().optional(),
+    url: z.string().url().optional(),
+    activityImageUrl: z.string().url().optional(),
+  })
+  .refine((value) => Boolean(value.imageUrl || value.url || value.activityImageUrl), {
+    message: '업로드 이미지 URL이 없습니다.',
+  });
+
+export type UploadActivityImageResponse = z.infer<typeof uploadActivityImageResponseSchema>;

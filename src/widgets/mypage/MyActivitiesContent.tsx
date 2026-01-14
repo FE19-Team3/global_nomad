@@ -7,7 +7,7 @@ import { useFormGuard } from '@/features/activity/hooks/useFormGuard';
 import ReservationScheduleSection from '@/features/activity/ui/ReservationScheduleSection';
 import UploadIntroImage from '@/features/activity/ui/UploadIntroImage';
 import UploadMainImage from '@/features/activity/ui/UploadMainImage';
-import { ActivityCategoryValues } from '@/shared/schema/activity';
+import { ActivityCategoryValues } from '@/shared/constants/activity';
 import Button from '@/shared/ui/Button/Button';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
@@ -86,6 +86,7 @@ const MyActivitiesContent = () => {
               id="price"
               placeholder="체험 금액을 입력해 주세요"
               inputMode="numeric"
+              autoComplete="off"
               error={!!errors.price}
               errorMsg={errors.price?.message}
               {...register('price')}
@@ -98,6 +99,7 @@ const MyActivitiesContent = () => {
             <Input
               id="address"
               placeholder="주소를 입력해 주세요"
+              autoComplete="off"
               error={!!errors.address}
               errorMsg={errors.address?.message}
               {...register('address')}
@@ -126,7 +128,7 @@ const MyActivitiesContent = () => {
           <Button
             variant="primary"
             size="sm"
-            className="mx-auto block"
+            className="mx-auto block text-white-force"
             type="submit"
             disabled={isSubmitting || isPending}
           >

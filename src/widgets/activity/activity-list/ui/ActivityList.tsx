@@ -3,10 +3,10 @@
 import { useMemo } from 'react';
 
 import { ActivityCard } from '@/widgets/activity/activity-card';
-import type { Activity } from '@/widgets/activity/types';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 
 interface ActivityListProps {
-  experiences: Activity[];
+  experiences: ActivityCardItem[];
   limit?: number;
 }
 

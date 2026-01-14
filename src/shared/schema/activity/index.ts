@@ -1,6 +1,4 @@
 export {
-  ActivityCategoryValues,
-  type ActivityCategory,
   createActivityApiRequestSchema,
   createActivityScheduleSchema,
   type CreateActivityFormValues,
@@ -8,4 +6,6 @@ export {
 export {
   createActivityApiResponseSchema,
   type CreateActivityApiResponse,
+  uploadActivityImageResponseSchema,
+  type UploadActivityImageResponse,
 } from './activity.api.schema';
