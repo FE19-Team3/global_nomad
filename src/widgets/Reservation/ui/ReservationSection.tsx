@@ -49,9 +49,7 @@ export const ReservationSection = ({ price }: ReservationSectionProps) => {
                 ₩ {headCount * 1000}
               </Text>
             </div>
-            <Button size="sm">
-              예약하기
-            </Button>
+            <Button size="sm">예약하기</Button>
           </div>
         </div>
       </aside>
