@@ -24,6 +24,7 @@
   --color-primary-100: 229 243 255;
   --color-primary: 61 158 242;
   --color-primary-200: 40 130 210;
+  --color-primary-500: 61 158 242;
 
   --color-red: 255 39 39;
   --font-sans:
@@ -50,6 +51,7 @@
 
   --color-primary-100: 30 80 120;
   --color-primary-200: 120 195 255;
+  --color-primary-500: 61 158 242;
   --color-primary: 93 177 255;
 
   --color-red: 255 80 80;
