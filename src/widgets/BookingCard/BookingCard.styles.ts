@@ -12,12 +12,12 @@ export const styles = tv({
     info: 'font-bold text-gray-900',
     number: 'font-medium text-gray-500',
     actions: 'flex  w-full m-auto items-center gap-2 mt-2 md:mt-0 md:w-[358px]',
-    actionBtn: 'flex-1 !h-9 text-gray-600',
+    actionBtn: 'flex-1 h-9 text-gray-600',
   },
   variants: {
     actionBtnVariant: {
       cancel: {
-        actionBtn: '!bg-gray-100 !text-gray-500 hover:!bg-gray-200 !border-0',
+        actionBtn: 'bg-gray-100 text-gray-500 hover:bg-gray-200 border-0 hover:border-0',
       },
     },
   },

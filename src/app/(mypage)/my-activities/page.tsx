@@ -1,7 +1,7 @@
-import { MyActivitiesContent } from '@/widgets/mypage';
+import { MyActivitiesManageContent } from '@/widgets/mypage';
 
 const MyActivites = () => {
-  return <MyActivitiesContent />;
+  return <MyActivitiesManageContent />;
 };
 
 export default MyActivites;

@@ -8,7 +8,7 @@ const MyActivitesLayout = ({ children }: MyActivitesLayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col items-center">
       <Header />
-      <div className="w-full max-w-175 py-10">{children}</div>
+      <div className="w-full max-w-187 py-10 px-8">{children}</div>
     </div>
   );
 };
