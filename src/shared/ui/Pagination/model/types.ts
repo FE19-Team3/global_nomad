@@ -10,4 +10,5 @@ export interface PaginationProps {
   pageType: PaginationContext;
   totalCount: number;
   onPageChange: (page: number, pageSize: number) => void;
+  pageSize?: number; // 반응형 pageSize 전달
 }

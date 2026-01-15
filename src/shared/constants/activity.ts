@@ -8,3 +8,7 @@ export const ActivityCategoryValues = [
 ] as const;
 
 export type ActivityCategory = (typeof ActivityCategoryValues)[number];
+
+export const ActivitySortValues = ['most_reviewed', 'price_asc', 'price_desc', 'latest'] as const;
+
+export type ActivitySort = (typeof ActivitySortValues)[number];

@@ -12,8 +12,9 @@ export const Pagination = ({
   pageType,
   totalCount,
   onPageChange,
+  pageSize: externalPageSize,
 }: PaginationProps) => {
-  const pageSize = PAGE_SIZE_MAP[pageType];
+  const pageSize = externalPageSize ?? PAGE_SIZE_MAP[pageType];
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   const clamp = (page: number) => Math.min(Math.max(page, 1), totalPages);
