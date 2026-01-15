@@ -9,13 +9,16 @@ export const checkboxStyles = tv({
       border
       cursor-pointer
       select-none
-      transition-colors
+      transition-all
+      duration-180
 
       shrink-0          
       whitespace-nowrap
 
       has-focus-visible:ring-2
       has-focus-visible:ring-primary
+
+      active:scale-93
     `,
     icon: 'w-6 h-6 shrink-0',
     input: 'absolute opacity-0 pointer-events-none',

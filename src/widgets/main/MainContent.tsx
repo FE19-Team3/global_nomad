@@ -50,15 +50,10 @@ const MainContent = ({ initialData }: { initialData: ActivityListResponse }) => 
           <PopularSection />
         </section>
         {/* 모든 체험 */}
-        <section>
-          <Text.B18 as="h2" className="md:text-[32px] md:font-bold">
-            🛼 모든 체험
-          </Text.B18>
-          {/* <AllSection /> */}
-          <div className="mt-8">
-            <AllSection activities={activities} />
-          </div>
-        </section>
+        {/* <AllSection /> */}
+        <div className="mt-8">
+          <AllSection activities={activities} />
+        </div>
       </div>
     </main>
   );

@@ -54,8 +54,8 @@ const MyActivitiesCreateContent = () => {
                   <Select.Trigger variant="input-like" placeholder="카테고리를 선택해 주세요" />
                   <Select.Content>
                     {ActivityCategoryValues.map((category) => (
-                      <Select.Item key={category} value={category}>
-                        {category}
+                      <Select.Item key={category.value} value={category.value}>
+                        {category.label}
                       </Select.Item>
                     ))}
                   </Select.Content>
