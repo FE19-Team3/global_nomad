@@ -17,7 +17,7 @@ export const useReservationStore = create<ReservationState>((set) => ({
   isOpen: false,
   step: 'date',
   headCount: 1,
-  selectedTime: '',
+  selectedTime: null,
 
   setIsOpen: (isOpen) => set({ isOpen }),
   setStep: (step) => set({ step }),
