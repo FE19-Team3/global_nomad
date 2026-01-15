@@ -28,7 +28,7 @@ interface BookingFloatingBarProps {
 export const BookingFloatingBar = ({ price }: BookingFloatingBarProps) => {
   const { headCount, setIsOpen, selectedTime } = useReservationStore();
   const { openAlert } = useModalStore();
-  const isDisabled = selectedTime ? false : true;
+  const isDisabled = !selectedTime;
   const slots = styles();
 
   return (
