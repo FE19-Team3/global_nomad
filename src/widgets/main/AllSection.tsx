@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pagination } from '@/shared/ui/Pagination/ui/Pagination';
 
 import { ActivityCardItem } from '../activity/activity-card';
+import { ListHeader } from '../list/main/listHeader';
 
 import { ActivityList } from './ActivityList';
 
@@ -13,7 +14,9 @@ interface Props {
 const AllSection = ({ activities }: Props) => {
   const [pageSize, setPageSize] = useState(6);
   const [page, setPage] = useState(1);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
+  // pagination
   useEffect(() => {
     const getPageSize = () => {
       if (window.innerWidth >= 1024) return 15; // lg
@@ -29,27 +32,28 @@ const AllSection = ({ activities }: Props) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  //카테리 변경 시 페이지 번호 초기화
+  useEffect(() => {
+    setPage(1);
+  }, [selectedCategories]);
+
+  // 선택된 카테고리로 activities 필터링
+  const filteredActivities = selectedCategories.length
+    ? activities.filter((a) => selectedCategories.includes(a.category))
+    : activities;
+
   const pageType = 'main';
-  const totalCount = activities.length;
+  const totalCount = filteredActivities.length;
   const offset = (page - 1) * pageSize;
 
-  const pagedActivities = activities.slice(offset, offset + pageSize);
+  const pagedActivities = filteredActivities.slice(offset, offset + pageSize);
 
   return (
-    <div className="flex flex-col items-center mt-5">
+    <section className="flex flex-col items-center mt-5">
       {/* header */}
-      <div className="flex justify-between mb-7.5 w-full">
-        <div className="flex gap-5">
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-        </div>
-        <div>가격 ▼</div>
-      </div>
+      <ListHeader selected={selectedCategories} setSelected={setSelectedCategories} />
       {/* body */}
-      <div className="w-full">
+      <div className="w-full lg:min-h-261 md:min-h-217 min-h-191 h-fit">
         <ActivityList activities={pagedActivities} />
       </div>
       {/* pagination */}
@@ -64,7 +68,7 @@ const AllSection = ({ activities }: Props) => {
           }}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

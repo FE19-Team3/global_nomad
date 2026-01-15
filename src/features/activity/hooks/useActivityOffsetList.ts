@@ -35,7 +35,7 @@ export const useActivityOffsetList = ({
     method: 'offset',
     page,
     size,
-    ...(category && { category }),
+    ...(category && { category: category.value }),
     ...(keyword && { keyword }),
     ...(sort && { sort }),
   };

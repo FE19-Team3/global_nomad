@@ -33,7 +33,7 @@ export const useActivityCursorList = ({
   const queryParamsForApi: Record<string, string | number> = {
     method: 'cursor',
     size,
-    ...(category && { category }),
+    ...(category && { category: category.value }),
     ...(keyword && { keyword }),
     ...(sort && { sort }),
     ...(cursorId !== undefined && { cursorId }),
