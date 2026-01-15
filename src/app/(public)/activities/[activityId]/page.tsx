@@ -6,7 +6,7 @@ import { ReservationSection } from '@/widgets/Reservation/ui/ReservationSection'
 import { ReviewCard } from '@/widgets/review-card';
 
 // import { Pagination } from '@/shared/ui/Pagination/ui/Pagination';
-const Page = () => {
+export default function Page() {
   return (
     <div className="flex flex-col gap-5 md:flex-row ">
       <div className="flex flex-col gap-5 md:flex-1 md:gap-6 lg:gap-10">
@@ -69,6 +69,4 @@ const Page = () => {
       <ReservationSection price={1000} />
     </div>
   );
-};
-
-export default page;
+}
