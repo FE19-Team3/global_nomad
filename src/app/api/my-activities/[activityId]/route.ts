@@ -1,10 +1,12 @@
 import { createApiError, respondError, toApiError } from '@/shared/api';
 import { serverApi } from '@/shared/api/server';
 
-export async function DELETE(req: Request) {
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ activityId: string }> },
+) {
   try {
-    const pathname = new URL(req.url).pathname;
-    const activityIdParam = pathname.split('/').pop();
+    const { activityId: activityIdParam } = await params;
     const activityId = Number(activityIdParam);
 
     if (!activityIdParam || !Number.isFinite(activityId)) {
