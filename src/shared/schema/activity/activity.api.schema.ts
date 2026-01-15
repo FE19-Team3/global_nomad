@@ -16,6 +16,21 @@ const ActivityApiSubImageSchema = z.object({
   imageUrl: z.string(),
 });
 
+const MyActivityItemSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  title: z.string(),
+  description: z.string(),
+  category: z.string(),
+  price: z.number(),
+  address: z.string(),
+  bannerImageUrl: z.string(),
+  rating: z.number(),
+  reviewCount: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 export const createActivityApiResponseSchema = z.object({
   id: z.number(),
   userId: z.number(),
@@ -34,6 +49,14 @@ export const createActivityApiResponseSchema = z.object({
 });
 
 export type CreateActivityApiResponse = z.infer<typeof createActivityApiResponseSchema>;
+
+export const myActivitiesApiResponseSchema = z.object({
+  cursorId: z.number().nullable(),
+  totalCount: z.number(),
+  activities: z.array(MyActivityItemSchema),
+});
+
+export type MyActivitiesApiResponse = z.infer<typeof myActivitiesApiResponseSchema>;
 
 export const uploadActivityImageResponseSchema = z
   .object({

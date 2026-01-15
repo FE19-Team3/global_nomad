@@ -1,5 +1,3 @@
-import type { Activity } from '@/entities/activity/model/activity.types';
-
 export type ActivityDetailSchedule = {
   date: string;
   times: {
@@ -9,7 +7,15 @@ export type ActivityDetailSchedule = {
   }[];
 };
 
-export type ActivityDetail = Activity & {
+export type ActivityDetail = {
+  id: number;
+  title: string;
+  category: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  rating: number;
+  reviewCount: number;
   userId: number;
   description: string;
   subImages: {

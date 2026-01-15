@@ -70,7 +70,7 @@ const ReservationScheduleSection = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-[1fr_140px_12px_140px_44px] gap-2 mb-2">
+      <div className="hidden md:grid grid-cols-[1fr_140px_12px_140px_44px] gap-2 mb-2">
         <Label htmlFor="date" className="text-m-16 text-gray-800">
           날짜
         </Label>
@@ -80,7 +80,71 @@ const ReservationScheduleSection = () => {
         <div />
       </div>
 
-      <div className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2 mb-4">
+      <div className="md:hidden flex flex-col gap-3 mb-4">
+        <Label htmlFor="date" className="text-m-16 text-gray-800">
+          날짜
+        </Label>
+        <Input
+          id="date"
+          type="date"
+          placeholder="yy/mm/dd"
+          value={date}
+          onChange={(e) => {
+            setDate(e.target.value);
+            if (draftError) setDraftError('');
+          }}
+        />
+
+        <p className="text-m-16 text-gray-800">시간</p>
+        <div className="grid grid-cols-[1fr_12px_1fr_44px] items-center gap-2">
+          <Select.Root
+            value={startTime}
+            onValueChange={(value) => {
+              setStartTime(value);
+              if (draftError) setDraftError('');
+            }}
+          >
+            <Select.Trigger variant="input-like" placeholder="00:00" />
+            <Select.Content>
+              {timeOptions.map((time) => (
+                <Select.Item key={time} value={time}>
+                  {time}
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
+
+          <span className="text-center text-gray-400">-</span>
+
+          <Select.Root
+            value={endTime}
+            onValueChange={(value) => {
+              setEndTime(value);
+              if (draftError) setDraftError('');
+            }}
+          >
+            <Select.Trigger variant="input-like" placeholder="00:00" />
+            <Select.Content>
+              {timeOptions.map((time) => (
+                <Select.Item key={time} value={time}>
+                  {time}
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
+
+          <button
+            type="button"
+            disabled={!canAdd}
+            onClick={handleAdd}
+            className="cursor-pointer bg-primary text-white w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:opacity-90 disabled:cursor-not-allowed disabled:bg-primary"
+          >
+            <PlusIcon className="text-white" />
+          </button>
+        </div>
+      </div>
+
+      <div className="hidden md:grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2 mb-4">
         <Input
           id="date"
           type="date"
@@ -144,37 +208,67 @@ const ReservationScheduleSection = () => {
 
       <div className="flex flex-col gap-4">
         {fields.map((field, index) => (
-          <dl
-            key={field.id}
-            className="grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2"
-          >
-            <dt className="sr-only">날짜</dt>
-            <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
-              {formatDate(field.date)}
-            </dd>
+          <div key={field.id} className="flex flex-col gap-3">
+            <dl className="md:hidden flex flex-col gap-3">
+              <dt className="sr-only">날짜</dt>
+              <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                {formatDate(field.date)}
+              </dd>
 
-            <dt className="sr-only">시작 시간</dt>
-            <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
-              {field.startTime}
-            </dd>
+              <div className="grid grid-cols-[1fr_12px_1fr_44px] items-center gap-2">
+                <dt className="sr-only">시작 시간</dt>
+                <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                  {field.startTime}
+                </dd>
 
-            <dt className="sr-only">구분</dt>
-            <dd className="text-center text-gray-400">-</dd>
+                <dt className="sr-only">구분</dt>
+                <dd className="text-center text-gray-400">-</dd>
 
-            <dt className="sr-only">종료 시간</dt>
-            <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
-              {field.endTime}
-            </dd>
+                <dt className="sr-only">종료 시간</dt>
+                <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                  {field.endTime}
+                </dd>
 
-            <button
-              type="button"
-              aria-label="예약 시간 삭제"
-              onClick={() => remove(index)}
-              className="cursor-pointer bg-gray-100 text-gray-400 w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
-            >
-              <MinusIcon className="text-black" />
-            </button>
-          </dl>
+                <button
+                  type="button"
+                  aria-label="예약 시간 삭제"
+                  onClick={() => remove(index)}
+                  className="cursor-pointer bg-gray-100 text-gray-400 w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
+                >
+                  <MinusIcon className="text-black" />
+                </button>
+              </div>
+            </dl>
+
+            <dl className="hidden md:grid grid-cols-[1fr_140px_12px_140px_44px] items-center gap-2">
+              <dt className="sr-only">날짜</dt>
+              <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                {formatDate(field.date)}
+              </dd>
+
+              <dt className="sr-only">시작 시간</dt>
+              <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                {field.startTime}
+              </dd>
+
+              <dt className="sr-only">구분</dt>
+              <dd className="text-center text-gray-400">-</dd>
+
+              <dt className="sr-only">종료 시간</dt>
+              <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                {field.endTime}
+              </dd>
+
+              <button
+                type="button"
+                aria-label="예약 시간 삭제"
+                onClick={() => remove(index)}
+                className="cursor-pointer bg-gray-100 text-gray-400 w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
+              >
+                <MinusIcon className="text-black" />
+              </button>
+            </dl>
+          </div>
         ))}
       </div>
     </div>

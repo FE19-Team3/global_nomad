@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { useCreateActivity } from '@/features/activity/model/useCreateActivity';
@@ -30,6 +31,7 @@ const getErrorMessage = (error: unknown) => {
 };
 
 export const useActivityForm = () => {
+  const router = useRouter();
   const form = useForm<CreateActivityFormValues>({
     resolver: createZodResolver(createActivityApiRequestSchema),
     mode: 'onChange',
@@ -64,7 +66,12 @@ export const useActivityForm = () => {
       {
         onSuccess: () => {
           reset();
-          openAlert('체험 등록이 완료되었습니다.');
+          openAlert({
+            message: '체험 등록이 완료되었습니다.',
+            onClose: () => {
+              router.push('/my-activities');
+            },
+          });
         },
         onError: (error) => {
           openAlert(getErrorMessage(error));

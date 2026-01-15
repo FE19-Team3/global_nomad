@@ -15,7 +15,7 @@ import { Select } from '@/shared/ui/Select';
 import { Text } from '@/shared/ui/Text';
 import Textarea from '@/shared/ui/Textarea/Textarea';
 
-const MyActivitiesContent = () => {
+const MyActivitiesCreateContent = () => {
   const { form, handleSubmit, isPending } = useActivityForm();
 
   const {
@@ -140,4 +140,4 @@ const MyActivitiesContent = () => {
   );
 };
 
-export default MyActivitiesContent;
+export default MyActivitiesCreateContent;
