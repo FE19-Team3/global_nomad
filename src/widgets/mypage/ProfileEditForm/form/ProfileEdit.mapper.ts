@@ -3,6 +3,6 @@ import type { ProfileEditFormValues, ProfileEditSubmitValues } from '../model/va
 export const mapFormToSubmitValues = (
   formValues: ProfileEditFormValues,
 ): ProfileEditSubmitValues => {
-  const { nickname, password } = formValues;
-  return { nickname, password };
+  const { nickname, password, profileImageUrl } = formValues;
+  return { nickname, password, profileImageUrl };
 };
