@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const useIntervalPlaceholder = () => {
-  const PLACEHOLDERS = ['내가 원하는 체험은?', '두쫀쿠', '전시'];
+  const PLACEHOLDERS = ['내가 원하는 체험은?', '두바이쫀득쿠키', '전시'];
 
   const [placeholderText, setPlaceholderText] = useState('');
   const [index, setIndex] = useState(0);
