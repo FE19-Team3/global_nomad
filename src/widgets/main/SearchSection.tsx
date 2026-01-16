@@ -1,43 +1,33 @@
 import { useEffect, useState } from 'react';
 
-import { ActivityListResponse } from '@/features/activity/activity-list/schema/activity-list.schema';
 import { useActivityOffsetList } from '@/features/activity/hooks/useActivityOffsetList';
-import { ActivityCategory, ActivitySort } from '@/shared/constants/activity';
 import { Pagination } from '@/shared/ui/Pagination/ui/Pagination';
 import MainCardSkeleton from '@/shared/ui/Skeleton/MainCardSkeleton';
-
-import { ListHeader } from '../list/main/listHeader';
+import Text from '@/shared/ui/Text';
 
 import { ActivityList } from './ActivityList';
 
 interface Props {
-  initialData: ActivityListResponse;
+  keyword: string;
 }
 
-const AllSection = ({ initialData }: Props) => {
+const SearchSection = ({ keyword }: Props) => {
   const [pageSize, setPageSize] = useState(0);
   const [page, setPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState<ActivityCategory | undefined>(undefined);
-  const [selectedSort, setSelectedSort] = useState<ActivitySort['values']>('latest');
 
   const { activities, totalCount, isLoading } = useActivityOffsetList({
     page,
     size: pageSize,
-    sort: selectedSort,
-    category: selectedCategory,
-    initialData,
-    enabled: pageSize !== 0,
+    keyword,
+    enabled: !!pageSize, // pageSize가 확정되었을 때만 쿼리 실행
   });
 
-  // pagination
   useEffect(() => {
     const getPageSize = () => {
-      if (window.innerWidth >= 1024) return 15; // lg
+      if (window.innerWidth >= 1024) return 15; //lg
       if (window.innerWidth >= 768) return 4; // md
       return 6; // sm
     };
-
-    // 초기 계산
     setPageSize(getPageSize());
 
     const handleResize = () => setPageSize(getPageSize());
@@ -45,29 +35,28 @@ const AllSection = ({ initialData }: Props) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  //카테고리 변경 시 페이지 번호 초기화
   useEffect(() => {
     setPage(1);
-  }, [selectedCategory, selectedSort, pageSize]);
+  }, [keyword]);
 
   return (
-    <section className="flex flex-col items-center mt-5">
-      {/* header */}
-      <ListHeader
-        selectedCategory={selectedCategory}
-        selectedSort={selectedSort}
-        setSelectedCategory={setSelectedCategory}
-        setSelectedSort={setSelectedSort}
-      />
-      {/* body */}
-      <div className="w-full lg:min-h-261 md:min-h-217 min-h-191 h-fit">
+    <div className="flex flex-col items-center mt-5">
+      <div className="w-full mb-7.5 flex flex-col gap-1">
+        <div>
+          <Text.B24>{keyword}</Text.B24>
+          <Text.M24>로 검색한 결과입니다.</Text.M24>
+        </div>
+        <Text.M18 className="text-gray-700">총 {totalCount}개의 결과</Text.M18>
+      </div>
+
+      <div className="w-full">
         {isLoading ? (
           <MainCardSkeleton />
         ) : (
           <ActivityList activities={activities} limit={pageSize} />
         )}
       </div>
-      {/* pagination */}
+
       {totalCount > 0 && (
         <div className="mt-7.5">
           <Pagination
@@ -81,8 +70,8 @@ const AllSection = ({ initialData }: Props) => {
           />
         </div>
       )}
-    </section>
+    </div>
   );
 };
 
-export default AllSection;
+export default SearchSection;
