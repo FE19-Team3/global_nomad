@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 import Ic_calender from '@/shared/assets/icons/ic_calender.svg';
@@ -12,7 +13,7 @@ import { NavMenu } from '../components/nav-menu';
 import { styles } from './side-nav.style';
 
 type SideNavProps = {
-  header?: React.ReactNode;
+  profileImage: string | null;
 };
 
 type BaseNavItem = {
@@ -29,7 +30,7 @@ const navItems: BaseNavItem[] = [
   { value: '예약 현황', href: '/booking-status', icon: <Ic_calender /> },
 ];
 
-export const SideNav = ({ header }: SideNavProps) => {
+export const SideNav = ({ profileImage }: SideNavProps) => {
   const pathname = usePathname();
   const slots = styles();
   const navMenuItems = navItems.map((item) => ({
@@ -39,7 +40,14 @@ export const SideNav = ({ header }: SideNavProps) => {
 
   return (
     <aside className={slots.root()}>
-      {header}
+      <div className={slots.profileImage()}>
+        <Image
+          src={profileImage ?? '/default-profile.svg'}
+          alt="프로필 이미지"
+          fill
+          className="object-cover"
+        />
+      </div>
       <NavMenu items={navMenuItems} className={slots.nav()} />
     </aside>
   );
