@@ -3,6 +3,7 @@
 import { ActivityDetail } from '@/features/activity/activity-detail/model/activity-detail.types';
 import { createReservationClient } from '@/features/reservation/useCreateReservation';
 import { isApiError } from '@/shared/api';
+import { useModalStore } from '@/shared/stores/useModalStore';
 
 type Props = {
   activity: ActivityDetail;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function ActivityDetailClient({ activity, activityId }: Props) {
+  const { openAlert } = useModalStore();
   const handleReserve = async (scheduleId: number) => {
     try {
       await createReservationClient({
@@ -21,7 +23,7 @@ export default function ActivityDetailClient({ activity, activityId }: Props) {
       });
     } catch (e) {
       if (isApiError(e) && e.status === 409) {
-        alert(e.message);
+        openAlert(e.message);
       }
     }
   };
