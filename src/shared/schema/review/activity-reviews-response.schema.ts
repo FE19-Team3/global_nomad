@@ -12,8 +12,8 @@ const reviewSchema = z.object({
   activityId: z.number(),
   rating: z.number(),
   content: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
 });
 
 export const activityReviewsResponseSchema = z.object({
