@@ -86,6 +86,11 @@ export const useActivityEditForm = (initialData: ActivityEditInitialData) => {
     [initialData.subImages],
   );
 
+  const detailAddress = useMemo(() => {
+    const parts = initialData.address.split(',').map((part) => part.trim());
+    return parts.slice(1).join(', ');
+  }, [initialData.address]);
+
   const form = useForm<CreateActivityFormValues>({
     resolver: createZodResolver(createActivityApiRequestSchema),
     mode: 'onChange',
@@ -95,6 +100,7 @@ export const useActivityEditForm = (initialData: ActivityEditInitialData) => {
       description: initialData.description,
       price: String(initialData.price),
       address: initialData.address,
+      detailAddress,
       schedules: initialSchedules.map(({ date, startTime, endTime }) => ({
         date,
         startTime,

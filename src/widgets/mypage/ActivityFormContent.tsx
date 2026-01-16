@@ -3,6 +3,7 @@
 import { Controller, FormProvider, type UseFormReturn } from 'react-hook-form';
 
 import { useFormGuard } from '@/features/activity/hooks/useFormGuard';
+import AddressSearchField from '@/features/activity/ui/AddressSearchField';
 import ReservationScheduleSection from '@/features/activity/ui/ReservationScheduleSection';
 import UploadIntroImage from '@/features/activity/ui/UploadIntroImage';
 import UploadMainImage from '@/features/activity/ui/UploadMainImage';
@@ -109,14 +110,7 @@ const ActivityFormContent = ({
             <Label htmlFor="address" className="text-b-16 block mb-2">
               주소
             </Label>
-            <Input
-              id="address"
-              placeholder="주소를 입력해 주세요"
-              autoComplete="off"
-              error={!!errors.address}
-              errorMsg={errors.address?.message}
-              {...register('address')}
-            />
+            <AddressSearchField />
           </section>
         </div>
 

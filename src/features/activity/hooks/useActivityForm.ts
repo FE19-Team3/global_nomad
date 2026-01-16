@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
@@ -31,6 +32,7 @@ const getErrorMessage = (error: unknown) => {
 };
 
 export const useActivityForm = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const form = useForm<CreateActivityFormValues>({
     resolver: createZodResolver(createActivityApiRequestSchema),
@@ -41,6 +43,7 @@ export const useActivityForm = () => {
       description: '',
       price: '',
       address: '',
+      detailAddress: '',
       schedules: [],
       bannerImageUrl: '',
       subImageUrls: [],
@@ -66,6 +69,7 @@ export const useActivityForm = () => {
       {
         onSuccess: () => {
           reset();
+          queryClient.invalidateQueries({ queryKey: ['my-activities'] });
           openAlert({
             message: '체험 등록이 완료되었습니다.',
             onClose: () => {
