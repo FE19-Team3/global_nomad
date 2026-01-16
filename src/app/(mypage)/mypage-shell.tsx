@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import { SideNav } from '@/widgets/side-nav/ui/side-nav';
 
@@ -17,7 +17,7 @@ export const MypageShell = ({ children }: MypageShellProps) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const slots = styles();
 
-  const closeNav = useMemo(() => () => setIsNavOpen(false), []);
+  const closeNav = useCallback(() => setIsNavOpen(false), []);
 
   useEffect(() => {
     if (!isNavOpen) return;
@@ -45,7 +45,7 @@ export const MypageShell = ({ children }: MypageShellProps) => {
   useEffect(() => {
     if (!isNavOpen) return;
     closeNav();
-  }, [pathname]);
+  }, [pathname, closeNav]);
 
   return (
     <div className="relative mx-auto max-w-187">
@@ -65,7 +65,7 @@ export const MypageShell = ({ children }: MypageShellProps) => {
 
           {isNavOpen ? (
             <>
-              <div role="menu" className={slots.closeMenuBtn()}>
+              <div className={slots.closeMenuBtn()}>
                 <SideNav />
               </div>
               <button

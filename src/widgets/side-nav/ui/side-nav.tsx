@@ -20,6 +20,10 @@ type BaseNavItem = {
   icon: React.ReactElement<React.SVGProps<SVGSVGElement>>;
 };
 
+type SideNavProps = {
+  className?: string;
+};
+
 // 경로는 임시 경로 설정한 것임
 const navItems: BaseNavItem[] = [
   { value: '내 정보', href: '/side', icon: <Ic_user /> },
@@ -28,7 +32,7 @@ const navItems: BaseNavItem[] = [
   { value: '예약 현황', href: '/booking-status', icon: <Ic_calender /> },
 ];
 
-export const SideNav = ({ className }: { className?: string }) => {
+export const SideNav = ({ className }: SideNavProps) => {
   const { user } = useAuth();
   const pathname = usePathname();
   const slots = styles();
