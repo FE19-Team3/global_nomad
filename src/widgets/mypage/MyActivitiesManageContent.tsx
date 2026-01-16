@@ -65,6 +65,10 @@ const MyActivitiesManageContent = () => {
     });
   };
 
+  const handleEdit = (activityId: number) => {
+    router.push(`/my-activities/${activityId}/edit`);
+  };
+
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -79,12 +83,17 @@ const MyActivitiesManageContent = () => {
           radius="md"
           onClick={() => router.push('/my-activities/new')}
         >
-          <Text.B14>체험 등록</Text.B14>
+          <Text.B16>체험 등록하기</Text.B16>
         </Button>
       </div>
       <div className="flex flex-col gap-4">
         {activities.map((activity) => (
-          <ManageActivityCard key={activity.id} activity={activity} onDelete={handleDelete} />
+          <ManageActivityCard
+            key={activity.id}
+            activity={activity}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
         ))}
         {activities.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">

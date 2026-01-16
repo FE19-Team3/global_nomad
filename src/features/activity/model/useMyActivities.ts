@@ -6,7 +6,7 @@ import { getMyActivities, type MyActivitiesQuery } from '@/features/activity/api
 
 export const useMyActivities = (query: MyActivitiesQuery = {}) => {
   return useQuery({
-    queryKey: ['my-activities', query],
+    queryKey: ['my-activities', query.cursorId ?? null, query.size ?? null],
     queryFn: () => getMyActivities(query),
   });
 };
