@@ -3,7 +3,7 @@ import { z } from 'zod';
 const reviewUserSchema = z.object({
   id: z.number(),
   nickname: z.string(),
-  profileImageUrl: z.string().nullable(),
+  profileImageUrl: z.string().url().nullable(),
 });
 
 const reviewSchema = z.object({
