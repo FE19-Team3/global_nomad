@@ -23,10 +23,11 @@ const styles = tv({
 
 interface BookingFloatingBarProps {
   price: number;
+  onReserve: (scheduleId: number) => void;
 }
 
-export const BookingFloatingBar = ({ price }: BookingFloatingBarProps) => {
-  const { date, headCount, setIsOpen, selectedTime } = useReservationStore();
+export const BookingFloatingBar = ({ price, onReserve }: BookingFloatingBarProps) => {
+  const { date, headCount, setIsOpen, selectedTime, selectedScheduleId } = useReservationStore();
   const { openAlert } = useModalStore();
   const isDisabled = !selectedTime;
   const slots = styles();
@@ -45,7 +46,11 @@ export const BookingFloatingBar = ({ price }: BookingFloatingBarProps) => {
 
       <Button
         disabled={isDisabled}
-        onClick={() => openAlert('예약이 완료 되었습니다.')}
+        onClick={() => {
+          if (!selectedScheduleId) return;
+          onReserve(selectedScheduleId);
+          openAlert('예약이 완료되었습니다.');
+        }}
         size="full"
         className={slots.reserveBtn()}
       >

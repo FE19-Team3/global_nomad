@@ -16,11 +16,16 @@ import { TimeStep } from './steps/TimeStep';
 interface BookingBottomSheetProps {
   schedules: ActivitySchedule[];
   availableDates: string[];
+  onReserve: (scheduleId: number) => void;
 }
 
-export const BookingBottomSheet = ({ schedules, availableDates }: BookingBottomSheetProps) => {
+export const BookingBottomSheet = ({
+  schedules,
+  availableDates,
+  onReserve,
+}: BookingBottomSheetProps) => {
   const isTablet = useMediaQuery('(min-width: 768px)');
-  const { isOpen, setIsOpen, step, setStep } = useReservationStore();
+  const { isOpen, setIsOpen, step, setStep, selectedScheduleId } = useReservationStore();
 
   useEffect(() => {
     if (!isOpen) setStep('date');
@@ -44,7 +49,16 @@ export const BookingBottomSheet = ({ schedules, availableDates }: BookingBottomS
               </div>
             </div>
             <BottomSheet.Footer>
-              <Button onClick={() => setIsOpen(false)} size="full" className="font-bold">
+              <Button
+                size="full"
+                className="font-bold"
+                onClick={() => {
+                  // 선택된 scheduleId로 예약 실행
+                  if (!selectedScheduleId) return;
+                  onReserve(selectedScheduleId);
+                  setIsOpen(false);
+                }}
+              >
                 확인
               </Button>
             </BottomSheet.Footer>
@@ -67,7 +81,18 @@ export const BookingBottomSheet = ({ schedules, availableDates }: BookingBottomS
             <BottomSheet.Header onBack={() => setStep('date')}>인원</BottomSheet.Header>
             <PeopleStep />
             <BottomSheet.Footer>
-              <Button onClick={() => setIsOpen(false)} size="full" className="font-bold">
+              <Button
+                size="full"
+                className="font-bold"
+                onClick={() => {
+                  // 선택된 scheduleId로 예약 실행
+                  if (!selectedScheduleId) return;
+                  onReserve(selectedScheduleId);
+
+                  // 기존
+                  setIsOpen(false);
+                }}
+              >
                 확인
               </Button>
             </BottomSheet.Footer>

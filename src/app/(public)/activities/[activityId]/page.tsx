@@ -5,7 +5,7 @@ import Text from '@/shared/ui/Text';
 import ReviewSummary from '@/widgets/detail/ReviewSummary';
 import { ActivityGallery } from '@/widgets/gallery/ActivityGallery';
 import { LocationMap } from '@/widgets/location-map/LocationMap';
-import { ReservationSection } from '@/widgets/Reservation/ui/ReservationSection';
+import { ReservationContainer } from '@/widgets/Reservation/ui/ReservationContainer';
 import { ReviewCard } from '@/widgets/review-card';
 
 type Props = {
@@ -66,7 +66,11 @@ export default async function Page({ params }: Props) {
             {/* <Pagination currentPage={1} pageType="review" totalCount={5} onPageChange={() => {}} /> */}
           </div>
         </div>
-        <ReservationSection price={activity.price} schedules={activity.schedules} />
+        <ReservationContainer
+          activityId={id}
+          price={activity.price}
+          schedules={activity.schedules}
+        />
       </div>
     );
   } catch (e) {

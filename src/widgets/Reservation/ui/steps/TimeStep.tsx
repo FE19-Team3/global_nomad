@@ -9,7 +9,7 @@ interface TimeStepProps {
 }
 
 export const TimeStep = ({ schedules }: TimeStepProps) => {
-  const { date, selectedTime, setSelectedTime } = useReservationStore();
+  const { date, selectedTime, setSelectedTime, setSelectedScheduleId } = useReservationStore();
   const currentDate = schedules?.find((item) => item.date === date);
   const availableTimes = currentDate?.times || [];
 
@@ -24,7 +24,10 @@ export const TimeStep = ({ schedules }: TimeStepProps) => {
           variant="secondary"
           size="md"
           selected={selectedTime === `${time.startTime}~${time.endTime}`}
-          onClick={() => setSelectedTime(`${time.startTime}~${time.endTime}`)}
+          onClick={() => {
+            setSelectedTime(`${time.startTime}~${time.endTime}`);
+            setSelectedScheduleId(time.id); // 예약에 사용할 ID 저장
+          }}
         >
           {`${time.startTime}~${time.endTime}`}
         </Button>
