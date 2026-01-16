@@ -1,0 +1,48 @@
+'use client';
+
+import { ActivityDetail } from '@/features/activity/activity-detail/model/activity-detail.types';
+import { createReservationClient } from '@/features/reservation/useCreateReservation';
+import { isApiError } from '@/shared/api';
+
+type Props = {
+  activity: ActivityDetail;
+  activityId: number;
+};
+
+export default function ActivityDetailClient({ activity, activityId }: Props) {
+  const handleReserve = async (scheduleId: number) => {
+    try {
+      await createReservationClient({
+        activityId,
+        body: {
+          scheduleId,
+          headCount: 1,
+        },
+      });
+
+      alert('예약이 완료되었습니다.');
+    } catch (e) {
+      if (isApiError(e) && e.status === 409) {
+        alert(e.message);
+      }
+    }
+  };
+
+  return (
+    <section>
+      <h2>일정</h2>
+
+      {activity.schedules.map((schedule) => (
+        <div key={schedule.date}>
+          <strong>{schedule.date}</strong>
+
+          {schedule.times.map((time) => (
+            <button key={time.id} onClick={() => handleReserve(time.id)}>
+              {time.startTime} ~ {time.endTime}
+            </button>
+          ))}
+        </div>
+      ))}
+    </section>
+  );
+}
