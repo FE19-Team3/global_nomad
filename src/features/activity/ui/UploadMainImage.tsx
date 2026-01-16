@@ -17,7 +17,7 @@ const UploadMainImage = () => {
   const prevUrlRef = useRef<string>('');
   const { openAlert } = useModalStore();
 
-  const { mutate, isPending } = useUploadImageToUrl({
+  const { mutate, isPending } = useUploadImageToUrl('activity', {
     onSuccess: (url) => {
       setValue('bannerImageUrl', url, { shouldDirty: true, shouldValidate: true });
     },
