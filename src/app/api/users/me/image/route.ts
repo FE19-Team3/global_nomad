@@ -41,9 +41,9 @@ export async function POST(req: NextRequest): Promise<Response> {
       schema: imageUrlSchema,
     });
 
-    const url = res.profileImageUrl ?? res.activityImageUrl;
+    const { profileImageUrl, activityImageUrl } = res;
 
-    return NextResponse.json(url);
+    return NextResponse.json(profileImageUrl ?? activityImageUrl);
   } catch (e) {
     return respondError(toApiError(e));
   }
