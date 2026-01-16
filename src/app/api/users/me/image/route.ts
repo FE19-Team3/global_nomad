@@ -33,7 +33,6 @@ export async function POST(req: NextRequest): Promise<Response> {
         message: '파일 크기가 5MB를 초과합니다.',
       });
     }
-
     const path = req.nextUrl.pathname.replace('/api', '');
     const res = await serverApi.upload({
       path,

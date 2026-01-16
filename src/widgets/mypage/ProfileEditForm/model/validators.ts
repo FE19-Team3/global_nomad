@@ -16,6 +16,7 @@ export const profileEditSchema = z
     nickname: noSpaceString.pipe(nicknameSchema),
     password: noSpaceString.pipe(passwordSchema),
     confirmPassword: noSpaceString,
+    profileImageUrl: z.string().url().nullable(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: '비밀번호가 일치하지 않습니다.',

@@ -1,5 +1,6 @@
 'use client';
 
+import { UpdateProfileImage } from '@/features/profile/components/UpdateProfileImage/UpdateProfileImage';
 import { useToggle } from '@/shared/hooks/useToggle';
 import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
@@ -10,30 +11,47 @@ import PasswordToggleBtn from '../ui/PasswordToggleBtn';
 
 import { mapFormToSubmitValues } from './ProfileEdit.mapper';
 
+type onSubmitValues = {
+  nickname: string;
+  password: string;
+  profileImageUrl: string | null;
+};
 interface ProfileEditFormProps {
   nickname: string;
   email: string;
-  // 취소하기 동작 논의 필요
-  onCancel: () => void;
-  onSubmit: (values: { nickname: string; password: string }) => void;
+  currentImageUrl: string | null;
+  onSubmit: (values: onSubmitValues) => void;
 }
 
-export const ProfileEditForm = ({ nickname, email, onCancel, onSubmit }: ProfileEditFormProps) => {
+export const ProfileEditForm = ({
+  nickname,
+  email,
+  currentImageUrl,
+  onSubmit,
+}: ProfileEditFormProps) => {
   const form = useProfileEditForm(nickname);
   const {
     register,
     watch,
     handleSubmit,
+    setValue,
     formState: { errors, isValid: canSubmit },
   } = form;
   const [pwVisible, togglePwVisible] = useToggle();
   const [cpwVisible, toggleCpwVisible] = useToggle();
+
+  const handleImageUpdate = (newImageUrl: string | null) => {
+    setValue('profileImageUrl', newImageUrl);
+  };
 
   return (
     <form
       className="flex flex-col gap-6 w-94 md:w-186"
       onSubmit={handleSubmit((values) => onSubmit(mapFormToSubmitValues(values)))}
     >
+      <div className="flex w-full justify-center">
+        <UpdateProfileImage currentImageUrl={currentImageUrl} onImageUpdate={handleImageUpdate} />
+      </div>
       <div className="flex flex-col py-2 gap-1">
         <Text.B18 as="h2">내 정보</Text.B18>
         <Text.M14 as="span" className="text-gray-500">
@@ -76,16 +94,7 @@ export const ProfileEditForm = ({ nickname, email, onCancel, onSubmit }: Profile
         <PasswordToggleBtn visible={cpwVisible} onToggle={toggleCpwVisible} />
       </LabeledInput>
 
-      <div className="flex md:justify-center gap-3">
-        <Button
-          type="button"
-          onClick={onCancel}
-          size="full"
-          variant="secondary"
-          className="md:hidden"
-        >
-          취소하기
-        </Button>
+      <div className="flex">
         <Button type="submit" variant="primary" size="full" disabled={!canSubmit}>
           저장하기
         </Button>
