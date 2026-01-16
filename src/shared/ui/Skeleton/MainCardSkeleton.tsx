@@ -2,10 +2,10 @@ import { Skeleton } from '@/shared/ui/Skeleton';
 
 const MainCardSkeleton = () => {
   return (
-    <div className="flex gap-6 w-full p-4">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="relative justify-end w-full h-[360px] rounded-[32px] bg-gray-100">
-          <div className="absolute left-0 bottom-0 bg-white w-full h-[170px] rounded-[32px] p-6 shadow-sm flex flex-col gap-3">
+    <div className="w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-x-4 gap-y-8">
+      {Array.from({ length: 10 }).map((_, i) => (
+        <div key={i} className="relative justify-end w-full h-90 rounded-4xl bg-gray-100">
+          <div className="absolute left-0 bottom-0 bg-white w-full h-42.5 rounded-4xl p-6 shadow-sm flex flex-col gap-3">
             <Skeleton.Row width="85%" height={22} className="rounded-full" />
 
             <div className="flex items-center gap-2">
