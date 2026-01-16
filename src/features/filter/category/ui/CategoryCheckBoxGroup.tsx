@@ -1,27 +1,28 @@
 'use client';
 
-import { ActivityCategoryValues } from '@/shared/constants/activity';
+import { ActivityCategory, ActivityCategoryValues } from '@/shared/constants/activity';
 import { Checkbox } from '@/shared/ui/CheckBox/Checkbox';
 
 interface Props {
-  selected: string[];
-  setSelected: React.Dispatch<React.SetStateAction<string[]>>;
+  selected?: ActivityCategory;
+  setSelected: React.Dispatch<React.SetStateAction<ActivityCategory | undefined>>;
 }
 
 export const CategoryCheckBoxGroup = ({ selected, setSelected }: Props) => {
-  const toggle = (label: string, checked: boolean) => {
-    setSelected((prev: string[]) => (checked ? [...prev, label] : prev.filter((v) => v !== label)));
+  const handleChange = (category: ActivityCategory, checked: boolean) => {
+    setSelected(checked ? category : undefined);
   };
+
   return (
     <div className="flex-1 overflow-x-auto custom-scrollbar py-1 px-1">
       <div className="flex gap-2 min-w-fit">
-        {ActivityCategoryValues.map(({ value, label, icon }) => (
+        {ActivityCategoryValues.map((category) => (
           <Checkbox
-            key={value}
-            label={label}
-            icon={icon}
-            checked={selected.includes(value)}
-            onChange={(checked) => toggle(value, checked)}
+            key={category.value}
+            label={category.label}
+            icon={category.icon}
+            checked={selected?.value === category.value}
+            onChange={(checked) => handleChange(category, checked)}
           />
         ))}
       </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { ActivityListResponse } from '@/features/activity/activity-list/schema/activity-list.schema';
-import { useActivityOffsetList } from '@/features/activity/hooks/useActivityOffsetList';
 import Text from '@/shared/ui/Text';
 import MainHero from '@/widgets/main/MainHero';
 
@@ -20,13 +19,6 @@ import PopularSection from './PopularSection';
 // >;
 
 const MainContent = ({ initialData }: { initialData: ActivityListResponse }) => {
-  const { activities } = useActivityOffsetList({
-    // isLoading, isError 상태 추가
-    page: 1,
-    size: 20,
-    initialData,
-  });
-
   return (
     <main className="flex-1 mx-auto w-full max-w-350 px-6 py-26 md:px-10">
       <div className="mb-11">
@@ -46,14 +38,11 @@ const MainContent = ({ initialData }: { initialData: ActivityListResponse }) => 
           <Text.B18 as="h2" className="md:text-[32px] md:font-bold">
             🔥 인기 체험
           </Text.B18>{' '}
-          {/* 왜 classname 적용 안되지*/}
           <PopularSection />
         </section>
-        {/* 모든 체험 */}
-        {/* <AllSection /> */}
-        <div className="mt-8">
-          <AllSection activities={activities} />
-        </div>
+        <section className="mt-8">
+          <AllSection initialData={initialData} />
+        </section>
       </div>
     </main>
   );

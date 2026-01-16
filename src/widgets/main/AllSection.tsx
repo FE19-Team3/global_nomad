@@ -1,20 +1,33 @@
 import { useEffect, useState } from 'react';
 
+import { ActivityListResponse } from '@/features/activity/activity-list/schema/activity-list.schema';
+import { useActivityOffsetList } from '@/features/activity/hooks/useActivityOffsetList';
+import { ActivityCategory, ActivitySort } from '@/shared/constants/activity';
 import { Pagination } from '@/shared/ui/Pagination/ui/Pagination';
+import MainCardSkeleton from '@/shared/ui/Skeleton/MainCardSkeleton';
 
-import { ActivityCardItem } from '../activity/activity-card';
 import { ListHeader } from '../list/main/listHeader';
 
 import { ActivityList } from './ActivityList';
 
 interface Props {
-  activities: ActivityCardItem[];
+  initialData: ActivityListResponse;
 }
 
-const AllSection = ({ activities }: Props) => {
-  const [pageSize, setPageSize] = useState(6);
+const AllSection = ({ initialData }: Props) => {
+  const [pageSize, setPageSize] = useState(0);
   const [page, setPage] = useState(1);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<ActivityCategory | undefined>(undefined);
+  const [selectedSort, setSelectedSort] = useState<ActivitySort['values']>('latest');
+
+  const { activities, totalCount, isLoading } = useActivityOffsetList({
+    page,
+    size: pageSize,
+    sort: selectedSort,
+    category: selectedCategory,
+    initialData,
+    enabled: pageSize !== 0,
+  });
 
   // pagination
   useEffect(() => {
@@ -32,35 +45,33 @@ const AllSection = ({ activities }: Props) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  //카테리 변경 시 페이지 번호 초기화
+  //카테고리 변경 시 페이지 번호 초기화
   useEffect(() => {
     setPage(1);
-  }, [selectedCategories]);
-
-  // 선택된 카테고리로 activities 필터링
-  const filteredActivities = selectedCategories.length
-    ? activities.filter((a) => selectedCategories.includes(a.category))
-    : activities;
-
-  const pageType = 'main';
-  const totalCount = filteredActivities.length;
-  const offset = (page - 1) * pageSize;
-
-  const pagedActivities = filteredActivities.slice(offset, offset + pageSize);
+  }, [selectedCategory, selectedSort, pageSize]);
 
   return (
     <section className="flex flex-col items-center mt-5">
       {/* header */}
-      <ListHeader selected={selectedCategories} setSelected={setSelectedCategories} />
+      <ListHeader
+        selectedCategory={selectedCategory}
+        selectedSort={selectedSort}
+        setSelectedCategory={setSelectedCategory}
+        setSelectedSort={setSelectedSort}
+      />
       {/* body */}
       <div className="w-full lg:min-h-261 md:min-h-217 min-h-191 h-fit">
-        <ActivityList activities={pagedActivities} />
+        {isLoading ? (
+          <MainCardSkeleton />
+        ) : (
+          <ActivityList activities={activities} limit={pageSize} />
+        )}
       </div>
       {/* pagination */}
       <div className="mt-7.5">
         <Pagination
           currentPage={page}
-          pageType={pageType}
+          pageType="main"
           totalCount={totalCount}
           pageSize={pageSize}
           onPageChange={(nextPage) => {
