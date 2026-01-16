@@ -1,5 +1,5 @@
-import ArrowLeftIcon from '@/shared/assets/icons/ArrowLeftIcon.svg';
-import ArrowRightIcon from '@/shared/assets/icons/ArrowRightIcon.svg';
+import ArrowLeftIcon from '@/shared/assets/icons/ic_allow_left.svg';
+import ArrowRightIcon from '@/shared/assets/icons/ic_arrow_right.svg';
 import { cn } from '@/shared/lib/cn';
 
 import { PaginationProps, PAGE_SIZE_MAP } from '../model/types';
@@ -12,8 +12,9 @@ export const Pagination = ({
   pageType,
   totalCount,
   onPageChange,
+  pageSize: externalPageSize,
 }: PaginationProps) => {
-  const pageSize = PAGE_SIZE_MAP[pageType];
+  const pageSize = externalPageSize ?? PAGE_SIZE_MAP[pageType];
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   const clamp = (page: number) => Math.min(Math.max(page, 1), totalPages);

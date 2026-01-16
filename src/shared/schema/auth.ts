@@ -30,7 +30,7 @@ export const LoginSchema = z.object({
 // 객체를 “어떻게 보겠다”는 타입 설명서
 export type LoginFormValues = z.infer<typeof LoginSchema>;
 
-// ===== SIGN UP =====
+// ========== SIGN UP ==========
 export const SignupSchema = z
   .object({
     nickname: Nickname,
@@ -45,6 +45,23 @@ export const SignupSchema = z
 
 export type SignupFormValues = z.infer<typeof SignupSchema>;
 
+export const SignupResponse = z.object({
+  id: z.number(),
+  email: z.string().email(),
+  nickname: z.string(),
+  profileImageUrl: z.string().url().nullable(),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime(),
+});
+
+export const SignupRequestSchema = z.object({
+  email: z.string().email(),
+  nickname: z.string().min(1).max(20),
+  password: z.string().min(8),
+});
+export type SignupRequest = z.infer<typeof SignupRequestSchema>;
+// ========== SIGN UP ==========
+
 export const OauthToken = z.union([
   // JWT
   z.string().regex(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/, 'JWT 형식이 아님'),
@@ -55,3 +72,14 @@ export const OauthToken = z.union([
 export const RedirectUri = Url;
 
 export const OauthProvider = OauthProviderEnumSchema;
+
+export const OauthKakaoSignupRequestSchema = z.object({
+  nickname: Nickname,
+  token: OauthToken,
+  redirectUri: RedirectUri,
+});
+
+export const OauthSignupResponseSchema = z.object({
+  accessToken: z.string().min(1),
+  refreshToken: z.string().min(1),
+});

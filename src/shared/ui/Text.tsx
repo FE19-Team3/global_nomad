@@ -71,7 +71,7 @@ TextBody.displayName = 'TextBody';
 
 type TextBaseComponent = (props: TextProps) => React.ReactElement;
 
-type TextComponent = TextBaseComponent & {
+type TextComponent = React.FC<TextProps> & {
   displayName?: string;
 
   M11: TextBaseComponent;

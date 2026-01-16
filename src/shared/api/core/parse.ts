@@ -1,9 +1,22 @@
-import type { ZodType } from 'zod';
-
 import { createApiError } from '@/shared/api';
 
+type SchemaParseSuccess<T> = { success: true; data: T };
+type SchemaParseFailure = {
+  success: false;
+  error: {
+    flatten: (mapper: (issue: { message: string }) => string) => {
+      formErrors: string[];
+      fieldErrors: Record<string, string[]>;
+    };
+  };
+};
+
+export type SchemaParser<T> = {
+  safeParse: (data: unknown) => SchemaParseSuccess<T> | SchemaParseFailure;
+};
+
 type ParseJsonOptions<T> = {
-  schema?: ZodType<T>;
+  schema?: SchemaParser<T>;
 };
 
 export const parseJsonResponse = async <T>(

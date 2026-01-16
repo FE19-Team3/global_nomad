@@ -9,7 +9,7 @@ export interface Reservation {
   };
   scheduleId: number;
   status: 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
-  reviewSubmitted: false;
+  reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;
   date: string;
@@ -18,6 +18,7 @@ export interface Reservation {
   createdAt: string;
   updatedAt: string;
 }
+
 export interface BookingCardProps {
   reservation: Reservation;
 }

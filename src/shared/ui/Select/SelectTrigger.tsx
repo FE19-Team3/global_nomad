@@ -1,5 +1,5 @@
 'use client';
-import ChevronDownIcon from '@/shared/assets/icons/ChevronDownIcon.svg';
+import ChevronDownIcon from '@/shared/assets/icons/ic_chevron_down.svg';
 import { cn } from '@/shared/lib/cn';
 
 import { styles } from './Select.styles';

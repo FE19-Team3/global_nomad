@@ -2,14 +2,14 @@ import { create } from 'zustand';
 
 export type ModalType =
   | { type: 'base'; content: React.ReactNode; showCloseButton?: boolean }
-  | { type: 'alert'; message: string }
+  | { type: 'alert'; message: string; onClose?: () => void }
   | { type: 'confirm'; message: string; onConfirm?: () => void };
 
 type ModalState = {
   stack: ModalType[];
 
   openBaseModal: (payload: { content: React.ReactNode; showCloseButton?: boolean }) => void;
-  openAlert: (payload: string | { message: string }) => void;
+  openAlert: (payload: string | { message: string; onClose?: () => void }) => void;
   openConfirm: (payload: { message: string; onConfirm?: () => void }) => void;
 
   closeTop: () => void;
@@ -26,9 +26,21 @@ export const useModalStore = create<ModalState>((set) => ({
 
   openAlert: (payload) =>
     set((state) => {
-      const message = typeof payload === 'string' ? payload : payload.message;
+      if (typeof payload === 'string') {
+        return {
+          stack: [...state.stack, { type: 'alert', message: payload }],
+        };
+      }
+
       return {
-        stack: [...state.stack, { type: 'alert', message }],
+        stack: [
+          ...state.stack,
+          {
+            type: 'alert',
+            message: payload.message,
+            onClose: payload.onClose,
+          },
+        ],
       };
     }),
 

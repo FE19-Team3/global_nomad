@@ -1,36 +1,34 @@
+'use client';
+
+import { ActivityListResponse } from '@/features/activity/activity-list/schema/activity-list.schema';
+import { useActivityOffsetList } from '@/features/activity/hooks/useActivityOffsetList';
 import Text from '@/shared/ui/Text';
-import { ActivityList } from '@/widgets/main';
 import MainHero from '@/widgets/main/MainHero';
 
+import AllSection from './AllSection';
 import PopularSection from './PopularSection';
 
 // TODO: 실제 데이터로 교체
-const MOCK_ACTIVITIES = [
-  { id: 1, title: '함께 배우면 즐거운 스트릿 댄스', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 2, title: '연인과 사랑의 징검다리', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 3, title: '피오르 체험', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 4, title: '해안가 마을에서 1주일  ', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 5, title: '부모님과 함께 갈대숲 체험', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 6, title: '함께 배우면 즐거운 스트릿 댄스', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 7, title: '연인과 사랑의 징검다리', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 8, title: '피오르 체험', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 9, title: '해안가 마을에서 1주일  ', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 10, title: '부모님과 함께 갈대숲 체험', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 11, title: '함께 배우면 즐거운 스트릿 댄스', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 12, title: '연인과 사랑의 징검다리', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 13, title: '피오르 체험', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 14, title: '해안가 마을에서 1주일  ', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 15, title: '부모님과 함께 갈대숲 체험', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 16, title: '함께 배우면 즐거운 스트릿 댄스', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 17, title: '연인과 사랑의 징검다리', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 18, title: '피오르 체험', rating: 3.9, reviewCount: 108, price: 42800 },
-  { id: 19, title: '해안가 마을에서 1주일  ', rating: 4.5, reviewCount: 86, price: 55000 },
-  { id: 20, title: '부모님과 함께 갈대숲 체험', rating: 4.5, reviewCount: 86, price: 55000 },
-];
+// const BASE_ACTIVITY = {
+//   category: '투어',
+//   address: '서울특별시 강남구 테헤란로 427',
+//   bannerImageUrl:
+//     'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
+// } satisfies Omit<
+//   ActivityCardItem,
+//   'id' | 'title' | 'rating' | 'reviewCount' | 'price' | 'imageUrl'
+// >;
 
-const MainContent = () => {
+const MainContent = ({ initialData }: { initialData: ActivityListResponse }) => {
+  const { activities } = useActivityOffsetList({
+    // isLoading, isError 상태 추가
+    page: 1,
+    size: 20,
+    initialData,
+  });
+
   return (
-    <div className="flex flex-col justify-center max-w-330">
+    <main className="flex-1 mx-auto w-full max-w-350 px-6 py-26 md:px-10">
       <div className="mb-11">
         <MainHero />
       </div>
@@ -58,11 +56,11 @@ const MainContent = () => {
           </Text.B18>
           {/* <AllSection /> */}
           <div className="mt-8">
-            <ActivityList activities={MOCK_ACTIVITIES} />
+            <AllSection activities={activities} />
           </div>
         </section>
       </div>
-    </div>
+    </main>
   );
 };
 

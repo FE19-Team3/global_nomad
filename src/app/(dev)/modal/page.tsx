@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import StarIcon from '@/shared/assets/images/modal/modal-star.svg';
+import StarIcon from '@/shared/assets/icons/ic_modal_star.svg';
 import { useModalStore } from '@/shared/stores/useModalStore';
 import Text from '@/shared/ui/Text';
 

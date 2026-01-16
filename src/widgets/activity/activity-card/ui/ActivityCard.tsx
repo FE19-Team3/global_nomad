@@ -1,12 +1,21 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-import NoImageIcon from '@/shared/assets/icons/no-image.svg';
-import StarIcon from '@/shared/assets/images/icons/icon-star-sm.png';
-import type { Activity } from '@/widgets/activity/types';
+import NoImageIcon from '@/shared/assets/icons/ic_no_image.svg';
+import StarIcon from '@/shared/assets/icons/ic_star_on.png';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 
-export const ActivityCard = ({ id, title, rating, reviewCount, price, imageUrl }: Activity) => {
+export const ActivityCard = ({
+  id,
+  title,
+  rating,
+  reviewCount,
+  price,
+  imageUrl,
+}: ActivityCardItem) => {
   const [hasImage, setHasImage] = useState(Boolean(imageUrl));
   const ratingText = typeof rating === 'number' ? rating.toFixed(1) : '-';
   const reviewText = typeof reviewCount === 'number' ? reviewCount : 0;

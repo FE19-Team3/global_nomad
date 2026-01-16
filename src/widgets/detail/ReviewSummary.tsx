@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import IC_Star from '@/shared/assets/images/star_on.png';
+import IC_Star from '@/shared/assets/icons/ic_star_on.png';
 import Text from '@/shared/ui/Text';
 
 const MAX_VALUE = {

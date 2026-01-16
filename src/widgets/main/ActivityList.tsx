@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-import type { Activity } from '@/entities/activity';
+import type { ActivityCardItem } from '@/widgets/activity/model/activity-card.types';
 
 import { ActivityCard } from './ActivityCard';
 
 interface ActivityListProps {
-  activities?: Activity[];
+  activities?: ActivityCardItem[];
   limit?: number;
 }
 
@@ -19,7 +19,7 @@ export const ActivityList = ({ activities = [], limit }: ActivityListProps) => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-x-4 gap-y-8">
         {items.map((item) => (
           <ActivityCard key={item.id} {...item} />
         ))}
