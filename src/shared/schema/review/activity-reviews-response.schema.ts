@@ -10,7 +10,7 @@ const reviewSchema = z.object({
   id: z.number(),
   user: reviewUserSchema,
   activityId: z.number(),
-  rating: z.number(),
+  rating: z.number().min(0).max(5),
   content: z.string(),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
