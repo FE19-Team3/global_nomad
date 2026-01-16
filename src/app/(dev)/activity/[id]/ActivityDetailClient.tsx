@@ -31,15 +31,17 @@ export default function ActivityDetailClient({ activity, activityId }: Props) {
   return (
     <section>
       <h2>일정</h2>
-
       {activity.schedules.map((schedule) => (
         <div key={schedule.date}>
           <strong>{schedule.date}</strong>
 
           {schedule.times.map((time) => (
-            <button key={time.id} onClick={() => handleReserve(time.id)}>
-              {time.startTime} ~ {time.endTime}
-            </button>
+            <div key={time.id}>
+              <span>scheduleId: {time.id}</span>
+              <button onClick={() => handleReserve(time.id)}>
+                {time.startTime} ~ {time.endTime}
+              </button>
+            </div>
           ))}
         </div>
       ))}
