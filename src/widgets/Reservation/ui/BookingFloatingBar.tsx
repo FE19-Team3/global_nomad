@@ -8,7 +8,7 @@ import { useReservationStore } from '../store/reservationStore';
 
 const styles = tv({
   slots: {
-    root: 'fixed flex flex-col gap-3 bottom-0 left-0 w-full bg-white border-t border-gray-100 px-6 py-4.5 lg:hidden z-50 pb-[calc(1rem+env(safe-area-inset-bottom))]',
+    root: 'fixed flex flex-col gap-3 bottom-0 left-0 w-full bg-white border-t border-gray-100 px-6 py-4.5 lg:hidden z-[10] pb-[calc(1rem+env(safe-area-inset-bottom))]',
     infoArea: 'flex justify-between items-center gap-0.5',
     price: 'text-lg font-bold text-gray-950',
     unit: 'text-base text-gray-600 font-normal',

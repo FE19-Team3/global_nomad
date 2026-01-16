@@ -3,6 +3,7 @@
 import { ActivityDetail } from '@/features/activity/activity-detail/model/activity-detail.types';
 import { createReservationClient } from '@/features/reservation/useCreateReservation';
 import { isApiError } from '@/shared/api';
+import { useModalStore } from '@/shared/stores/useModalStore';
 import { useReservationStore } from '@/widgets/Reservation/store/reservationStore';
 import { ReservationSection } from '@/widgets/Reservation/ui/ReservationSection';
 
@@ -16,6 +17,7 @@ type Props = {
 
 export function ReservationContainer({ activityId, price, schedules }: Props) {
   const { headCount } = useReservationStore();
+  const { openAlert } = useModalStore();
   const handleReserve = async (scheduleId: number) => {
     try {
       await createReservationClient({
@@ -25,11 +27,10 @@ export function ReservationContainer({ activityId, price, schedules }: Props) {
           headCount,
         },
       });
-
-      alert('예약이 완료되었습니다.');
+      openAlert('예약이 완료되었습니다.');
     } catch (e) {
       if (isApiError(e) && e.status === 409) {
-        alert(e.message);
+        openAlert(e.message);
       }
     }
   };

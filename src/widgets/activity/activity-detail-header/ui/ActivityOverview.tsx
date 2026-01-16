@@ -37,7 +37,7 @@ const ActivityMenu = ({ experience, onEdit, onDelete }: ActivityMenuProps) => {
   };
 
   return (
-    <PopoverContent popoverKey="activity-overview-menu" placement="right-start">
+    <PopoverContent popoverKey="activity-overview-menu" placement="bottom-end">
       <button
         type="button"
         onClick={handleEdit}
@@ -57,7 +57,7 @@ const ActivityMenu = ({ experience, onEdit, onDelete }: ActivityMenuProps) => {
 };
 
 export const ActivityOverview = ({ experience, onEdit, onDelete }: ActivityOverviewProps) => {
-  const { category, title, rating, reviewCount, address, description } = experience;
+  const { category, title, rating, reviewCount, address } = experience;
 
   return (
     <section className="relative flex flex-col gap-3 bg-white">
@@ -94,8 +94,6 @@ export const ActivityOverview = ({ experience, onEdit, onDelete }: ActivityOverv
         <LocationIcon />
         <span className="text-m-14">{address ?? '주소 정보가 없습니다.'}</span>
       </div>
-
-      {description && <p className="mt-1 text-body-16 text-gray-700">{description}</p>}
     </section>
   );
 };

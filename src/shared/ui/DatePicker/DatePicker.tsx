@@ -25,6 +25,10 @@ const DatePicker = ({ onDateSelect, selectedDates = SELECTED }: DatePickerProps)
   useEffect(() => {
     if (!calendarRef.current) return;
 
+    // 오늘 날짜 기준 추가 (과거 날짜 막기용)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const calendar = new Calendar(calendarRef.current, {
       plugins: [dayGridPlugin, interactionPlugin],
       events: selectedDates.map((date) => ({ start: date, allDay: true })),
@@ -39,6 +43,16 @@ const DatePicker = ({ onDateSelect, selectedDates = SELECTED }: DatePickerProps)
       unselectAuto: false,
 
       select: (info) => {
+        // 선택한 날짜가 과거인지 체크
+        const selectedDate = new Date(info.startStr);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        // 과거 날짜는 선택 불가
+        if (selectedDate < today) {
+          calendar.unselect();
+          return;
+        }
+
         // event 날짜만 선택 가능
         if (!selectedDates.includes(info.startStr)) {
           calendar.unselect();
@@ -56,11 +70,16 @@ const DatePicker = ({ onDateSelect, selectedDates = SELECTED }: DatePickerProps)
           onDateSelect(info.startStr);
         }
       },
+
       dayMaxEventRows: false,
       height: 'auto',
       // 선택 가능한 날짜(이벤트 있는 날짜에 태그 추가
       dayCellClassNames: (arg) => {
         const classes = [];
+
+        // 셀 날짜도 시간 제거
+        const cellDate = new Date(arg.date);
+        cellDate.setHours(0, 0, 0, 0);
 
         // 로컬 시간대 기준으로 YYYY-MM-DD 형식으로 변환
         const year = arg.date.getFullYear();
@@ -68,11 +87,19 @@ const DatePicker = ({ onDateSelect, selectedDates = SELECTED }: DatePickerProps)
         const day = String(arg.date.getDate()).padStart(2, '0');
         const dateStr = `${year}-${month}-${day}`;
 
-        // event 날짜인지 확인
-        if (selectedDates.includes(dateStr)) {
+        // 과거 날짜인지 체크
+        const isPast = cellDate < today;
+
+        // event 날짜이면서 과거가 아닌 경우만 선택 가능
+        if (selectedDates.includes(dateStr) && !isPast) {
           classes.push('selectable-date');
         } else {
           classes.push('not-selectable-date');
+        }
+
+        // 과거 날짜에 추가 클래스 (CSS 스타일링용)
+        if (isPast) {
+          classes.push('past-date');
         }
 
         return classes;

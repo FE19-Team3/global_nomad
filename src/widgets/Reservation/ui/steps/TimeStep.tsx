@@ -1,4 +1,4 @@
-import Button from '@/shared/ui/Button/Button';
+import { Radio } from '@/shared/ui/Radio';
 import Text from '@/shared/ui/Text';
 
 import { useReservationStore } from '../../store/reservationStore';
@@ -18,20 +18,25 @@ export const TimeStep = ({ schedules }: TimeStepProps) => {
       <Text size={16} weight="B">
         예약 가능한 시간
       </Text>
-      {availableTimes.map((time) => (
-        <Button
-          key={time.id}
-          variant="secondary"
-          size="md"
-          selected={selectedTime === `${time.startTime}~${time.endTime}`}
-          onClick={() => {
-            setSelectedTime(`${time.startTime}~${time.endTime}`);
-            setSelectedScheduleId(time.id); // 예약에 사용할 ID 저장
-          }}
-        >
-          {`${time.startTime}~${time.endTime}`}
-        </Button>
-      ))}
+      {/* Button → Radio로 변경 */}
+      <Radio
+        name="reservation-time"
+        selectedValue={selectedTime ?? undefined}
+        onChange={(value) => {
+          setSelectedTime(value);
+          // value에서 scheduleId 찾기
+          const time = availableTimes.find((t) => `${t.startTime}~${t.endTime}` === value);
+          if (time) setSelectedScheduleId(time.id);
+        }}
+      >
+        {availableTimes.map((time) => (
+          <Radio.Item
+            key={time.id}
+            value={`${time.startTime}~${time.endTime}`}
+            label={`${time.startTime}~${time.endTime}`}
+          />
+        ))}
+      </Radio>
     </div>
   );
 };

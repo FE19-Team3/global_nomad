@@ -2,6 +2,7 @@ import { getActivityDetail } from '@/entities/activity/api/getActivityDetail';
 import { mapToActivityDetail } from '@/features/activity/activity-detail/lib/mapToActivityDetail';
 import { isApiError } from '@/shared/api';
 import Text from '@/shared/ui/Text';
+import { ActivityOverview } from '@/widgets/activity/activity-detail-header';
 import ReviewSummary from '@/widgets/detail/ReviewSummary';
 import { ActivityGallery } from '@/widgets/gallery/ActivityGallery';
 import { LocationMap } from '@/widgets/location-map/LocationMap';
@@ -13,7 +14,7 @@ type Props = {
     activityId: string;
   };
 };
-// import { Pagination } from '@/shared/ui/Pagination/ui/Pagination';
+
 export default async function Page({ params }: Props) {
   const { activityId } = await params;
   const id = Number(activityId);
@@ -21,10 +22,15 @@ export default async function Page({ params }: Props) {
     const { data } = await getActivityDetail(id);
     const activity = mapToActivityDetail(data);
     return (
-      <div className="flex flex-col gap-5 md:flex-row ">
+      <main className="flex flex-col gap-5 md:flex-row mx-auto w-full max-w-350 px-6 py-22 md:px-10">
         <div className="flex flex-col gap-5 md:flex-1 md:gap-6 lg:gap-10">
           <ActivityGallery subImageUrls={activity.subImages.map((i) => i.imageUrl)} />
           {/* PC - activity-overview 영역 */}
+
+          {/* 모바일/태블릿에서만 오버뷰 표시 */}
+          <div className="lg:hidden">
+            <ActivityOverview experience={activity} />
+          </div>
 
           <div className="pb-5 border-b border-gray-100 md:pb-6 lg:pb-10">
             <Text size={18} weight="B">
@@ -39,12 +45,14 @@ export default async function Page({ params }: Props) {
               오시는 길
             </Text>
             <Text size={14}>{activity.address}</Text>
-            <LocationMap
-              location={{
-                address: activity.address,
-                placeName: activity.title,
-              }}
-            />
+            <div className="relative z-0">
+              <LocationMap
+                location={{
+                  address: activity.address,
+                  placeName: activity.title,
+                }}
+              />
+            </div>
           </div>
 
           <ReviewSummary averageRating={4.5} totalCount={1300} />
@@ -66,12 +74,23 @@ export default async function Page({ params }: Props) {
             {/* <Pagination currentPage={1} pageType="review" totalCount={5} onPageChange={() => {}} /> */}
           </div>
         </div>
-        <ReservationContainer
-          activityId={id}
-          price={activity.price}
-          schedules={activity.schedules}
-        />
-      </div>
+
+        {/* 오른쪽: 데스크톱 사이드바 */}
+        <aside className="lg:w-[384px]">
+          <div className="sticky top-18 flex flex-col gap-6">
+            {/* 데스크톱에서만 오버뷰 표시 */}
+            <div className="hidden lg:block">
+              <ActivityOverview experience={activity} />
+            </div>
+
+            <ReservationContainer
+              activityId={id}
+              price={activity.price}
+              schedules={activity.schedules}
+            />
+          </div>
+        </aside>
+      </main>
     );
   } catch (e) {
     if (isApiError(e)) {
