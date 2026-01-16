@@ -25,7 +25,7 @@ export const ActivityCard = ({
   }, [imageUrl]);
 
   return (
-    <Link href={`/experience/${id}`} className="group relative block h-92 w-full">
+    <Link href={`/activities/${id}`} className="group relative block h-92 w-full">
       <div className="relative h-92 w-full rounded-4xl text-gray-950">
         <div className="absolute inset-0 overflow-hidden rounded-4xl bg-gray-50">
           {hasImage ? (

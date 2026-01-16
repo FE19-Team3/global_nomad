@@ -26,7 +26,7 @@ interface BookingFloatingBarProps {
 }
 
 export const BookingFloatingBar = ({ price }: BookingFloatingBarProps) => {
-  const { headCount, setIsOpen, selectedTime } = useReservationStore();
+  const { date, headCount, setIsOpen, selectedTime } = useReservationStore();
   const { openAlert } = useModalStore();
   const isDisabled = !selectedTime;
   const slots = styles();
@@ -39,7 +39,7 @@ export const BookingFloatingBar = ({ price }: BookingFloatingBarProps) => {
         </div>
         {/* 날짜 선택하기를 눌러도 바텀시트가 열려야 하므로 onOpen 연결 */}
         <button type="button" className={slots.link()} onClick={() => setIsOpen(true)}>
-          {selectedTime ? selectedTime : '날짜 선택하기'}
+          {date && selectedTime ? `${date} ${selectedTime}` : '날짜 선택하기'}
         </button>
       </div>
 
