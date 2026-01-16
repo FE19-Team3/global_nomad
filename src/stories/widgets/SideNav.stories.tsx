@@ -27,23 +27,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof SideNav>;
 
-export const Default: Story = {
-  args: {
-    profileImage: null,
-  },
-};
+export const Default: Story = {};
 
-export const WithProfileImage: Story = {
-  args: {
-    profileImage:
-      'https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2025/04/29/7b72e65a-eeb0-4810-8b36-e026dc210c47.jpg',
-  },
-};
+export const WithProfileImage: Story = {};
 
 export const BookingPage: Story = {
-  args: {
-    profileImage: null,
-  },
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -55,9 +43,6 @@ export const BookingPage: Story = {
 };
 
 export const MyExperiencePage: Story = {
-  args: {
-    profileImage: null,
-  },
   parameters: {
     nextjs: {
       appDirectory: true,
@@ -69,9 +54,6 @@ export const MyExperiencePage: Story = {
 };
 
 export const BookingStatusPage: Story = {
-  args: {
-    profileImage: null,
-  },
   parameters: {
     nextjs: {
       appDirectory: true,
