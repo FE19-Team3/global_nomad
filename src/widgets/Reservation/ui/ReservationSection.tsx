@@ -5,6 +5,7 @@ import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
 
 import { useReservationStore } from '../store/reservationStore';
+import { ReservationSectionProps } from '../types';
 
 import { BookingBottomSheet } from './BookingBottomSheet';
 import { BookingFloatingBar } from './BookingFloatingBar';
@@ -12,13 +13,10 @@ import { DateStep } from './steps/DateStep';
 import { PeopleStep } from './steps/PeopleStep';
 import { TimeStep } from './steps/TimeStep';
 
-interface ReservationSectionProps {
-  price: number;
-}
-export const ReservationSection = ({ price }: ReservationSectionProps) => {
+export const ReservationSection = ({ price, schedules }: ReservationSectionProps) => {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const { headCount } = useReservationStore();
-
+  const availableDates = schedules.map((item) => item.date);
   // 1. PC 사이드바 (aside 레이아웃)
   if (isDesktop) {
     return (
@@ -34,11 +32,11 @@ export const ReservationSection = ({ price }: ReservationSectionProps) => {
             <Text size={16} weight="B" className=" block">
               날짜
             </Text>
-            <DateStep className="mt-4" />
+            <DateStep className="mt-4" availableDates={availableDates} />
           </div>
           <PeopleStep />
           <div>
-            <TimeStep />
+            <TimeStep schedules={schedules} />
           </div>
           <div className="flex justify-between items-center font-bold pt-4 border-t border-gray-100">
             <div className="flex flex-1 gap-x-1">
@@ -46,7 +44,7 @@ export const ReservationSection = ({ price }: ReservationSectionProps) => {
                 총 합계
               </Text>
               <Text size={20} weight="B">
-                ₩ {headCount * 1000}
+                ₩ {headCount * price}
               </Text>
             </div>
             <Button size="sm">예약하기</Button>
@@ -60,7 +58,7 @@ export const ReservationSection = ({ price }: ReservationSectionProps) => {
   return (
     <>
       <BookingFloatingBar price={price} />
-      <BookingBottomSheet />
+      <BookingBottomSheet schedules={schedules} availableDates={availableDates} />
     </>
   );
 };

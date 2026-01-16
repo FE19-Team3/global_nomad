@@ -2,25 +2,31 @@ import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
 
 import { useReservationStore } from '../../store/reservationStore';
+import { ActivitySchedule } from '../../types';
 
-const Mocktimes = ['14:00~15:00', '15:00~16:00']; //임시 타임
+interface TimeStepProps {
+  schedules: ActivitySchedule[];
+}
 
-export const TimeStep = () => {
-  const { selectedTime, setSelectedTime } = useReservationStore();
+export const TimeStep = ({ schedules }: TimeStepProps) => {
+  const { date, selectedTime, setSelectedTime } = useReservationStore();
+  const currentDate = schedules?.find((item) => item.date === date);
+  const availableTimes = currentDate?.times || [];
+
   return (
     <div className="flex flex-col gap-3">
       <Text size={16} weight="B">
         예약 가능한 시간
       </Text>
-      {Mocktimes.map((time) => (
+      {availableTimes.map((time) => (
         <Button
-          key={time}
+          key={time.id}
           variant="secondary"
           size="md"
-          selected={selectedTime === time}
-          onClick={() => setSelectedTime(time)}
+          selected={selectedTime === `${time.startTime}~${time.endTime}`}
+          onClick={() => setSelectedTime(`${time.startTime}~${time.endTime}`)}
         >
-          {time}
+          {`${time.startTime}~${time.endTime}`}
         </Button>
       ))}
     </div>
