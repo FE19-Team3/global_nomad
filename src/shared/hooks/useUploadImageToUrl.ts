@@ -2,17 +2,19 @@
 
 import { useMutation } from '@tanstack/react-query';
 
+import type { ImageUploadType } from '@/shared/types/updateImage';
+
+import { ApiError } from '../api';
 import { uploadImageToUrl } from '../api/images/uploadImageToUrl';
 
-// 추후 apiError 처리 필요
 type Options = {
   onSuccess?: (url: string) => void;
-  onError?: (error: Error) => void;
+  onError?: (error: ApiError) => void;
 };
 
-export const useUploadImageToUrl = (options?: Options) => {
-  return useMutation<string, Error, File>({
-    mutationFn: uploadImageToUrl,
+export const useUploadImageToUrl = (type: ImageUploadType, options?: Options) => {
+  return useMutation<string, ApiError, File>({
+    mutationFn: (file) => uploadImageToUrl(file, type),
     ...options,
   });
 };

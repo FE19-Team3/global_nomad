@@ -1,13 +1,11 @@
 'use client';
 
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 import { useFileInput } from '@/shared/hooks/useFileInput';
 import { useUploadImageToUrl } from '@/shared/hooks/useUploadImageToUrl';
 import { validateImageFile } from '@/shared/lib/validateImageFile';
 
-// Blob 로직 전부 임시 로직
-import { revokeIfBlob } from './temp/revokeIfBlob';
 import { UpdateProfileImageView } from './UpdateProfileImageView';
 
 interface UpdateProfileImageProps {
@@ -20,7 +18,7 @@ export const UpdateProfileImage = ({ currentImageUrl, onImageUpdate }: UpdatePro
 
   const { ref: fileInputRef, open: openFilePicker, reset: resetFileInput } = useFileInput();
 
-  const { mutate, isPending } = useUploadImageToUrl({
+  const { mutate, isPending } = useUploadImageToUrl('profile', {
     onSuccess: (url) => {
       setUploadedUrl(url);
       onImageUpdate(url);
@@ -31,12 +29,6 @@ export const UpdateProfileImage = ({ currentImageUrl, onImageUpdate }: UpdatePro
       alert('이미지 업로드에 실패했습니다.');
     },
   });
-
-  useEffect(() => {
-    return () => {
-      revokeIfBlob(uploadedUrl);
-    };
-  }, [uploadedUrl]);
 
   const getSelectedFile = (event: ChangeEvent<HTMLInputElement>) => event.target.files?.[0] ?? null;
 
@@ -50,7 +42,6 @@ export const UpdateProfileImage = ({ currentImageUrl, onImageUpdate }: UpdatePro
   };
 
   const clearPreview = () => {
-    revokeIfBlob(uploadedUrl);
     setUploadedUrl(null);
     onImageUpdate(null);
     resetFileInput();
@@ -65,7 +56,6 @@ export const UpdateProfileImage = ({ currentImageUrl, onImageUpdate }: UpdatePro
       return;
     }
 
-    revokeIfBlob(uploadedUrl);
     mutate(file, { onSettled: resetFileInput });
   };
 
