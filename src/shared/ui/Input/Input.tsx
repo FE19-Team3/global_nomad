@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { forwardRef, InputHTMLAttributes, ChangeEvent } from 'react';
 
 import { cn } from '@/shared/lib/cn';
@@ -15,7 +14,7 @@ export interface InputProps extends Omit<
   disabled?: boolean;
   error?: boolean;
   errorMsg?: string;
-  icon?: string; // TODO: SVGIcon 컴포넌트 추가후, 타입 변경
+  icon?: React.ReactNode;
   placeholder?: string;
   radius?: 'md' | 'lg';
   size?: 'md' | 'lg';
@@ -60,11 +59,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={container()}>
-        {icon && (
-          <div className={iconWrapper()}>
-            <Image src={icon} alt="아이콘" width={24} height={24} className="w-6 h-6" />
-          </div>
-        )}
+        {icon && <div className={iconWrapper()}>{icon}</div>}
         <input
           ref={ref}
           type={type}

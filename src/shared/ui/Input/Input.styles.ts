@@ -2,10 +2,10 @@ import { tv } from 'tailwind-variants';
 
 export const styles = tv({
   slots: {
-    container: 'flex flex-col justify-start relative',
-    iconWrapper: 'absolute top-0 left-0 flex items-center justify-center pointer-events-none',
-    input:
-      'flex items-center w-full text-gray-950 placeholder-gray-400 focus:outline-none transition-all duration-150',
+    container: 'relative',
+    iconWrapper:
+      'absolute top-0 left-0 flex items-center justify-center pointer-events-none text-gray-800',
+    input: 'flex items-center w-full text-gray-950 focus:outline-none transition-all duration-150',
     error: 'px-2 mt-1.5 text-red-500',
   },
   variants: {
@@ -21,17 +21,17 @@ export const styles = tv({
     },
     size: {
       md: {
-        input: 'h-13.5 px-5',
-        iconWrapper: 'h-13.5 px-5',
+        input: 'h-13.5 px-5 placeholder-gray-400',
+        iconWrapper: 'h-8 top-1/2 -translate-y-1/2 mx-4',
       },
       lg: {
-        input: 'h-17.5 px-8',
-        iconWrapper: 'h-17.5 px-8',
+        input: 'h-17.5 px-8 placeholder-gray-700',
+        iconWrapper: 'h-6 top-1/2 -translate-y-1/2 mx-7',
       },
     },
     radius: {
       md: { input: 'rounded-[16px]' },
-      lg: { input: 'rounded-[24px]' },
+      lg: { input: 'rounded-3xl' },
     },
     disabled: {
       true: { input: 'bg-gray-100 cursor-not-allowed opacity-50' },
