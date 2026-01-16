@@ -172,3 +172,31 @@
 .datepicker-calendar .fc-day-today {
   background-color: transparent !important;
 }
+
+/* 과거 날짜 스타일 */
+.past-date {
+  opacity: 0.4;
+  pointer-events: none; /* 클릭 자체를 막음 */
+}
+
+/* 수정: 포커스 상태 (마우스 올렸을 때) - 빨간색 */
+.selectable-date .fc-daygrid-day-frame:hover {
+  background-color: rgb(var(--color-primary) / 1) !important;
+}
+
+/* 수정: 키보드 포커스 상태 */
+.selectable-date .fc-daygrid-day-frame:focus,
+.selectable-date .fc-daygrid-day-frame:focus-within {
+  background-color: rgb(var(--color-primary) / 1) !important;
+  outline: 2px solid rgb(var(--color-primary) / 1);
+}
+
+/* 수정: 선택한 날짜 (클릭 후) - 파란색 */
+.fc-daygrid-day.fc-day-selected .fc-daygrid-day-frame {
+  background-color: rgb(var(--color-primary) / 1) !important;
+}
+
+/* 수정: 선택한 날짜에 마우스 올려도 파란색 유지 */
+.fc-daygrid-day.fc-day-selected .fc-daygrid-day-frame:hover {
+  background-color: rgb(var(--color-primary) / 1) !important;
+}
