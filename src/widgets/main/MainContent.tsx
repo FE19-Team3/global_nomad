@@ -36,14 +36,10 @@ const MainContent = ({ initialData }: { initialData: ActivityListResponse }) => 
           <SearchSection keyword={searchKeyword} />
         ) : (
           <div>
-            {/* 인기 체험 */}
-            <section className="mb-15">
-              <Text.B18 as="h2" className="md:text-[32px] md:font-bold">
-                🔥 인기 체험
-              </Text.B18>{' '}
+            <section className="mb-13">
               <PopularSection />
             </section>
-            <section className="mt-8">
+            <section>
               <AllSection initialData={initialData} />
             </section>
           </div>
