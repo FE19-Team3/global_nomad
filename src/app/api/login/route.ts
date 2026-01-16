@@ -1,51 +1,52 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { respondError, toApiError } from '@/shared/api';
+import { serverApi } from '@/shared/api/server';
+import { loginRequestSchema } from '@/shared/schema/auth/login-request.schema';
+import { loginResponseSchema } from '@/shared/schema/auth/login-response.schema';
+
 export const POST = async (req: NextRequest) => {
   try {
-    // 클라이언트(LoginForm)에서 보낸 데이터 추출 (email, password)
-    const body = await req.json();
+    // 요청 body 파싱 + 검증
+    const body = loginRequestSchema.parse(await req.json());
+    console.log('[LOGIN BODY]', body);
 
-    // 외부 Auth API 호출
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+    // Auth 서버 로그인 요청
+    const {
+      data: { accessToken, refreshToken },
+    } = await serverApi.post({
+      path: '/auth/login',
+      body,
+      schema: loginResponseSchema,
     });
 
-    if (!res.ok) {
-      // **추후 수정** ApiError 규격으로 매핑
-      return NextResponse.json({ message: 'Login failed' }, { status: res.status });
-    }
-
-    const { accessToken, refreshToken } = await res.json();
-
-    // HttpOnly Cookie 설정
-    // cookies() 함수를 호출하면 현재 요청(Request)에 포함된 쿠키들을 읽거나, 응답(Response)에 보낼 새로운 쿠키를 설정할 수 있는 **객체(Store)**를 반환합니다
-    const response = NextResponse.json({ success: true }, { status: 200 });
+    // 응답 생성 (쿠키 설정을 위해 NextResponse 사용)
+    const response = NextResponse.json({ success: true });
 
     const isSecure = process.env.NODE_ENV === 'production';
 
-    // Access Token 설정
+    // Access Token 쿠키 설정
     response.cookies.set('accessToken', accessToken, {
       httpOnly: true,
       secure: isSecure,
-      sameSite: 'lax', //기본 보안
+      sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60, // 1시간
+      maxAge: 60 * 60,
     });
 
-    // Refresh Token 설정
+    // Refresh Token 쿠키 설정
     response.cookies.set('refreshToken', refreshToken, {
       httpOnly: true,
       secure: isSecure,
-      sameSite: 'lax', //기본 보안
+      sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 7일
+      maxAge: 60 * 60 * 24 * 7,
     });
 
+    // 정상 종료
     return response;
-  } catch {
-    // **추후 수정** ApiError 공통 처리
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+  } catch (e) {
+    // 모든 에러는 공통 ApiError 흐름으로 종료
+    return respondError(toApiError(e));
   }
 };

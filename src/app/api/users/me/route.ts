@@ -1,20 +1,18 @@
 import { NextResponse } from 'next/server';
 
-import { fetchWithAuth } from '@/shared/lib/fetchWithAuth';
+import { respondError, toApiError } from '@/shared/api';
+import { serverApi } from '@/shared/api/server';
+import { userMeResponseSchema } from '@/shared/schema/user/user-me-response.schema';
 
 export const GET = async () => {
   try {
-    const res = await fetchWithAuth('/users/me', {
-      method: 'GET',
+    const { data: user } = await serverApi.get({
+      path: '/users/me',
+      schema: userMeResponseSchema,
     });
 
-    if (!res.ok) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: res.status });
-    }
-
-    const user = await res.json();
     return NextResponse.json(user);
-  } catch {
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+  } catch (e) {
+    return respondError(toApiError(e));
   }
 };
