@@ -2,7 +2,6 @@
 
 import { tv } from 'tailwind-variants';
 
-import { useModalStore } from '@/shared/stores/useModalStore';
 import Button from '@/shared/ui/Button/Button';
 
 import { useReservationStore } from '../store/reservationStore';
@@ -28,7 +27,6 @@ interface BookingFloatingBarProps {
 
 export const BookingFloatingBar = ({ price, onReserve }: BookingFloatingBarProps) => {
   const { date, headCount, setIsOpen, selectedTime, selectedScheduleId } = useReservationStore();
-  const { openAlert } = useModalStore();
   const isDisabled = !selectedTime;
   const slots = styles();
 
@@ -49,7 +47,6 @@ export const BookingFloatingBar = ({ price, onReserve }: BookingFloatingBarProps
         onClick={() => {
           if (!selectedScheduleId) return;
           onReserve(selectedScheduleId);
-          openAlert('예약이 완료되었습니다.');
         }}
         size="full"
         className={slots.reserveBtn()}
