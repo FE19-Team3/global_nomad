@@ -7,19 +7,21 @@ import Ic_calender from '@/shared/assets/icons/ic_calender.svg';
 import Ic_setting from '@/shared/assets/icons/ic_setting.svg';
 import Ic_speech from '@/shared/assets/icons/ic_speech.svg';
 import Ic_user from '@/shared/assets/icons/ic_user.svg';
+import { cn } from '@/shared/lib/cn';
+import { useAuth } from '@/widgets/header/model/useAuth';
 
 import { NavMenu } from '../components/nav-menu';
 
 import { styles } from './side-nav.style';
 
-type SideNavProps = {
-  profileImage: string | null;
-};
-
 type BaseNavItem = {
   value: string;
   href: string;
   icon: React.ReactElement<React.SVGProps<SVGSVGElement>>;
+};
+
+type SideNavProps = {
+  className?: string;
 };
 
 // 경로는 임시 경로 설정한 것임
@@ -30,7 +32,8 @@ const navItems: BaseNavItem[] = [
   { value: '예약 현황', href: '/booking-status', icon: <Ic_calender /> },
 ];
 
-export const SideNav = ({ profileImage }: SideNavProps) => {
+export const SideNav = ({ className }: SideNavProps) => {
+  const { user } = useAuth();
   const pathname = usePathname();
   const slots = styles();
   const navMenuItems = navItems.map((item) => ({
@@ -39,10 +42,10 @@ export const SideNav = ({ profileImage }: SideNavProps) => {
   }));
 
   return (
-    <aside className={slots.root()}>
+    <aside className={cn(slots.root(), className)}>
       <div className={slots.profileImage()}>
         <Image
-          src={profileImage ?? '/default-profile.svg'}
+          src={user?.profileImageUrl ?? '/default-profile.svg'}
           alt="프로필 이미지"
           fill
           className="object-cover"
