@@ -19,8 +19,6 @@ export default function ActivityDetailClient({ activity, activityId }: Props) {
           headCount: 1,
         },
       });
-
-      alert('예약이 완료되었습니다.');
     } catch (e) {
       if (isApiError(e) && e.status === 409) {
         alert(e.message);

@@ -15,4 +15,5 @@ export interface ActivitySchedule {
 export interface ReservationSectionProps {
   price: number;
   schedules: ActivitySchedule[];
+  onReserve: (scheduleId: number) => void;
 }

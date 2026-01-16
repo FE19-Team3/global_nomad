@@ -1,8 +1,11 @@
-export type User = {
+export interface User {
   id: number;
+  email: string;
   nickname: string;
   profileImageUrl: string;
-};
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface AuthState {
   user: User | null; // 사용자 정보 (없으면 null)

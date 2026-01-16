@@ -13,9 +13,9 @@ import { DateStep } from './steps/DateStep';
 import { PeopleStep } from './steps/PeopleStep';
 import { TimeStep } from './steps/TimeStep';
 
-export const ReservationSection = ({ price, schedules }: ReservationSectionProps) => {
+export const ReservationSection = ({ price, schedules, onReserve }: ReservationSectionProps) => {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
-  const { headCount } = useReservationStore();
+  const { headCount, selectedScheduleId } = useReservationStore();
   const availableDates = schedules.map((item) => item.date);
   // 1. PC 사이드바 (aside 레이아웃)
   if (isDesktop) {
@@ -47,7 +47,15 @@ export const ReservationSection = ({ price, schedules }: ReservationSectionProps
                 ₩ {headCount * price}
               </Text>
             </div>
-            <Button size="sm">예약하기</Button>
+            <Button
+              size="sm"
+              onClick={() => {
+                if (!selectedScheduleId) return;
+                onReserve(selectedScheduleId);
+              }}
+            >
+              예약하기
+            </Button>
           </div>
         </div>
       </aside>
@@ -57,8 +65,12 @@ export const ReservationSection = ({ price, schedules }: ReservationSectionProps
   // 2. 모바일/태블릿 (플로팅 바 + 바텀시트)
   return (
     <>
-      <BookingFloatingBar price={price} />
-      <BookingBottomSheet schedules={schedules} availableDates={availableDates} />
+      <BookingFloatingBar price={price} onReserve={onReserve} />
+      <BookingBottomSheet
+        schedules={schedules}
+        availableDates={availableDates}
+        onReserve={onReserve}
+      />
     </>
   );
 };
