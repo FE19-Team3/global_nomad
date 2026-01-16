@@ -41,7 +41,7 @@ export async function POST(req: NextRequest): Promise<Response> {
       schema: imageUrlSchema,
     });
 
-    const { profileImageUrl, activityImageUrl } = res;
+    const { profileImageUrl, activityImageUrl } = res.data;
 
     return NextResponse.json(profileImageUrl ?? activityImageUrl);
   } catch (e) {
