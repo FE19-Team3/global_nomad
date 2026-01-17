@@ -21,11 +21,15 @@ export async function POST() {
       data: { accessToken, refreshToken: newRefreshToken },
     } = await serverApi.post({
       path: '/auth/tokens',
-      body: { refreshToken },
+      init: {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      },
       schema: tokenResponseSchema,
     });
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ accessToken, refreshToken: newRefreshToken });
     const isSecure = process.env.NODE_ENV === 'production';
 
     // accessToken 갱신

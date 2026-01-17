@@ -40,6 +40,7 @@ export const parseJsonResponse = async <T>(
   }
 
   const data = await res.json();
+  console.log(data);
 
   if (options.schema) {
     const parsed = options.schema.safeParse(data);

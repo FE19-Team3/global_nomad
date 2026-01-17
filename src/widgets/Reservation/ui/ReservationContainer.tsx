@@ -1,8 +1,11 @@
 'use client';
 
+import { z } from 'zod';
+
 import { ActivityDetail } from '@/features/activity/activity-detail/model/activity-detail.types';
 import { createReservationClient } from '@/features/reservation/useCreateReservation';
 import { isApiError } from '@/shared/api';
+import { clientApi } from '@/shared/api/client/fetch';
 import { useModalStore } from '@/shared/stores/useModalStore';
 import { Skeleton } from '@/shared/ui/Skeleton';
 import { useAuth } from '@/widgets/header/model/useAuth';
@@ -17,6 +20,11 @@ type Props = {
   schedules: Schedule[];
   ownerId: number;
 };
+
+const schema = z.object({
+  refreshToken: z.string(),
+  accessToken: z.string(),
+});
 
 export function ReservationContainer({ activityId, price, schedules, ownerId }: Props) {
   const { user, isLoading } = useAuth();
@@ -48,8 +56,25 @@ export function ReservationContainer({ activityId, price, schedules, ownerId }: 
       if (isApiError(e) && e.status === 409) {
         openAlert(e.message);
       }
+
+      if (isApiError(e) && e.status === 401) {
+        try {
+          await clientApi.post({ path: '/refresh', schema });
+          // await createReservationClient({
+          //   activityId,
+          //   body: { scheduleId, headCount },
+          // });
+          openAlert('예약이 완료되었습니다.');
+        } catch (e2) {
+          if (isApiError(e2)) {
+            openAlert(e2.message);
+            return;
+          }
+          openAlert('예약에 실패했습니다. 다시 시도해주세요.');
+          return;
+        }
+      }
     }
   };
-
   return <ReservationSection price={price} schedules={schedules} onReserve={handleReserve} />;
 }
