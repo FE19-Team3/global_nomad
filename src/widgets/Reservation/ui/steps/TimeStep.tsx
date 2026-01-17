@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { toMinutes, toDateInputValue, normalizeDate } from '@/shared/lib/time';
 import { Radio } from '@/shared/ui/Radio';
 import Text from '@/shared/ui/Text';
@@ -11,19 +13,20 @@ interface TimeStepProps {
 
 export const TimeStep = ({ schedules }: TimeStepProps) => {
   const { date, selectedTime, setSelectedTime, setSelectedScheduleId } = useReservationStore();
-  const currentDate = schedules?.filter((item) => item.date === date);
-  const availableTimes = currentDate?.flatMap((schedule) => schedule.times || []) || [];
-  const now = new Date();
-  const today = toDateInputValue(normalizeDate(now));
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  const filteredTimes =
-    date === today
-      ? availableTimes.filter((time) => {
-          const startMinutes = toMinutes(time.startTime);
-          if (startMinutes === null) return false;
-          return startMinutes > nowMinutes;
-        })
-      : availableTimes;
+  const filteredTimes = useMemo(() => {
+    const currentDate = schedules?.filter((item) => item.date === date);
+    const availableTimes = currentDate?.flatMap((schedule) => schedule.times || []) || [];
+    const now = new Date();
+    const today = toDateInputValue(normalizeDate(now));
+    if (date !== today) return availableTimes;
+
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    return availableTimes.filter((time) => {
+      const startMinutes = toMinutes(time.startTime);
+      if (startMinutes === null) return false;
+      return startMinutes > nowMinutes;
+    });
+  }, [date, schedules]);
 
   return (
     <div className="flex flex-col gap-3">

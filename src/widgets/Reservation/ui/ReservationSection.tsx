@@ -1,5 +1,7 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
 import { addDays, MAX_SCHEDULE_DAYS_AHEAD, normalizeDate, parseDateInput } from '@/shared/lib/time';
 import Button from '@/shared/ui/Button/Button';
@@ -17,13 +19,15 @@ import { TimeStep } from './steps/TimeStep';
 export const ReservationSection = ({ price, schedules, onReserve }: ReservationSectionProps) => {
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const { headCount, selectedScheduleId } = useReservationStore();
-  const today = normalizeDate(new Date());
-  const maxDate = addDays(today, MAX_SCHEDULE_DAYS_AHEAD);
-  const availableDates = Array.from(new Set(schedules.map((item) => item.date))).filter((date) => {
-    const parsed = parseDateInput(date);
-    if (!parsed) return false;
-    return parsed >= today && parsed <= maxDate;
-  });
+  const availableDates = useMemo(() => {
+    const today = normalizeDate(new Date());
+    const maxDate = addDays(today, MAX_SCHEDULE_DAYS_AHEAD);
+    return Array.from(new Set(schedules.map((item) => item.date))).filter((date) => {
+      const parsed = parseDateInput(date);
+      if (!parsed) return false;
+      return parsed >= today && parsed <= maxDate;
+    });
+  }, [schedules]);
   // 1. PC 사이드바 (aside 레이아웃)
   if (isDesktop) {
     return (

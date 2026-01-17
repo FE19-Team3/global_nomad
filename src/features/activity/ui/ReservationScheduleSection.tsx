@@ -50,32 +50,39 @@ const ReservationScheduleSection = () => {
     return endMinutes > startMinutes;
   })();
 
-  const today = normalizeDate(new Date());
-  const maxDate = addDays(today, MAX_SCHEDULE_DAYS_AHEAD);
-  const minDateValue = toDateInputValue(today);
-  const maxDateValue = toDateInputValue(maxDate);
-  const now = new Date();
-  const todayValue = toDateInputValue(today);
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const { minDateValue, maxDateValue, todayValue } = useMemo(() => {
+    const today = normalizeDate(new Date());
+    const maxDate = addDays(today, MAX_SCHEDULE_DAYS_AHEAD);
+    return {
+      minDateValue: toDateInputValue(today),
+      maxDateValue: toDateInputValue(maxDate),
+      todayValue: toDateInputValue(today),
+    };
+  }, []);
 
   const startTimeOptions = useMemo(() => {
     if (!date || date !== todayValue) return timeOptions;
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
     return timeOptions.filter((time) => {
       const minutes = toMinutes(time);
       return minutes !== null && minutes > nowMinutes;
     });
-  }, [date, nowMinutes, timeOptions, todayValue]);
+  }, [date, timeOptions, todayValue]);
 
   const endTimeOptions = useMemo(() => {
     const startMinutes = toMinutes(startTime);
+    const isToday = date === todayValue;
+    const now = isToday ? new Date() : null;
+    const nowMinutes = now ? now.getHours() * 60 + now.getMinutes() : 0;
     return timeOptions.filter((time) => {
       const minutes = toMinutes(time);
       if (minutes === null) return false;
-      if (date === todayValue && minutes <= nowMinutes) return false;
+      if (isToday && minutes <= nowMinutes) return false;
       if (startMinutes !== null && minutes <= startMinutes) return false;
       return true;
     });
-  }, [date, nowMinutes, startTime, timeOptions, todayValue]);
+  }, [date, startTime, timeOptions, todayValue]);
 
   const hasOverlap = () => {
     const startMinutes = toMinutes(startTime);

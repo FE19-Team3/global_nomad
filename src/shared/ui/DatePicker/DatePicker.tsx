@@ -14,13 +14,15 @@ interface DatePickerProps {
 
 const DatePicker = ({ onDateSelect, selectedDates = [] }: DatePickerProps) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const today = normalizeDate(new Date());
-  const maxDate = useMemo(() => addDays(today, MAX_SCHEDULE_DAYS_AHEAD), [today]);
-  const validRange = useMemo(() => {
-    const start = new Date(today.getFullYear(), today.getMonth(), 1);
-    const end = new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 1);
-    return { start, end };
-  }, [maxDate, today]);
+  const { today, maxDate, validRange } = useMemo(() => {
+    const today = normalizeDate(new Date());
+    const maxDate = addDays(today, MAX_SCHEDULE_DAYS_AHEAD);
+    const validRange = {
+      start: new Date(today.getFullYear(), today.getMonth(), 1),
+      end: new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 1),
+    };
+    return { today, maxDate, validRange };
+  }, []);
 
   // 중복 제거
   const uniqueDates = Array.from(new Set(selectedDates));
