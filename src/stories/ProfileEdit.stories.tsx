@@ -41,8 +41,8 @@ export const Default: Story = {
     nickname: 'nick',
     email: 'nick@example.com',
     currentImageUrl: null,
-    onSubmit: (values: { nickname: string; password: string }) => {
-      alert(`submit\nnickname=${values.nickname}\npassword=${values.password}`);
+    onSubmit: (values: { nickname: string; newPassword: string }) => {
+      alert(`submit\nnickname=${values.nickname}\npassword=${values.newPassword}`);
     },
   },
 };
