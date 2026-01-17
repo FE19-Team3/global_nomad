@@ -24,6 +24,17 @@
   justify-content: center;
   box-shadow: none;
 }
+.datepicker-calendar .fc-prev-button:disabled,
+.datepicker-calendar .fc-next-button:disabled {
+  background-color: transparent;
+  color: var(--color-gray-400);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.datepicker-calendar .fc-prev-button:disabled:hover,
+.datepicker-calendar .fc-next-button:disabled:hover {
+  background-color: transparent;
+}
 .datepicker-calendar .fc-button:hover {
   background-color: var(--color-blue-50);
   color: black;
@@ -133,6 +144,14 @@
 /* ----- 선택 불가능 숫자 ----- */
 .datepicker-calendar .fc-daygrid-day.not-selectable-date .fc-daygrid-day-number {
   color: #9ca3af;
+}
+
+/* ----- 범위 밖 날짜 ----- */
+.datepicker-calendar .fc-day-disabled {
+  background-color: transparent !important;
+}
+.datepicker-calendar .fc-day-disabled .fc-daygrid-day-number {
+  opacity: 0.35;
 }
 
 /* ===== event ===== */

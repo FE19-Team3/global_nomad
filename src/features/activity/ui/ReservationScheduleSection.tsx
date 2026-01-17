@@ -3,7 +3,13 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '@/shared/assets/icons/ic_add.svg';
 import MinusIcon from '@/shared/assets/icons/ic_minus.svg';
-import { toMinutes } from '@/shared/lib/time';
+import {
+  addDays,
+  MAX_SCHEDULE_DAYS_AHEAD,
+  normalizeDate,
+  toDateInputValue,
+  toMinutes,
+} from '@/shared/lib/time';
 import {
   createActivityScheduleSchema,
   type CreateActivityFormValues,
@@ -44,6 +50,54 @@ const ReservationScheduleSection = () => {
     return endMinutes > startMinutes;
   })();
 
+  const { minDateValue, maxDateValue, todayValue } = useMemo(() => {
+    const today = normalizeDate(new Date());
+    const maxDate = addDays(today, MAX_SCHEDULE_DAYS_AHEAD);
+    return {
+      minDateValue: toDateInputValue(today),
+      maxDateValue: toDateInputValue(maxDate),
+      todayValue: toDateInputValue(today),
+    };
+  }, []);
+
+  const startTimeOptions = useMemo(() => {
+    if (!date || date !== todayValue) return timeOptions;
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    return timeOptions.filter((time) => {
+      const minutes = toMinutes(time);
+      return minutes !== null && minutes > nowMinutes;
+    });
+  }, [date, timeOptions, todayValue]);
+
+  const endTimeOptions = useMemo(() => {
+    const startMinutes = toMinutes(startTime);
+    const isToday = date === todayValue;
+    const now = isToday ? new Date() : null;
+    const nowMinutes = now ? now.getHours() * 60 + now.getMinutes() : 0;
+    return timeOptions.filter((time) => {
+      const minutes = toMinutes(time);
+      if (minutes === null) return false;
+      if (isToday && minutes <= nowMinutes) return false;
+      if (startMinutes !== null && minutes <= startMinutes) return false;
+      return true;
+    });
+  }, [date, startTime, timeOptions, todayValue]);
+
+  const hasOverlap = () => {
+    const startMinutes = toMinutes(startTime);
+    const endMinutes = toMinutes(endTime);
+    if (startMinutes === null || endMinutes === null) return false;
+
+    return fields.some((field) => {
+      if (field.date !== date) return false;
+      const fieldStart = toMinutes(field.startTime);
+      const fieldEnd = toMinutes(field.endTime);
+      if (fieldStart === null || fieldEnd === null) return false;
+      return startMinutes < fieldEnd && endMinutes > fieldStart;
+    });
+  };
+
   const resetDraft = () => {
     setStartTime('');
     setEndTime('');
@@ -54,6 +108,11 @@ const ReservationScheduleSection = () => {
     if (!parsed.success) {
       const message = parsed.error.issues[0]?.message ?? '입력값을 확인해 주세요.';
       setDraftError(message);
+      return;
+    }
+
+    if (hasOverlap()) {
+      setDraftError('같은 날짜에 겹치는 시간대가 있습니다.');
       return;
     }
 
@@ -89,6 +148,8 @@ const ReservationScheduleSection = () => {
           type="date"
           placeholder="yy/mm/dd"
           value={date}
+          min={minDateValue}
+          max={maxDateValue}
           onChange={(e) => {
             setDate(e.target.value);
             if (draftError) setDraftError('');
@@ -106,7 +167,7 @@ const ReservationScheduleSection = () => {
           >
             <Select.Trigger variant="input-like" placeholder="00:00" />
             <Select.Content>
-              {timeOptions.map((time) => (
+              {startTimeOptions.map((time) => (
                 <Select.Item key={time} value={time}>
                   {time}
                 </Select.Item>
@@ -125,7 +186,7 @@ const ReservationScheduleSection = () => {
           >
             <Select.Trigger variant="input-like" placeholder="00:00" />
             <Select.Content>
-              {timeOptions.map((time) => (
+              {endTimeOptions.map((time) => (
                 <Select.Item key={time} value={time}>
                   {time}
                 </Select.Item>
