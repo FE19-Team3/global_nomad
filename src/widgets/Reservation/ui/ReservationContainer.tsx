@@ -4,6 +4,8 @@ import { ActivityDetail } from '@/features/activity/activity-detail/model/activi
 import { createReservationClient } from '@/features/reservation/useCreateReservation';
 import { isApiError } from '@/shared/api';
 import { useModalStore } from '@/shared/stores/useModalStore';
+import { Skeleton } from '@/shared/ui/Skeleton';
+import { useAuth } from '@/widgets/header/model/useAuth';
 import { useReservationStore } from '@/widgets/Reservation/store/reservationStore';
 import { ReservationSection } from '@/widgets/Reservation/ui/ReservationSection';
 
@@ -13,19 +15,33 @@ type Props = {
   activityId: number;
   price: number;
   schedules: Schedule[];
+  ownerId: number;
 };
 
-export function ReservationContainer({ activityId, price, schedules }: Props) {
+export function ReservationContainer({ activityId, price, schedules, ownerId }: Props) {
+  const { user, isLoading } = useAuth();
   const { headCount } = useReservationStore();
   const { openAlert } = useModalStore();
+
+  // 로딩 중에는 렌더 안 함
+  if (isLoading) {
+    return (
+      <div className="p-4 border rounded-lg">
+        <Skeleton.Row height={24} className="mb-3" />
+        <Skeleton.Rect height={40} className="mb-2" />
+        <Skeleton.Rect height={40} className="mb-2" />
+        <Skeleton.Rect height={48} />
+      </div>
+    );
+  }
+  // 로그인 상태면 예약 카드 숨김
+  if (user && user.id === ownerId) return null;
+
   const handleReserve = async (scheduleId: number) => {
     try {
       await createReservationClient({
         activityId,
-        body: {
-          scheduleId,
-          headCount,
-        },
+        body: { scheduleId, headCount },
       });
       openAlert('예약이 완료되었습니다.');
     } catch (e) {

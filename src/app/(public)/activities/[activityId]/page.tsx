@@ -90,6 +90,7 @@ export default async function Page({ params }: Props) {
               activityId={id}
               price={activity.price}
               schedules={activity.schedules}
+              ownerId={activity.userId}
             />
           </div>
         </aside>
