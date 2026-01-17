@@ -13,7 +13,7 @@ export const Header = () => {
   const { user, isAuthenticated } = useAuth();
 
   return (
-    <header className="sticky top-0 z-50 w-full h-18 bg-white">
+    <header className="sticky top-0 z-100 w-full h-18 bg-white">
       <div className="max-w-[1520px] mx-auto h-full flex items-center justify-between px-4">
         {/* 로고 */}
         <Button as="link" href="/" variant="icon" iconOnly>
