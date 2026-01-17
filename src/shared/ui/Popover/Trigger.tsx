@@ -7,7 +7,7 @@ import { cn } from '@/shared/lib/cn';
 import { usePopover } from './PopoverContext';
 
 interface PopoverTriggerProps {
-  children: React.ReactNode;
+  children: React.ReactNode | ((ctx: { isActive: boolean }) => React.ReactNode);
   popoverKey: string;
   label?: string;
   className?: string;
@@ -18,24 +18,19 @@ const PopoverTrigger = ({ children, className, popoverKey, label }: PopoverTrigg
 
   const isActive = activeKey === popoverKey;
 
-  const handleClick = () => {
-    // TODO: 키보드 접근성 추가(Esc)
-    if (triggerRef.current) {
-      toggle(popoverKey, triggerRef.current);
-    }
-  };
-
   return (
     <button
       ref={triggerRef}
       type="button"
-      aria-haspopup="true"
+      aria-haspopup="menu"
       aria-expanded={isActive}
-      onClick={handleClick}
+      onClick={() => {
+        if (triggerRef.current) toggle(popoverKey, triggerRef.current);
+      }}
       className={cn('cursor-pointer', className)}
       aria-label={label}
     >
-      {children}
+      {typeof children === 'function' ? children({ isActive }) : children}
     </button>
   );
 };

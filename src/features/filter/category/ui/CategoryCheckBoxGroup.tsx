@@ -14,8 +14,8 @@ export const CategoryCheckBoxGroup = ({ selected, setSelected }: Props) => {
   };
 
   return (
-    <div className="flex-1 overflow-x-auto custom-scrollbar py-1 px-1">
-      <div className="flex gap-2 min-w-fit">
+    <div className="overflow-x-auto custom-scrollbar py-1 px-1 min-w-0 flex-1">
+      <div className="inline-flex gap-2">
         {ActivityCategoryValues.map((category) => (
           <Checkbox
             key={category.value}

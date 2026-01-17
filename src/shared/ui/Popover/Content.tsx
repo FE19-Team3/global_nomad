@@ -11,7 +11,7 @@ import { usePopover } from './PopoverContext';
 import { usePopoverPosition } from './usePopoverPosition';
 
 interface PopoverContentProps {
-  children: React.ReactNode;
+  children: React.ReactNode | ((ctx: { close: () => void }) => React.ReactNode);
   popoverKey: string;
   placement?: Placement;
   className?: string;
@@ -23,7 +23,7 @@ const PopoverContent = ({
   placement = 'top',
   className,
 }: PopoverContentProps) => {
-  const { activeKey, anchorEl } = usePopover();
+  const { activeKey, anchorEl, close, setFloatingEl } = usePopover();
 
   const triggerRef = anchorEl ?? null;
   const isActive = activeKey === popoverKey;
@@ -34,17 +34,25 @@ const PopoverContent = ({
 
   const portalEl = typeof window !== 'undefined' ? document.body : null;
 
+    const content =
+    typeof children === 'function'
+      ? children({ close })
+      : children;
+
   return portalEl
     ? createPortal(
         <div
           // floating-ui의 ref callback은 이렇게 사용하도록 설계됨
           // eslint-disable-next-line react-hooks/refs
-          ref={refs.setFloating}
+          ref={(el) => {
+            refs.setFloating(el);
+            setFloatingEl(el);
+          }}
           style={floatingStyles}
           className={cn('m-1 z-50 rounded-lg bg-white shadow-sm overflow-hidden', className)}
           onClick={(e) => e.stopPropagation()}
         >
-          {children}
+          {content}
         </div>,
         portalEl,
       )

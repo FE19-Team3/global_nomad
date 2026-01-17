@@ -148,6 +148,8 @@ body {
   background: rgb(var(--color-white) / 1);
   color: rgb(var(--color-gray-950) / 1);
   font-family: var(--font-sans);
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* ========== CUSTOM SCROLL BAR ========== */
