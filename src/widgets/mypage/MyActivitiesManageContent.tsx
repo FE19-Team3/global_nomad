@@ -49,7 +49,7 @@ const MyActivitiesManageContent = ({ query = {} }: MyActivitiesManageContentProp
 
   if (isLoading) {
     return (
-      <section className="flex flex-col gap-6">
+      <section className="flex flex-col gap-6 w-full">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-3">
             <Skeleton.Row width={140} height={22} className="rounded-full" />
@@ -67,7 +67,7 @@ const MyActivitiesManageContent = ({ query = {} }: MyActivitiesManageContentProp
   }
 
   if (isError) {
-    return <p className="text-m-16 text-red-500">내 체험 목록을 불러오지 못했습니다.</p>;
+    return <NoData text="내 체험 목록을 불러오지 못했습니다." />;
   }
 
   const handleDelete = (activityId: number) => {
@@ -104,7 +104,7 @@ const MyActivitiesManageContent = ({ query = {} }: MyActivitiesManageContentProp
   };
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6 w-full">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-y-3">
           <h2 className="text-b-18">내 체험 관리</h2>
