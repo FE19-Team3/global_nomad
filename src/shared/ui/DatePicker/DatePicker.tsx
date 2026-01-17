@@ -2,8 +2,10 @@
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import './DatePicker.css';
+
+import { addDays, MAX_SCHEDULE_DAYS_AHEAD, normalizeDate } from '@/shared/lib/time';
 
 interface DatePickerProps {
   onDateSelect?: (date: string) => void;
@@ -12,8 +14,13 @@ interface DatePickerProps {
 
 const DatePicker = ({ onDateSelect, selectedDates = [] }: DatePickerProps) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = normalizeDate(new Date());
+  const maxDate = useMemo(() => addDays(today, MAX_SCHEDULE_DAYS_AHEAD), [today]);
+  const validRange = useMemo(() => {
+    const start = new Date(today.getFullYear(), today.getMonth(), 1);
+    const end = new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 1);
+    return { start, end };
+  }, [maxDate, today]);
 
   // 중복 제거
   const uniqueDates = Array.from(new Set(selectedDates));
@@ -27,11 +34,13 @@ const DatePicker = ({ onDateSelect, selectedDates = [] }: DatePickerProps) => {
         headerToolbar={{ end: 'prev,next' }}
         dayHeaderFormat={{ weekday: 'narrow' }}
         height="auto"
+        validRange={validRange}
         dateClick={(info) => {
           const clickedDate = new Date(info.dateStr);
           clickedDate.setHours(0, 0, 0, 0);
 
-          if (clickedDate < today || !uniqueDates.includes(info.dateStr)) return;
+          if (clickedDate < today || clickedDate > maxDate || !uniqueDates.includes(info.dateStr))
+            return;
 
           setSelectedDate(info.dateStr);
           onDateSelect?.(info.dateStr);
@@ -43,8 +52,9 @@ const DatePicker = ({ onDateSelect, selectedDates = [] }: DatePickerProps) => {
 
           const dateStr = `${arg.date.getFullYear()}-${String(arg.date.getMonth() + 1).padStart(2, '0')}-${String(arg.date.getDate()).padStart(2, '0')}`;
           const isPast = cellDate < today;
+          const isTooFuture = cellDate > maxDate;
 
-          if (uniqueDates.includes(dateStr) && !isPast) {
+          if (uniqueDates.includes(dateStr) && !isPast && !isTooFuture) {
             classes.push('selectable-date');
           } else {
             classes.push('not-selectable-date');
