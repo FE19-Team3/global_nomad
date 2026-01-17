@@ -15,6 +15,7 @@ export interface InputProps extends Omit<
   error?: boolean;
   errorMsg?: string;
   icon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
   placeholder?: string;
   radius?: 'md' | 'lg';
   size?: 'md' | 'lg';
@@ -32,6 +33,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       error = false,
       errorMsg = '',
       icon = '',
+      rightIcon = '',
       placeholder,
       radius = 'md',
       size = 'md',
@@ -46,6 +48,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const {
       container,
       iconWrapper,
+      rightIconWrapper,
       input,
       error: errorClass,
     } = styles({
@@ -55,18 +58,20 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       error: error,
       hasIcon: !!icon,
+      hasRightIcon: !!rightIcon,
     });
 
     return (
       <div className={container()}>
         {icon && <div className={iconWrapper()}>{icon}</div>}
+        {rightIcon && <div className={rightIconWrapper()}>{rightIcon}</div>}
         <input
           ref={ref}
           type={type}
           value={value}
           placeholder={placeholder}
           disabled={disabled}
-          className={cn(input(), className)}
+          className={cn(input(), type === 'date' && rightIcon && 'input-date', className)}
           onChange={onChange}
           {...rest}
         />
