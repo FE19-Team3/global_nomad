@@ -32,8 +32,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled = false,
       error = false,
       errorMsg = '',
-      icon = '',
-      rightIcon = '',
+      icon = null,
+      rightIcon = null,
       placeholder,
       radius = 'md',
       size = 'md',
@@ -45,6 +45,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    const hasRightIcon = Boolean(rightIcon);
     const {
       container,
       iconWrapper,
@@ -58,7 +59,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       error: error,
       hasIcon: !!icon,
-      hasRightIcon: !!rightIcon,
+      hasRightIcon,
     });
 
     return (
@@ -71,7 +72,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           value={value}
           placeholder={placeholder}
           disabled={disabled}
-          className={cn(input(), type === 'date' && rightIcon && 'input-date', className)}
+          className={cn(input(), type === 'date' && hasRightIcon && 'input-date', className)}
           onChange={onChange}
           {...rest}
         />
