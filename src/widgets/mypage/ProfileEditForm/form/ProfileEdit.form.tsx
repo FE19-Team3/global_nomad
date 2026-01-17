@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { UpdateProfileImage } from '@/features/profile/components/UpdateProfileImage/UpdateProfileImage';
 import { useToggle } from '@/shared/hooks/useToggle';
+import { useModalStore } from '@/shared/stores/useModalStore';
 import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
 import { LabeledInput } from '@/widgets/mypage/ProfileEditForm/ui/LabeledInput';
@@ -43,6 +44,7 @@ export const ProfileEditForm = ({
   const [pwVisible, togglePwVisible] = useToggle();
   const [cpwVisible, toggleCpwVisible] = useToggle();
   const [imageResetKey, setImageResetKey] = useState(0);
+  const { openAlert } = useModalStore();
 
   const handleImageUpdate = (newImageUrl: string | null) => {
     setValue('profileImageUrl', newImageUrl);
@@ -52,10 +54,16 @@ export const ProfileEditForm = ({
     <form
       className="flex flex-col gap-6 w-94 md:w-186"
       onSubmit={handleSubmit(async (values) => {
-        await onSubmit(mapFormToSubmitValues(values));
+        try {
+          await onSubmit(mapFormToSubmitValues(values));
 
-        setImageResetKey((prev) => prev + 1);
-        reset();
+          setImageResetKey((prev) => prev + 1);
+          reset();
+          openAlert('프로필이 성공적으로 업데이트되었습니다.');
+        } catch (e) {
+          openAlert('프로필 업데이트에 실패했습니다. 다시 시도해주세요.');
+          console.error('프로필 업데이트 실패:', e);
+        }
       })}
     >
       <div className="flex w-full justify-center">
