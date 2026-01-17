@@ -3,11 +3,10 @@ import { mapToActivityDetail } from '@/features/activity/activity-detail/lib/map
 import { isApiError } from '@/shared/api';
 import Text from '@/shared/ui/Text';
 import { ActivityOverview } from '@/widgets/activity/activity-detail-header';
-import ReviewSummary from '@/widgets/detail/ReviewSummary';
 import { ActivityGallery } from '@/widgets/gallery/ActivityGallery';
 import { LocationMap } from '@/widgets/location-map/LocationMap';
 import { ReservationContainer } from '@/widgets/Reservation/ui/ReservationContainer';
-import { ReviewCard } from '@/widgets/review-card';
+import { ActivityReviewSection } from '@/widgets/review/ui/ActivityReviewSection';
 
 type Props = {
   params: {
@@ -58,24 +57,7 @@ export default async function Page({ params }: Props) {
             </div>
           </div>
 
-          <ReviewSummary averageRating={4.5} totalCount={1300} />
-          <div className="flex flex-col gap-4 pb-5 items-center">
-            <ReviewCard
-              nickname="김태현"
-              rating={5}
-              content="저는 저희 스트릿 댄서 체험에 참가하게 된 지 얼마 안됐지만, 정말 즐거운 시간을 보냈습니다. 새로운 스타일과 춤추기를 좋아하는 나에게 정말 적합한 체험이었고, 전문가가 직접 강사로 참여하기 때문에 어떤 수준의 춤추는 사람도 쉽게 이해할 수 있었습니다. 강사님께서 정말 친절하게 설명해주셔서 정말 좋았고, 이번 체험을 거쳐 새로운 스타일과 춤추기에 대한 열정이 더욱 생겼습니다. 저는 이 체험을 적극 추천합니다!"
-              createdAt="2023.2.4"
-            />
-            <ReviewCard
-              nickname="김태현"
-              rating={5}
-              content="저는 저희 스트릿 댄서 체험에 참가하게 된 지 얼마 안됐지만, 정말 즐거운 시간을 보냈습니다. 새로운 스타일과 춤추기를 좋아하는 나에게 정말 적합한 체험이었고, 전문가가 직접 강사로 참여하기 때문에 어떤 수준의 춤추는 사람도 쉽게 이해할 수 있었습니다. 강사님께서 정말 친절하게 설명해주셔서 정말 좋았고, 이번 체험을 거쳐 새로운 스타일과 춤추기에 대한 열정이 더욱 생겼습니다. 저는 이 체험을 적극 추천합니다!"
-              createdAt="2023.2.4"
-            />
-          </div>
-          <div className="mx-auto">
-            {/* <Pagination currentPage={1} pageType="review" totalCount={5} onPageChange={() => {}} /> */}
-          </div>
+          <ActivityReviewSection activityId={id} />
         </div>
 
         {/* 오른쪽: 데스크톱 사이드바 */}
