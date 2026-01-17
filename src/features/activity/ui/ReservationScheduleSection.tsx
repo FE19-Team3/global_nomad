@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '@/shared/assets/icons/ic_add.svg';
-import Ic_calender from '@/shared/assets/icons/ic_calender.svg';
+import CalendarIcon from '@/shared/assets/icons/ic_calender.svg';
 import MinusIcon from '@/shared/assets/icons/ic_minus.svg';
 import {
   addDays,
@@ -152,7 +152,7 @@ const ReservationScheduleSection = () => {
           value={date}
           min={minDateValue}
           max={maxDateValue}
-          rightIcon={<Ic_calender />}
+          rightIcon={<CalendarIcon />}
           onChange={(e) => {
             setDate(e.target.value);
             if (draftError) setDraftError('');
