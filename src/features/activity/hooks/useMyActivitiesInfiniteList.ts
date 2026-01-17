@@ -1,6 +1,7 @@
 'use client';
 
 import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import { clientApi } from '@/shared/api/client';
 import { myActivitiesApiResponseSchema } from '@/shared/schema/activity';
@@ -39,19 +40,23 @@ const useMyActivitiesInfiniteList = ({ size = 4 }: Params = {}) => {
     initialPageParam: undefined,
   });
 
+  const activities = useMemo(
+    () =>
+      query.data?.pages.flatMap((page) =>
+        page.activities.map((activity) => ({
+          id: activity.id,
+          title: activity.title,
+          rating: activity.rating,
+          reviewCount: activity.reviewCount,
+          price: activity.price,
+          bannerImageUrl: activity.bannerImageUrl,
+        })),
+      ) ?? [],
+    [query.data],
+  );
+
   return {
-    activities: query.data?.pages
-      ? query.data.pages.flatMap((page) =>
-          page.activities.map((activity) => ({
-            id: activity.id,
-            title: activity.title,
-            rating: activity.rating,
-            reviewCount: activity.reviewCount,
-            price: activity.price,
-            bannerImageUrl: activity.bannerImageUrl,
-          })),
-        )
-      : [],
+    activities,
     fetchNextPage: query.fetchNextPage,
     hasNextPage: query.hasNextPage,
     isFetchingNextPage: query.isFetchingNextPage,
