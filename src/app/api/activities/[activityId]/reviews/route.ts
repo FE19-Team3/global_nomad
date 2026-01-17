@@ -6,7 +6,7 @@ import { activityReviewsResponseSchema } from '@/shared/schema/review/activity-r
 
 export async function GET(req: NextRequest, { params }: { params: { activityId: string } }) {
   try {
-    const { activityId } = params;
+    const { activityId } = await params;
     const { searchParams } = new URL(req.url);
 
     // query 기본값 처리

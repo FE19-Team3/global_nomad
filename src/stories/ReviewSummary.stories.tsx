@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import ReviewSummary from '@/widgets/detail/ReviewSummary';
+import ReviewSummary from '@/widgets/review/ui/ReviewSummary';
 
 const meta = {
   title: 'Components/ReviewSummary',

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import KebabMenuPopover from '@/widgets/detail/KebabMenuPopover';
+import KebabMenuPopover from '@/widgets/KebabMenu/KebabMenuPopover';
 
 const meta = {
   title: 'Components/KebabMenuPopover',
