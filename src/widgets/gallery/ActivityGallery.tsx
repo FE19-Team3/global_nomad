@@ -5,11 +5,14 @@ import { cn } from '@/shared/lib/cn';
 import { styles } from './ActivityGallery.styles';
 
 interface ActivityGalleryProps {
+  mainImageUrl: string;
   subImageUrls?: string[];
 }
 
-export const ActivityGallery = ({ subImageUrls = [] }: ActivityGalleryProps) => {
-  const displayImages = subImageUrls.slice(0, 4);
+export const ActivityGallery = ({ mainImageUrl, subImageUrls = [] }: ActivityGalleryProps) => {
+  const images = [mainImageUrl, ...subImageUrls].slice(0, 4);
+
+  const displayImages = images.slice(0, 4);
   const slots = styles({ count: displayImages.length as 0 | 1 | 2 | 3 | 4 });
 
   return (

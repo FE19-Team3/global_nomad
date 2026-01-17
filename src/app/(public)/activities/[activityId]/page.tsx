@@ -24,7 +24,10 @@ export default async function Page({ params }: Props) {
     return (
       <main className="flex flex-col gap-5 md:flex-row mx-auto w-full max-w-350 px-6 py-22 md:px-10">
         <div className="flex flex-col gap-5 md:flex-1 md:gap-6 lg:gap-10">
-          <ActivityGallery subImageUrls={activity.subImages.map((i) => i.imageUrl)} />
+          <ActivityGallery
+            mainImageUrl={activity.bannerImageUrl}
+            subImageUrls={activity.subImages.map((i) => i.imageUrl)}
+          />
           {/* PC - activity-overview 영역 */}
 
           {/* 모바일/태블릿에서만 오버뷰 표시 */}

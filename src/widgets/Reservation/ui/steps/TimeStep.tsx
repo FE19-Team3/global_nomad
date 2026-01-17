@@ -10,8 +10,8 @@ interface TimeStepProps {
 
 export const TimeStep = ({ schedules }: TimeStepProps) => {
   const { date, selectedTime, setSelectedTime, setSelectedScheduleId } = useReservationStore();
-  const currentDate = schedules?.find((item) => item.date === date);
-  const availableTimes = currentDate?.times || [];
+  const currentDate = schedules?.filter((item) => item.date === date);
+  const availableTimes = currentDate?.flatMap((schedule) => schedule.times || []) || [];
 
   return (
     <div className="flex flex-col gap-3">
