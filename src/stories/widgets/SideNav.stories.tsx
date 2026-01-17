@@ -47,7 +47,7 @@ export const MyExperiencePage: Story = {
     nextjs: {
       appDirectory: true,
       navigation: {
-        pathname: '/my-experience',
+        pathname: '/my-activities',
       },
     },
   },

@@ -48,9 +48,9 @@ export const MypageShell = ({ children }: MypageShellProps) => {
   }, [pathname, closeNav]);
 
   return (
-    <div className="relative mx-auto max-w-187">
-      <SideNav className="hidden lg:flex absolute right-full top-10 w-60" />
-      <div className="px-8 pt-6 lg:hidden">
+    <div className="lg:flex lg:items-start relative lg:justify-center lg:gap-12 px-6">
+      <SideNav className="hidden lg:flex lg:sticky lg:top-26 w-60" />
+      <div className="max-w-187 mx-auto pt-6 lg:hidden">
         <div className="relative inline-block">
           <button
             type="button"
@@ -78,7 +78,9 @@ export const MypageShell = ({ children }: MypageShellProps) => {
           ) : null}
         </div>
       </div>
-      <div className="py-10 px-8">{children}</div>
+      <div className="py-10 max-w-187 w-full flex flex-col items-center mx-auto lg:mx-0">
+        {children}
+      </div>
     </div>
   );
 };
