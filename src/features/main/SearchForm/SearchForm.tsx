@@ -30,8 +30,9 @@ const SearchForm = ({ onSearch }: Props) => {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <Button type="submit" size="sm" className="absolute right-0 top-1/2 -translate-y-1/2 mr-3">
-        검색하기
+      <Button type="submit" className="absolute right-0 top-1/2 -translate-y-1/2 mr-3">
+        <Button.Label className="max-[600px]:hidden mx-5 my-3">검색하기</Button.Label>
+        <IC_Search className="min-[601px]:hidden mx-3 my-3 w-6 h-6" />
       </Button>
     </form>
   );

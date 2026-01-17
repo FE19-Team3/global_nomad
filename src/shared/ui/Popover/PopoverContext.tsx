@@ -4,10 +4,12 @@ import { createContext, useContext } from 'react';
 
 interface PopoverContextType {
   anchorEl?: HTMLElement | null;
+  floatingEl: HTMLElement | null;
   activeKey: string | null;
   close: () => void;
   open: (key: string, anchor: HTMLElement) => void;
   toggle: (key: string, anchor: HTMLElement) => void;
+  setFloatingEl: (el: HTMLElement | null) => void;
 }
 
 export const PopoverContext = createContext<PopoverContextType | undefined>(undefined);

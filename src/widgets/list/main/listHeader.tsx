@@ -32,28 +32,25 @@ export const ListHeader = ({
   return (
     <section className="w-full border-b border-gray-100 mb-5">
       <div className="py-3 space-y-3">
-        {/* 타이틀 */}
-
         <div className="flex items-center justify-between">
           <Text.B18 as="h2" className="md:text-[32px] md:font-bold">
             🛼 모든 체험
           </Text.B18>
-
           <div className="min-[744px]:hidden">
             <SortDropdown selected={selectedSort} setSelected={setSelectedSort} />
           </div>
         </div>
 
         {/* 카테고리 + 가격 (PC) */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex gap-3 items-center overflow-x-auto">
+        <div className="flex items-center justify-between gap-3 min-w-0">
+          <div className="flex gap-3 items-center min-w-0 ">
             <Button
               variant="secondary"
               iconOnly
               radius="full"
               onClick={handleReset}
               aria-label="필터 초기화"
-              className="w-12 h-12"
+              className="w-12 h-12 shrink-0"
             >
               <Reset
                 className={isSpinning ? 'animate-spin' : ''}
@@ -63,7 +60,7 @@ export const ListHeader = ({
             <CategoryCheckBoxGroup selected={selectedCategory} setSelected={setSelectedCategory} />
           </div>
 
-          <div className="max-[743px]:hidden">
+          <div className="max-[743px]:hidden shrink-0">
             <SortDropdown selected={selectedSort} setSelected={setSelectedSort} />
           </div>
         </div>

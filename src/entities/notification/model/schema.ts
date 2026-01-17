@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // 서버 응답 스키마
-export const notificationApiItemSchema = z.object({
+export const NotificationApiItemSchema = z.object({
   id: z.number(),
   teamId: z.string(),
   userId: z.number(),
@@ -11,12 +11,12 @@ export const notificationApiItemSchema = z.object({
   deletedAt: z.string().nullable(),
 });
 
-export const notificationApiResponseSchema = z.object({
+export const NotificationApiResponseSchema = z.object({
   cursorId: z.number().nullable(), // null 가능
-  notifications: z.array(notificationApiItemSchema),
+  notifications: z.array(NotificationApiItemSchema),
   totalCount: z.number(),
 });
 
 // 타입 추론
-export type NotificationApiItem = z.infer<typeof notificationApiItemSchema>;
-export type NotificationApiResponse = z.infer<typeof notificationApiResponseSchema>;
+export type NotificationApiItem = z.infer<typeof NotificationApiItemSchema>;
+export type NotificationApiResponse = z.infer<typeof NotificationApiResponseSchema>;

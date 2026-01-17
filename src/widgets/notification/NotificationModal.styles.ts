@@ -3,16 +3,11 @@ import { tv } from 'tailwind-variants';
 export const notificationModalStyles = tv({
   slots: {
     root: `
-      fixed md:absolute
-      inset-0 md:inset-auto
-      md:top-full md:right-0 md:mt-2
-      w-full md:w-[368px]
-      h-full md:h-auto md:max-h-[600px]
-      md:rounded-lg
-      bg-white md:shadow-lg
-      flex flex-col
-      overflow-hidden
-      z-50
+    w-full md:w-[368px]
+    h-full md:h-auto md:max-h-[600px]
+    rounded-lg
+    shadow-lg
+    border border-gray-100
     `,
     header: 'flex items-center justify-between px-6 py-5 border-b border-gray-100',
     title: 'text-xl font-bold text-gray-900',
