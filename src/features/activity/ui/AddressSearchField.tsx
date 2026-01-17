@@ -1,10 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import Script from 'next/script';
 import { useFormContext } from 'react-hook-form';
 
-import Icon from '@/shared/assets/icons/ic_search.png';
+import Icon from '@/shared/assets/icons/ic_search.svg';
 import type { CreateActivityFormValues } from '@/shared/schema/activity';
 import { useModalStore } from '@/shared/stores/useModalStore';
 import Button from '@/shared/ui/Button/Button';
@@ -82,7 +81,7 @@ const AddressSearchField = () => {
           onClick={handleSearch}
         >
           <Button.Icon>
-            <Image src={Icon} alt="검색" width={24} height={24} />
+            <Icon className="h-6 w-6" aria-hidden />
           </Button.Icon>
         </Button>
       </div>

@@ -2,6 +2,8 @@ import { getActivityDetail } from '@/entities/activity/api/getActivityDetail';
 import { mapToActivityDetail } from '@/features/activity/activity-detail/lib/mapToActivityDetail';
 import { isApiError } from '@/shared/api';
 
+import ActivityDetailClient from './ActivityDetailClient';
+
 type Props = {
   params: {
     id: string;
@@ -32,19 +34,28 @@ export default async function ActivityDetailPage({ params }: Props) {
           ))}
         </section>
 
-        <section>
+        {/* <section>
           <h2>일정</h2>
-          {activity.schedules.map((schedule) => (
-            <div key={schedule.date}>
-              <strong>{schedule.date}</strong>
-              {schedule.times.map((time) => (
-                <div key={time.id}>
-                  {time.startTime} ~ {time.endTime}
-                </div>
-              ))}
-            </div>
-          ))}
-        </section>
+          {activity.schedules.map((schedule) => {
+            console.log('schedule:', schedule);
+
+            return (
+              <div key={schedule.date}>
+                <strong>{schedule.date}</strong>
+                {schedule.times.map((time) => {
+                  console.log('time:', time);
+
+                  return (
+                    <div key={time.id}>
+                      {time.startTime} ~ {time.endTime}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </section> */}
+        <ActivityDetailClient activity={activity} activityId={activityId} />
       </main>
     );
   } catch (e) {

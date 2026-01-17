@@ -1,16 +1,18 @@
-import { clientApi } from '@/shared/api/client';
-import { uploadActivityImageResponseSchema } from '@/shared/schema/activity';
+import { imageUrlSchema } from '@/shared/types/updateImage';
+import type { ImageUploadType } from '@/shared/types/updateImage';
 
-export const uploadImageToUrl = async (file: File): Promise<string> => {
-  const form = new FormData();
-  form.append('image', file);
+import { clientApi } from '../client';
 
-  const response = await clientApi.upload({
-    path: '/activities/image',
-    body: form,
-    schema: uploadActivityImageResponseSchema,
+export const uploadImageToUrl = async (file: File, type: ImageUploadType): Promise<string> => {
+  const fd = new FormData();
+  fd.append('image', file);
+
+  const path = type === 'profile' ? '/users/me/image' : '/activities/image';
+  const res = await clientApi.upload({
+    path,
+    body: fd,
+    schema: imageUrlSchema,
   });
 
-  const data = response.data;
-  return data.activityImageUrl ?? data.imageUrl ?? data.url ?? '';
+  return res.data;
 };

@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useDeleteMyActivity } from '@/features/activity/model/useDeleteMyActivity';
 import { useMyActivities } from '@/features/activity/model/useMyActivities';
 import { isApiError } from '@/shared/api';
-import LogoImg from '@/shared/assets/logo/logo_img.svg';
 import { useModalStore } from '@/shared/stores/useModalStore';
 import Button from '@/shared/ui/Button/Button';
+import NoData from '@/shared/ui/NoData';
 import Text from '@/shared/ui/Text';
 import { ManageActivityCard } from '@/widgets/manage-activity-card/ManageActivityCard';
 
@@ -97,8 +97,7 @@ const MyActivitiesManageContent = () => {
         ))}
         {activities.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <LogoImg className="h-30 w-30 opacity-40" />
-            <p className="mt-8 text-m-18 text-gray-600">아직 등록한 체험이 없어요</p>
+            <NoData text="아직 등록한 체험이 없어요" />
           </div>
         )}
       </div>

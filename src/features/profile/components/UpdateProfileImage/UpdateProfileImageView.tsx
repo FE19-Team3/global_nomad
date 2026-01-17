@@ -23,7 +23,7 @@ export const UpdateProfileImageView = ({
   onFileChange,
 }: Props) => {
   return (
-    <div className="relative w-30 h-30">
+    <div className="relative size-30">
       <div className="relative w-full h-full overflow-hidden rounded-full">
         <Image src={displayImage} alt="프로필 이미지" fill className="object-cover" />
         {isPending && <p className="absolute bottom-0">업로드 중...</p>}
@@ -32,10 +32,10 @@ export const UpdateProfileImageView = ({
       <button
         type="button"
         onClick={onPickFile}
-        className="absolute bottom-0 right-0 hover:cursor-pointer"
+        className="absolute bottom-0 right-0 cursor-pointer"
         aria-label="프로필 이미지 변경"
       >
-        <EditBtnIcon className="w-8 h-8" />
+        <EditBtnIcon className="size-8 md:size-6 lg:size-8" />
       </button>
 
       {showRemoveBtn && (
@@ -43,10 +43,10 @@ export const UpdateProfileImageView = ({
           type="button"
           onClick={onRemove}
           disabled={isPending}
-          className="absolute top-2 right-1 hover:cursor-pointer"
+          className="absolute top-2 right-2cursor-pointer"
           aria-label="업로드한 이미지 삭제"
         >
-          <XBtnIcon className="w-6 h-6" />
+          <XBtnIcon className="size-5" />
         </button>
       )}
 

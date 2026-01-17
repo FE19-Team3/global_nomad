@@ -17,7 +17,7 @@ const UploadIntroImage = () => {
   const prevUrlsRef = useRef<string[]>([]);
   const { openAlert } = useModalStore();
 
-  const { mutate, isPending } = useUploadImageToUrl({
+  const { mutate, isPending } = useUploadImageToUrl('activity', {
     onSuccess: (url) => {
       setValue('subImageUrls', [...subImageUrls, url], { shouldDirty: true, shouldValidate: true });
     },

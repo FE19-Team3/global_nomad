@@ -53,8 +53,12 @@ export async function GET(req: NextRequest) {
       size: searchParams.get('size') ? Number(searchParams.get('size')) : 20,
     };
 
+    const cleanedQueryParams = Object.fromEntries(
+      Object.entries(queryParams).filter(([, v]) => v !== undefined && v !== null && v !== ''),
+    );
+
     // 쿼리 파라미터 유효성 검사
-    const parsed = ActivityQuerySchema.parse(queryParams);
+    const parsed = ActivityQuerySchema.parse(cleanedQueryParams);
 
     const response = await serverApi.get({
       path: '/activities',

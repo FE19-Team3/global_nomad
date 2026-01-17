@@ -1,19 +1,35 @@
 import { useEffect, useState } from 'react';
 
+import { ActivityListResponse } from '@/features/activity/activity-list/schema/activity-list.schema';
+import { useActivityOffsetList } from '@/features/activity/hooks/useActivityOffsetList';
+import { ActivityCategory, ActivitySort } from '@/shared/constants/activity';
 import { Pagination } from '@/shared/ui/Pagination/ui/Pagination';
+import MainCardSkeleton from '@/shared/ui/Skeleton/MainCardSkeleton';
 
-import { ActivityCardItem } from '../activity/activity-card';
+import { ListHeader } from '../list/main/listHeader';
 
 import { ActivityList } from './ActivityList';
 
 interface Props {
-  activities: ActivityCardItem[];
+  initialData: ActivityListResponse;
 }
 
-const AllSection = ({ activities }: Props) => {
-  const [pageSize, setPageSize] = useState(6);
+const AllSection = ({ initialData }: Props) => {
+  const [pageSize, setPageSize] = useState(0);
   const [page, setPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState<ActivityCategory | undefined>(undefined);
+  const [selectedSort, setSelectedSort] = useState<ActivitySort['values']>('latest');
 
+  const { activities, totalCount, isLoading } = useActivityOffsetList({
+    page,
+    size: pageSize,
+    sort: selectedSort,
+    category: selectedCategory,
+    initialData,
+    enabled: pageSize !== 0,
+  });
+
+  // pagination
   useEffect(() => {
     const getPageSize = () => {
       if (window.innerWidth >= 1024) return 15; // lg
@@ -29,42 +45,43 @@ const AllSection = ({ activities }: Props) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const pageType = 'main';
-  const totalCount = activities.length;
-  const offset = (page - 1) * pageSize;
-
-  const pagedActivities = activities.slice(offset, offset + pageSize);
+  //카테고리 변경 시 페이지 번호 초기화
+  useEffect(() => {
+    setPage(1);
+  }, [selectedCategory, selectedSort, pageSize]);
 
   return (
-    <div className="flex flex-col items-center mt-5">
+    <section className="flex flex-col items-center mt-5">
       {/* header */}
-      <div className="flex justify-between mb-7.5 w-full">
-        <div className="flex gap-5">
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-          <span className="border rounded-full px-2 py-1">뱃지</span>
-        </div>
-        <div>가격 ▼</div>
-      </div>
+      <ListHeader
+        selectedCategory={selectedCategory}
+        selectedSort={selectedSort}
+        setSelectedCategory={setSelectedCategory}
+        setSelectedSort={setSelectedSort}
+      />
       {/* body */}
-      <div className="w-full">
-        <ActivityList activities={pagedActivities} />
+      <div className="w-full lg:min-h-261 md:min-h-217 min-h-191 h-fit">
+        {isLoading ? (
+          <MainCardSkeleton />
+        ) : (
+          <ActivityList activities={activities} limit={pageSize} />
+        )}
       </div>
       {/* pagination */}
-      <div className="mt-7.5">
-        <Pagination
-          currentPage={page}
-          pageType={pageType}
-          totalCount={totalCount}
-          pageSize={pageSize}
-          onPageChange={(nextPage) => {
-            setPage(nextPage);
-          }}
-        />
-      </div>
-    </div>
+      {totalCount > 0 && (
+        <div className="mt-7.5">
+          <Pagination
+            currentPage={page}
+            pageType="main"
+            totalCount={totalCount}
+            pageSize={pageSize}
+            onPageChange={(nextPage) => {
+              setPage(nextPage);
+            }}
+          />
+        </div>
+      )}
+    </section>
   );
 };
 

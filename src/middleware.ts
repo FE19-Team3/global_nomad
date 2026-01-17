@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const PROTECTED_ROUTES = ['/my-activities'];
+const PROTECTED_ROUTES = ['/my-activities', '/new'];
 const AUTH_ROUTES = ['/login', '/signup'];
 
 export function middleware(req: NextRequest) {
@@ -18,7 +18,7 @@ export function middleware(req: NextRequest) {
 
   // 로그인 한 상태 + 로그인, 회원가입 페이지 접근
   if (accessToken && isAuthRoute) {
-    return NextResponse.redirect(new URL('/', req.url));
+    return NextResponse.redirect(new URL('/main', req.url));
   }
 
   return NextResponse.next();
@@ -26,5 +26,5 @@ export function middleware(req: NextRequest) {
 
 //**추후 수정** 지정한 경로 미들웨어 차단
 export const config = {
-  matcher: ['/my-activities/:path*', '/login', '/signup'],
+  matcher: ['/my-activities/:path*', '/new/:path*', '/login', '/signup'],
 };

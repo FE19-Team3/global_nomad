@@ -1,44 +1,32 @@
-// **추후수정** 로그인 api가 추가되면 주석 해제
-// import { useQuery } from '@tanstack/react-query';
-// import { getCurrentUser } from 'entities/user';
+'use client';
 
-import type { AuthState } from './types';
+import { useQuery } from '@tanstack/react-query';
 
-// **추후수정** 임시 목 데이터
+import type { AuthState, User } from './types';
+
 export function useAuth(): AuthState {
-  const isLoggedIn = false;
+  const { data: user, isLoading } = useQuery<User | null>({
+    queryKey: ['auth', 'user'],
+    queryFn: async () => {
+      const res = await fetch('/api/users/me');
 
-  if (isLoggedIn) {
-    return {
-      user: {
-        id: 1,
-        nickname: '정만철',
-        profileImageUrl: '',
-      },
-      isAuthenticated: true,
-      isLoading: false,
-    };
-  }
+      if (res.status === 401 || res.status === 404) {
+        return null; // 인증 실패 or 유저 없음 → null 반환
+      }
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch user');
+      }
+
+      return res.json();
+    },
+    retry: false,
+    staleTime: 5 * 60 * 1000,
+  });
 
   return {
-    user: null,
-    isAuthenticated: false,
-    isLoading: false,
+    user: user ?? null,
+    isAuthenticated: !!user,
+    isLoading,
   };
 }
-
-// **추후수정** 로그인 api가 추가되면 주석 해제
-// export function useAuth(): AuthState {
-//   const { data: user, isLoading } = useQuery({
-//     queryKey: ['user', 'current'],
-//     queryFn: getCurrentUser, // ← entities/user에서 import
-//     retry: false,
-//     staleTime: 1000 * 60 * 5, // ← 5분 캐시
-//   });
-
-//   return {
-//     user: user ?? null,
-//     isAuthenticated: !!user,
-//     isLoading,
-//   };
-// }

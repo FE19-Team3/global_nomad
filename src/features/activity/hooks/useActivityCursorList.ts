@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { clientApi } from '@/shared/api/client';
-import { ActivityCategory, ActivitySort } from '@/shared/constants/activity';
+import { ActivityCategory, ActivitySort, ActivitySortValues } from '@/shared/constants/activity';
 
 import { mapToActivityCardItem } from '../activity-list/lib/mapToActivityCardItem';
 import {
@@ -17,7 +17,7 @@ interface Params {
   enabled?: boolean;
   keyword?: string;
   size?: number;
-  sort?: ActivitySort;
+  sort?: ActivitySort['values'];
   initialData?: ActivityListResponse;
 }
 
@@ -27,20 +27,20 @@ export const useActivityCursorList = ({
   enabled = true,
   keyword,
   size = 20,
-  sort = 'latest',
+  sort = ActivitySortValues[0].values,
   initialData,
 }: Params) => {
   const queryParamsForApi: Record<string, string | number> = {
     method: 'cursor',
     size,
-    ...(category && { category }),
+    ...(category && { category: category?.value }),
     ...(keyword && { keyword }),
     ...(sort && { sort }),
     ...(cursorId !== undefined && { cursorId }),
   };
 
   const query = useQuery({
-    queryKey: ['activities-cursor', category, cursorId, keyword, sort],
+    queryKey: ['activities-cursor', size, category?.value, cursorId, keyword, sort],
     queryFn: async () => {
       const res = await clientApi.get({
         path: '/activities',
@@ -50,7 +50,7 @@ export const useActivityCursorList = ({
       return res.data;
     },
     enabled: enabled && !initialData,
-    initialData,
+    initialData: !category && !keyword && sort === 'latest' ? initialData : undefined,
     staleTime: 5 * 60 * 1000, // 5분
   });
 

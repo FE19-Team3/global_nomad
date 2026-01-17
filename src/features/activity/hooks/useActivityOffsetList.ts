@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { clientApi } from '@/shared/api/client';
-import { ActivityCategory, ActivitySort } from '@/shared/constants/activity';
+import { ActivityCategory, ActivitySort, ActivitySortValues } from '@/shared/constants/activity';
 
 import { mapToActivityCardItem } from '../activity-list/lib/mapToActivityCardItem';
 import {
@@ -18,7 +18,7 @@ interface Params {
   keyword?: string;
   page?: number;
   size?: number;
-  sort?: ActivitySort;
+  sort?: ActivitySort['values'];
   initialData?: ActivityListResponse;
 }
 
@@ -28,20 +28,20 @@ export const useActivityOffsetList = ({
   keyword,
   page = 1,
   size = 20,
-  sort = 'latest',
+  sort = ActivitySortValues[0].values,
   initialData,
 }: Params) => {
   const queryParams: ActivityQuery = {
     method: 'offset',
     page,
     size,
-    ...(category && { category }),
+    ...(category?.value && { category: category.value }),
     ...(keyword && { keyword }),
     ...(sort && { sort }),
   };
 
   const query = useQuery({
-    queryKey: ['activities-offset', page, category, keyword, sort],
+    queryKey: ['activities-offset', page, size, category?.value, keyword, sort],
     queryFn: async () => {
       const res = await clientApi.get({
         path: '/activities',
@@ -51,7 +51,7 @@ export const useActivityOffsetList = ({
       return res.data;
     },
     enabled,
-    initialData,
+    initialData: page === 1 && !category && !keyword && sort === 'latest' ? initialData : undefined,
     staleTime: 5 * 60 * 1000, // 5분
   });
 

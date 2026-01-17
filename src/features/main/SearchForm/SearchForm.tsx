@@ -1,32 +1,37 @@
-'use client';
-import Image from 'next/image';
 import { useState, FormEvent } from 'react';
 
-import Icon from '@/shared/assets/icons/ic_search.png';
+import IC_Search from '@/shared/assets/icons/ic_search.svg';
 import Button from '@/shared/ui/Button/Button';
 import Input from '@/shared/ui/Input/Input';
 
-const SearchForm = () => {
-  const [value, setValue] = useState('');
+import useIntervalPlaceholder from './useIntervalPlaceholder';
 
-  // TODO: 제출 api 연결
+interface Props {
+  onSearch: (keyword: string) => void;
+}
+
+const SearchForm = ({ onSearch }: Props) => {
+  const [inputValue, setInputValue] = useState('');
+  const placeholderWithCursor = useIntervalPlaceholder();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert('제출');
+    onSearch(inputValue);
   };
 
   return (
-    <form className="relative" onSubmit={handleSubmit}>
+    <form className="w-full relative" onSubmit={handleSubmit}>
       <Input
+        icon={<IC_Search />}
         variant="secondary"
-        placeholder="내가 원하는 체험은?"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        radius="lg"
+        placeholder={placeholderWithCursor}
+        size="lg"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
       />
-      <Button iconOnly className="absolute top-1.5 right-2" type="submit" aria-label="검색하기">
-        <Button.Icon>
-          <Image src={Icon} alt="검색" width={24} height={24} />
-        </Button.Icon>
+      <Button type="submit" size="sm" className="absolute right-0 top-1/2 -translate-y-1/2 mr-3">
+        검색하기
       </Button>
     </form>
   );

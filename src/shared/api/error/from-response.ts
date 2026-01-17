@@ -9,13 +9,13 @@ export const responseToApiError = async (res: Response): Promise<ApiError> => {
   const parsed = await readBody(res);
 
   if (parsed.kind === 'json') {
-    const coerced = coerceApiError(parsed.data);
+    const coerced = coerceApiError(status, parsed.data);
     if (coerced) return coerced;
   }
 
   return createApiError({
     status,
-    message: '요청 처리 중 문제가 발생했습니다',
+    message: res.statusText,
     details: {
       meta: {
         contentType: parsed.contentType || '없음',

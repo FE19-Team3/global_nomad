@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ActivityCategoryValues, type ActivityCategory } from '@/shared/constants/activity';
+import { ActivityCategoryValues } from '@/shared/constants/activity';
 import { toMinutes } from '@/shared/lib/time';
 
 const timePattern = /^\d{2}:\d{2}$/;
@@ -33,7 +33,7 @@ export const createActivityApiRequestSchema = z.object({
     .string()
     .min(1, '카테고리를 선택해 주세요.')
     .refine(
-      (value) => !value || ActivityCategoryValues.includes(value as ActivityCategory),
+      (value) => !value || ActivityCategoryValues.some((cat) => cat.value === value),
       '카테고리명이 올바르지 않습니다.',
     ),
   description: z.string().min(1, '설명을 입력해 주세요.'),
