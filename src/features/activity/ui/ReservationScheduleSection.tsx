@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '@/shared/assets/icons/ic_add.svg';
+import CalendarIcon from '@/shared/assets/icons/ic_calender.svg';
 import MinusIcon from '@/shared/assets/icons/ic_minus.svg';
 import {
   addDays,
@@ -17,6 +18,7 @@ import {
 import Divider from '@/shared/ui/Divider/Divider';
 import Input from '@/shared/ui/Input/Input';
 import Label from '@/shared/ui/Label';
+import NoData from '@/shared/ui/NoData';
 import { Select } from '@/shared/ui/Select';
 
 const ReservationScheduleSection = () => {
@@ -150,6 +152,7 @@ const ReservationScheduleSection = () => {
           value={date}
           min={minDateValue}
           max={maxDateValue}
+          rightIcon={<CalendarIcon />}
           onChange={(e) => {
             setDate(e.target.value);
             if (draftError) setDraftError('');
@@ -209,43 +212,49 @@ const ReservationScheduleSection = () => {
 
       <Divider className="my-6 border-gray-100" />
 
-      <div className="flex flex-col gap-4">
-        {fields.map((field, index) => (
-          <dl
-            key={field.id}
-            className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_140px_12px_140px_44px] md:items-center md:gap-2"
-          >
-            <dt className="sr-only">날짜</dt>
-            <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
-              {formatDate(field.date)}
-            </dd>
-
-            <div className="grid grid-cols-[1fr_12px_1fr_44px] items-center gap-2 md:contents">
-              <dt className="sr-only">시작 시간</dt>
-              <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
-                {field.startTime}
+      {fields.length === 0 ? (
+        <div className="flex justify-center">
+          <NoData text="예약 가능한 시간대를 추가해주세요." />
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {fields.map((field, index) => (
+            <dl
+              key={field.id}
+              className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_140px_12px_140px_44px] md:items-center md:gap-2"
+            >
+              <dt className="sr-only">날짜</dt>
+              <dd className="flex items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                {formatDate(field.date)}
               </dd>
 
-              <dt className="sr-only">구분</dt>
-              <dd className="text-center text-gray-400">-</dd>
+              <div className="grid grid-cols-[1fr_12px_1fr_44px] items-center gap-2 md:contents">
+                <dt className="sr-only">시작 시간</dt>
+                <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                  {field.startTime}
+                </dd>
 
-              <dt className="sr-only">종료 시간</dt>
-              <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
-                {field.endTime}
-              </dd>
+                <dt className="sr-only">구분</dt>
+                <dd className="text-center text-gray-400">-</dd>
 
-              <button
-                type="button"
-                aria-label="예약 시간 삭제"
-                onClick={() => remove(index)}
-                className="cursor-pointer bg-gray-100 text-gray-400 w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
-              >
-                <MinusIcon className="text-black" />
-              </button>
-            </div>
-          </dl>
-        ))}
-      </div>
+                <dt className="sr-only">종료 시간</dt>
+                <dd className="flex justify-center items-center w-full text-gray-950 placeholder-gray-400 h-13.5 px-5 rounded-xl">
+                  {field.endTime}
+                </dd>
+
+                <button
+                  type="button"
+                  aria-label="예약 시간 삭제"
+                  onClick={() => remove(index)}
+                  className="cursor-pointer bg-gray-100 text-gray-400 w-11 h-11 rounded-full flex items-center justify-center text-2xl hover:bg-gray-200"
+                >
+                  <MinusIcon className="text-black" />
+                </button>
+              </div>
+            </dl>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -5,6 +5,8 @@ export const styles = tv({
     container: 'relative',
     iconWrapper:
       'absolute top-0 left-0 flex items-center justify-center pointer-events-none text-gray-800',
+    rightIconWrapper:
+      'absolute top-0 right-0 flex items-center justify-center pointer-events-none text-gray-800',
     input: 'flex items-center w-full text-gray-950 focus:outline-none transition-all duration-150',
     error: 'px-2 mt-1.5 text-red-500',
   },
@@ -23,10 +25,12 @@ export const styles = tv({
       md: {
         input: 'h-13.5 px-5 placeholder-gray-400',
         iconWrapper: 'h-8 top-1/2 -translate-y-1/2 mx-4',
+        rightIconWrapper: 'h-8 top-1/2 -translate-y-1/2 mx-5',
       },
       lg: {
         input: 'h-17.5 px-8 placeholder-gray-700',
         iconWrapper: 'h-6 top-1/2 -translate-y-1/2 mx-7',
+        rightIconWrapper: 'h-6 top-1/2 -translate-y-1/2 mx-7',
       },
     },
     radius: {
@@ -44,6 +48,9 @@ export const styles = tv({
     hasIcon: {
       true: { input: '' },
     },
+    hasRightIcon: {
+      true: { input: '' },
+    },
   },
   compoundVariants: [
     {
@@ -55,6 +62,16 @@ export const styles = tv({
       hasIcon: true,
       size: 'lg',
       class: { input: 'pl-16' },
+    },
+    {
+      hasRightIcon: true,
+      size: 'md',
+      class: { input: 'pr-14' },
+    },
+    {
+      hasRightIcon: true,
+      size: 'lg',
+      class: { input: 'pr-16' },
     },
   ],
 });
