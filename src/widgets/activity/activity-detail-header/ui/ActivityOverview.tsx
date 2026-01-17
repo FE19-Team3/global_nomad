@@ -61,6 +61,7 @@ const ActivityMenu = ({ experience, onDelete }: ActivityMenuProps) => {
 };
 
 export const ActivityOverview = ({ experience }: ActivityOverviewProps) => {
+  const router = useRouter();
   const { category, title, rating, reviewCount, address } = experience;
   const { user } = useAuth();
 
@@ -79,14 +80,17 @@ export const ActivityOverview = ({ experience }: ActivityOverviewProps) => {
             queryClient.invalidateQueries({
               queryKey: myActivitiesInfiniteQueryKey,
             });
-            openAlert('체험이 삭제되었습니다.');
+            openAlert({
+              message: '체험이 삭제되었습니다.',
+              onClose: () => router.push('/my-activities'),
+            });
           },
           onError: (e) => {
             if (!isApiError(e)) {
-              openAlert('알 수 없는 오류가 발생했습니다.');
+              openAlert({ message: '알 수 없는 오류가 발생했습니다.' });
               return;
             }
-            openAlert(e.message);
+            openAlert({ message: e.message });
           },
         });
       },
