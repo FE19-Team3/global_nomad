@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { myActivitiesInfiniteQueryKey } from '@/features/activity/model/my-activities-infinite-query';
 import { useUpdateMyActivity } from '@/features/activity/model/useUpdateMyActivity';
 import { isApiError } from '@/shared/api';
 import { createZodResolver } from '@/shared/lib/createZodResolver';
@@ -154,6 +155,7 @@ export const useActivityEditForm = (initialData: ActivityEditInitialData) => {
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['my-activities'] });
+          queryClient.invalidateQueries({ queryKey: myActivitiesInfiniteQueryKey });
           openAlert({
             message: '수정이 완료되었습니다.',
             onClose: () => {

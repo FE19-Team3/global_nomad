@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 
 import StarIcon from '@/shared/assets/icons/ic_star_on.png';
 import Button from '@/shared/ui/Button/Button';
+import { Skeleton } from '@/shared/ui/Skeleton';
 import { Text } from '@/shared/ui/Text';
 
 import { styles } from './ManageActivityCard.styles';
@@ -11,6 +13,7 @@ import type { ManageActivityCardProps } from './ManageActivityCard.types';
 
 export const ManageActivityCard = ({ activity, onEdit, onDelete }: ManageActivityCardProps) => {
   const slots = styles();
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
     <article className={slots.root()}>
@@ -19,6 +22,9 @@ export const ManageActivityCard = ({ activity, onEdit, onDelete }: ManageActivit
 
         <div className={slots.rating()}>
           <div className="relative h-5 w-5">
+            {!isImageLoaded && (
+              <Skeleton.Rect width="100%" height="100%" className="rounded-xl md:rounded-4xl" />
+            )}
             <Image src={StarIcon} alt="별점" fill className="object-contain" />
           </div>
           <Text.M16>
@@ -55,7 +61,17 @@ export const ManageActivityCard = ({ activity, onEdit, onDelete }: ManageActivit
       </div>
 
       <div className={slots.thumbWrapper()}>
-        <Image src={activity.bannerImageUrl} alt={activity.title} fill className={slots.thumb()} />
+        {!isImageLoaded && (
+          <Skeleton.Rect width="100%" height="100%" className="rounded-xl md:rounded-4xl" />
+        )}
+        <Image
+          src={activity.bannerImageUrl}
+          alt={activity.title}
+          fill
+          className={`${slots.thumb()} ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+          onLoadingComplete={() => setIsImageLoaded(true)}
+          onError={() => setIsImageLoaded(true)}
+        />
       </div>
     </article>
   );

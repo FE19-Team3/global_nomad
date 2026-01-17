@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
+import { myActivitiesInfiniteQueryKey } from '@/features/activity/model/my-activities-infinite-query';
 import { useCreateActivity } from '@/features/activity/model/useCreateActivity';
 import { isApiError } from '@/shared/api';
 import { createZodResolver } from '@/shared/lib/createZodResolver';
@@ -70,6 +71,7 @@ export const useActivityForm = () => {
         onSuccess: () => {
           reset();
           queryClient.invalidateQueries({ queryKey: ['my-activities'] });
+          queryClient.invalidateQueries({ queryKey: myActivitiesInfiniteQueryKey });
           openAlert({
             message: '체험 등록이 완료되었습니다.',
             onClose: () => {
