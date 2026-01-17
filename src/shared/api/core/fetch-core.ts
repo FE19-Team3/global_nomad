@@ -7,7 +7,7 @@ import { type Query } from './url';
 type Method = 'GET' | 'POST' | 'DELETE' | 'PATCH';
 type Body = unknown | FormData | string;
 
-type BaseOptions = {
+export type BaseOptions = {
   path: string;
   query?: Query;
   body?: Body;
