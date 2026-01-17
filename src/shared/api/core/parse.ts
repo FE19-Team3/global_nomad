@@ -41,6 +41,10 @@ export const parseJsonResponse = async <T>(
 
   const data = await res.json();
 
+  if (typeof data === 'string' && data.trim() !== '') {
+    return data as T;
+  }
+
   if (options.schema) {
     const parsed = options.schema.safeParse(data);
     if (!parsed.success) {

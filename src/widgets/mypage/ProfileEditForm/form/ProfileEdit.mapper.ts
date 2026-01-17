@@ -4,5 +4,5 @@ export const mapFormToSubmitValues = (
   formValues: ProfileEditFormValues,
 ): ProfileEditSubmitValues => {
   const { nickname, password, profileImageUrl } = formValues;
-  return { nickname, password, profileImageUrl };
+  return { nickname, newPassword: password, profileImageUrl };
 };

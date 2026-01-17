@@ -24,4 +24,8 @@ export const profileEditSchema = z
   });
 
 export type ProfileEditFormValues = z.infer<typeof profileEditSchema>;
-export type ProfileEditSubmitValues = Omit<ProfileEditFormValues, 'confirmPassword'>;
+export type ProfileEditSubmitValues = {
+  nickname: string;
+  newPassword: string;
+  profileImageUrl: string | null;
+};

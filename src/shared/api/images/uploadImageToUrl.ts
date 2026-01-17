@@ -13,6 +13,5 @@ export const uploadImageToUrl = async (file: File, type: ImageUploadType): Promi
     body: fd,
     schema: imageUrlSchema,
   });
-
   return res.data;
 };

@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import { UpdateProfileImage } from '@/features/profile/components/UpdateProfileImage/UpdateProfileImage';
 import { useToggle } from '@/shared/hooks/useToggle';
 import Button from '@/shared/ui/Button/Button';
@@ -13,7 +15,7 @@ import { mapFormToSubmitValues } from './ProfileEdit.mapper';
 
 type onSubmitValues = {
   nickname: string;
-  password: string;
+  newPassword: string;
   profileImageUrl: string | null;
 };
 interface ProfileEditFormProps {
@@ -29,16 +31,18 @@ export const ProfileEditForm = ({
   currentImageUrl,
   onSubmit,
 }: ProfileEditFormProps) => {
-  const form = useProfileEditForm(nickname);
+  const form = useProfileEditForm(nickname, currentImageUrl);
   const {
     register,
     watch,
     handleSubmit,
+    reset,
     setValue,
     formState: { errors, isValid: canSubmit },
   } = form;
   const [pwVisible, togglePwVisible] = useToggle();
   const [cpwVisible, toggleCpwVisible] = useToggle();
+  const [imageResetKey, setImageResetKey] = useState(0);
 
   const handleImageUpdate = (newImageUrl: string | null) => {
     setValue('profileImageUrl', newImageUrl);
@@ -47,10 +51,19 @@ export const ProfileEditForm = ({
   return (
     <form
       className="flex flex-col gap-6 w-94 md:w-186"
-      onSubmit={handleSubmit((values) => onSubmit(mapFormToSubmitValues(values)))}
+      onSubmit={handleSubmit(async (values) => {
+        await onSubmit(mapFormToSubmitValues(values));
+
+        setImageResetKey((prev) => prev + 1);
+        reset();
+      })}
     >
       <div className="flex w-full justify-center">
-        <UpdateProfileImage currentImageUrl={currentImageUrl} onImageUpdate={handleImageUpdate} />
+        <UpdateProfileImage
+          key={imageResetKey}
+          currentImageUrl={currentImageUrl}
+          onImageUpdate={handleImageUpdate}
+        />
       </div>
       <div className="flex flex-col py-2 gap-1">
         <Text.B18 as="h2">내 정보</Text.B18>

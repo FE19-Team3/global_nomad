@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { profileEditSchema, type ProfileEditFormValues } from '../model/validators';
 
-export const useProfileEditForm = (defaultNickname: string) => {
+export const useProfileEditForm = (defaultNickname: string, defaultImage: string | null) => {
   return useForm<ProfileEditFormValues>({
     resolver: zodResolver(profileEditSchema),
     mode: 'onBlur',
@@ -13,6 +13,7 @@ export const useProfileEditForm = (defaultNickname: string) => {
       nickname: defaultNickname,
       password: '',
       confirmPassword: '',
+      profileImageUrl: defaultImage,
     },
   });
 };
