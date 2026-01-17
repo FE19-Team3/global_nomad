@@ -37,19 +37,13 @@ function ReviewSkeleton() {
 export function ActivityReviewSection({ activityId }: Props) {
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['activityReviews', activityId, page],
     queryFn: () => getActivityReviews(activityId, page, PAGE_SIZE),
   });
 
   if (isLoading) {
     return <ReviewSkeleton />;
-  }
-
-  if (isError) {
-    return (
-      <div className="py-10 text-center text-gray-500">리뷰를 불러오는 중 오류가 발생했습니다.</div>
-    );
   }
 
   if (!data?.data) {

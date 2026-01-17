@@ -1,4 +1,4 @@
-import LogoFont from '@/shared/assets/logo/logo_font.svg';
+import LogoFont from '@/shared/assets/logo/logo_font0.svg';
 import LogoImg from '@/shared/assets/logo/logo_img.svg';
 
 interface AuthLayoutProps {
@@ -8,8 +8,8 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-6">
-      <LogoImg className="w-36" />
-      <LogoFont className="w-64 mt-6 hidden md:block" />
+      <LogoImg className="w-60" />
+      <LogoFont className="w-40 mt-3 hidden md:block" />
       {children}
     </div>
   );
