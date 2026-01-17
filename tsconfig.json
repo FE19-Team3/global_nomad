@@ -25,6 +25,8 @@
   },
   "include": [
     "next-env.d.ts",
+    "src/types/static.d.ts",
+    "src/types/daum.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",

@@ -8,6 +8,8 @@ export {
   type CreateActivityApiResponse,
   myActivitiesApiResponseSchema,
   type MyActivitiesApiResponse,
+  updateMyActivityApiRequestSchema,
+  type UpdateMyActivityApiRequest,
   uploadActivityImageResponseSchema,
   type UploadActivityImageResponse,
 } from './activity.api.schema';

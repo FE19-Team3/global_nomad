@@ -47,6 +47,7 @@ export const createActivityApiRequestSchema = z.object({
   schedules: z.array(createActivityScheduleSchema).min(1, '예약 시간을 1개 이상 추가해 주세요.'),
   bannerImageUrl: z.string().url().or(z.literal('')).optional(),
   subImageUrls: z.array(z.string().url()).optional(),
+  detailAddress: z.string().optional(),
 });
 
 export type CreateActivityFormValues = z.infer<typeof createActivityApiRequestSchema>;
