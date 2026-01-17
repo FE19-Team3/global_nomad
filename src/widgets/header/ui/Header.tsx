@@ -1,6 +1,6 @@
 'use client';
 
-import LogoFont from '@/shared/assets/logo/logo_font.svg';
+import LogoFont from '@/shared/assets/logo/logo_font0.svg';
 import LogoImg from '@/shared/assets/logo/logo_img.svg';
 import Button from '@/shared/ui/Button/Button';
 
@@ -17,8 +17,8 @@ export const Header = () => {
       <div className="max-w-380 mx-auto h-full flex items-center justify-between px-4">
         {/* 로고 */}
         <Button as="link" href="/" variant="icon" iconOnly className="group">
-          <LogoImg className="w-7 transition-transform duration-150 group-hover:scale-118 group-hover:animate-pulse" />
-          <LogoFont className="w-34 ml-3 dark:bg-white" />
+          <LogoImg className="w-18" />
+          <LogoFont className="w-20 ml-1 dark:bg-white" />
         </Button>
         {/* 로그인 여부에 따라 분기 */}
         <div className="flex items-center gap-4">
