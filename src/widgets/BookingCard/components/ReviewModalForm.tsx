@@ -9,10 +9,9 @@ import { Rating } from './Rating';
 
 type ReviewModalFormProps = {
   onSubmit: (values: { rating: number; content: string }) => void;
-  onClose: () => void;
 };
 
-export const ReviewModalForm = ({ onSubmit, onClose }: ReviewModalFormProps) => {
+export const ReviewModalForm = ({ onSubmit }: ReviewModalFormProps) => {
   const {
     register,
     handleSubmit,
@@ -30,7 +29,6 @@ export const ReviewModalForm = ({ onSubmit, onClose }: ReviewModalFormProps) => 
       onSubmit={handleSubmit(async (values) => {
         try {
           await onSubmit(values);
-          onClose();
         } catch (e) {
           console.error(e);
         }

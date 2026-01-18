@@ -1,6 +1,11 @@
+'use client';
+
+import { useQueryClient } from '@tanstack/react-query';
+
 import { isApiError } from '@/shared/api';
 import { clientApi } from '@/shared/api/client';
 import Ic_delete from '@/shared/assets/icons/ic_delete.svg';
+import { useModalStore } from '@/shared/stores/useModalStore';
 import Button from '@/shared/ui/Button/Button';
 import Text from '@/shared/ui/Text';
 
@@ -17,14 +22,17 @@ type ReviewModalProps = {
     headCount: number;
     date: string;
     reservationId: number;
+    activityId: number;
   };
   onClose: () => void;
 };
 
 export const ReviewModal = ({
-  reservation: { title, startTime, entTime, headCount, date, reservationId },
+  reservation: { title, startTime, entTime, headCount, date, reservationId, activityId },
   onClose,
 }: ReviewModalProps) => {
+  const queryClient = useQueryClient();
+  const { openAlert } = useModalStore();
   const description = buildDescription({ startTime, endTime: entTime, headCount, date });
   const handleSubmit = async (values: { rating: number; content: string }) => {
     try {
@@ -33,10 +41,18 @@ export const ReviewModal = ({
         body: values,
         schema: reviewSchema,
       });
-      onClose();
+      await queryClient.invalidateQueries({ queryKey: ['activityReviews', activityId] });
+      await queryClient.invalidateQueries({ queryKey: ['my-reservations'] });
+      openAlert({
+        message: '후기 작성 완료',
+        onClose,
+      });
     } catch (e) {
       if (isApiError(e)) {
-        console.error('API Error:', e.message);
+        openAlert({ message: e.message });
+      } else {
+        console.error('Review submission failed:', e);
+        openAlert({ message: '리뷰 작성 중 알 수 없는 오류가 발생했습니다.' });
       }
     }
   };
@@ -52,7 +68,7 @@ export const ReviewModal = ({
         <Text.B16 as="h2">{title}</Text.B16>
         <Text.M14 className="text-gray-500">{description}</Text.M14>
       </div>
-      <ReviewModalForm onSubmit={handleSubmit} onClose={onClose} />
+      <ReviewModalForm onSubmit={handleSubmit} />
     </div>
   );
 };
