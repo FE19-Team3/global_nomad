@@ -230,10 +230,6 @@ const MyActivitiesReservationContent = () => {
         queryKey: ['reserved-schedule', selectedActivity.id],
         exact: false,
       });
-      queryClient.invalidateQueries({
-        queryKey: ['host-reservations', selectedActivity.id],
-        exact: false,
-      });
       queryClient.refetchQueries({
         queryKey: ['host-reservations', selectedActivity.id],
         exact: false,
