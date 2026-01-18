@@ -1,8 +1,10 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useMemo } from 'react';
 
 import { useActivityOffsetList } from '@/features/activity/hooks/useActivityOffsetList';
+import { Skeleton } from '@/shared/ui/Skeleton';
 import Text from '@/shared/ui/Text';
 
 // CSS - scoped 해당 파일에서만 사용하도록 정의
@@ -21,7 +23,7 @@ const heroKeyframes = `
 `;
 
 const MainHero = () => {
-  const { activities = [] } = useActivityOffsetList({
+  const { activities = [], isLoading } = useActivityOffsetList({
     sort: 'most_reviewed',
     page: 1,
     size: 10,
@@ -33,14 +35,24 @@ const MainHero = () => {
     return activities[index];
   }, [activities]);
 
-  if (!randomActivity) return null;
+  if (isLoading) {
+    return <Skeleton.Rect width="100%" height="500px" className="rounded-3xl!" />;
+  }
+
+  if (!randomActivity) {
+    return null;
+  }
 
   return (
-    <div className="relative flex flex-col items-center overflow-hidden w-full h-125 rounded-3xl bg-gray-100">
+    <Link
+      href={`/activities/${randomActivity.id}`}
+      className="group relative flex flex-col items-center overflow-hidden w-full h-125 rounded-3xl bg-gray-100 cursor-pointer hover:shadow-xl transition-shadow"
+      aria-label={`인기 체험 ${randomActivity.title} 상세 페이지로 이동`}
+    >
       <style>{heroKeyframes}</style>
 
       {/* 이미지 */}
-      <div className="absolute -inset-[20%] animate-[hero-shake_2.8s_cubic-bezier(0.19,1,0.22,1)_forwards]">
+      <div className="absolute -inset-[20%] animate-[hero-shake_2.8s_cubic-bezier(0.19,1,0.22,1)_forwards] transition-transform duration-3000 ease-out group-hover:scale-150">
         <Image
           src={randomActivity.bannerImageUrl}
           alt={randomActivity.title}
@@ -59,7 +71,7 @@ const MainHero = () => {
           <Text.B18 className="text-white-force text-shadow-md">1월의 인기 체험 BEST 🔥</Text.B18>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
