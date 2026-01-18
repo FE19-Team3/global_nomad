@@ -6,7 +6,6 @@ type ReservationListProps = {
 };
 
 export const ReservationList = ({ data }: ReservationListProps) => {
-  console.log(data[0]);
   return (
     <div className="flex flex-col gap-16 mt-8">
       {data.map((reservation) => (
