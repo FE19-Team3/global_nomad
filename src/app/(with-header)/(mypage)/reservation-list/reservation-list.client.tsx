@@ -7,6 +7,7 @@ import { Checkbox } from '@/shared/ui/CheckBox/Checkbox';
 import Text from '@/shared/ui/Text';
 import { ReservationList } from '@/widgets/mypage/reservation-list/reservationList';
 import { type StatusLabel } from '@/widgets/mypage/reservation-list/utils/map';
+import { mapStatusLabelToValue } from '@/widgets/mypage/reservation-list/utils/map';
 
 import { reservationListInfiniteQuery } from './queries/reservationList';
 
@@ -19,8 +20,12 @@ const categories = [
 ] as const;
 
 export const ReservationListClient = () => {
-  const query = useInfiniteQuery(reservationListInfiniteQuery({}));
-  const [selected, setSelected] = useState<StatusLabel[]>([]);
+  const [selected, setSelected] = useState<StatusLabel | undefined>(undefined);
+  const query = useInfiniteQuery(
+    reservationListInfiniteQuery({
+      status: selected ? mapStatusLabelToValue(selected) : undefined,
+    }),
+  );
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -41,10 +46,6 @@ export const ReservationListClient = () => {
   if (query.isLoading) return <div>Loading...</div>;
   if (!query.data) return null;
 
-  const toggle = (label: StatusLabel, checked: boolean) => {
-    setSelected((prev) => (checked ? [...prev, label] : prev.filter((v) => v !== label)));
-  };
-
   const reservations = query.data.pages.flatMap((page) => page.reservations);
 
   return (
@@ -52,7 +53,7 @@ export const ReservationListClient = () => {
       <div className="flex flex-col py-2 gap-1">
         <Text.B18 as="h2">내 정보</Text.B18>
         <Text.M14 as="span" className="text-gray-500">
-          닉네임과 비밀번호를 수정하실 수 있습니다.
+          나의 예약 내역을 확인하고 관리할 수 있습니다.
         </Text.M14>
       </div>
       <div className="flex flex-wrap gap-2">
@@ -60,12 +61,12 @@ export const ReservationListClient = () => {
           <Checkbox
             key={label}
             label={label}
-            checked={selected.includes(label)}
-            onChange={(checked) => toggle(label, checked)}
+            checked={selected === label}
+            onChange={(checked) => setSelected(checked ? label : undefined)}
           />
         ))}
       </div>
-      <ReservationList data={reservations} filter={selected} />
+      <ReservationList data={reservations} />
       <div ref={loadMoreRef} />
     </div>
   );

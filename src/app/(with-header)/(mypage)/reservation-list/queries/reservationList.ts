@@ -36,10 +36,10 @@ export const reservationListInfiniteQuery = (
 
     return getReservationList(query);
   },
-  initialPageParam: undefined as number | undefined,
+  initialPageParam: undefined,
   getNextPageParam: (lastPage: ReservationListResponseDto) => {
     return lastPage.cursorId ?? undefined;
   },
-  staleTime: Infinity,
+  staleTime: 5 * 60 * 1000,
   refetchOnWindowFocus: false,
 });

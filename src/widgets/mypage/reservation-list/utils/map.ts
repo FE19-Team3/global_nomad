@@ -8,6 +8,6 @@ const Status = {
 
 export type StatusLabel = keyof typeof Status;
 
-export const mapStatusLabelToValue = (labels: StatusLabel[]) => {
-  return labels.map((label) => Status[label]);
+export const mapStatusLabelToValue = (label: StatusLabel) => {
+  return Status[label];
 };
