@@ -50,6 +50,9 @@ export const ReviewModal = ({
     } catch (e) {
       if (isApiError(e)) {
         openAlert({ message: e.message });
+      } else {
+        console.error('Review submission failed:', e);
+        openAlert({ message: '리뷰 작성 중 알 수 없는 오류가 발생했습니다.' });
       }
     }
   };
@@ -65,7 +68,7 @@ export const ReviewModal = ({
         <Text.B16 as="h2">{title}</Text.B16>
         <Text.M14 className="text-gray-500">{description}</Text.M14>
       </div>
-      <ReviewModalForm onSubmit={handleSubmit} onClose={onClose} />
+      <ReviewModalForm onSubmit={handleSubmit} />
     </div>
   );
 };
