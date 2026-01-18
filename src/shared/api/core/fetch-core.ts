@@ -34,6 +34,7 @@ type ResponseType<T> = {
 export type RequesterEnv = {
   resolveUrl: (path: string, query?: Query) => string;
   getAccessToken?: () => Promise<string | undefined>;
+  handleUnauthorized?: () => Promise<boolean>;
   fetchFn: (
     url: string,
     init: RequestInit,
@@ -68,9 +69,18 @@ export const createRequestCore = (env: RequesterEnv) => {
 
     mergedInit.headers = buildHeaders(mergedInit, accessToken);
 
-    const res = await env.fetchFn(url, mergedInit, { timeoutMs, retryConfig });
+    let res = await env.fetchFn(url, mergedInit, { timeoutMs, retryConfig });
 
-    if (!res.ok) throw await responseToApiError(res);
+    if (res.status === 401 && env.handleUnauthorized) {
+      const isRefreshed = await env.handleUnauthorized();
+      if (isRefreshed) {
+        const newAccessToken = await env.getAccessToken?.();
+        mergedInit.headers = buildHeaders(mergedInit, newAccessToken);
+        res = await env.fetchFn(url, mergedInit, { timeoutMs, retryConfig });
+      }
+    }
+
+    if (!res.ok) throw responseToApiError(res);
     return res;
   };
 

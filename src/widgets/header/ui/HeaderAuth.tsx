@@ -3,7 +3,9 @@
 import Image from 'next/image';
 import { useRef } from 'react';
 
+import { logoutApi } from '@/features/auth/api/logout';
 import Profile from '@/shared/assets/icons/ic_profile.svg';
+import { useModalStore } from '@/shared/stores/useModalStore';
 import Button from '@/shared/ui/Button/Button';
 import Divider from '@/shared/ui/Divider/Divider';
 import Popover from '@/shared/ui/Popover';
@@ -18,12 +20,22 @@ interface UserMenuProps {
 }
 
 export const HeaderAuth = ({ user }: UserMenuProps) => {
+  const { openAlert, openConfirm } = useModalStore();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleLogout = () => {
-    // **추후수정** 로그아웃 API 연동
-    console.log('로그아웃');
-    alert('로그아웃 기능은 추후 구현 예정');
+  const handleLogout = async () => {
+    openConfirm({
+      message: '정말로 로그아웃 하시겠습니까?',
+      onConfirm: async () => {
+        try {
+          await logoutApi();
+          window.location.reload();
+        } catch (e) {
+          console.error('Logout Error:', e);
+          openAlert({ message: '로그아웃 중 오류가 발생했습니다. 다시 시도해주세요.' });
+        }
+      },
+    });
   };
 
   return (
