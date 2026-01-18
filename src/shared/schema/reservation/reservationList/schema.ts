@@ -43,5 +43,21 @@ export const ReservationListResponseSchema = z.object({
   totalCount: z.number(),
 });
 
+export const ReservationEditResponseSchema = z.object({
+  id: z.number(),
+  teamId: z.string(),
+  userId: z.number(),
+  activityId: z.number(),
+  scheduleId: z.number(),
+  status: z.string(),
+  totalPrice: z.number(),
+  headCount: z.number(),
+  date: z.string(),
+  startTime: z.string(),
+  endTime: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 export type ReservationDTO = z.infer<typeof ReservationSchema>;
 export type ReservationListResponseDto = z.infer<typeof ReservationListResponseSchema>;
