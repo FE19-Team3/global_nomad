@@ -61,7 +61,7 @@ const DatePicker = ({
 
   const sizeClass =
     variant === 'reservation'
-      ? 'lg:w-160 lg:h-204 md:w-full md:h-204 w-full h-fit'
+      ? 'w-full h-fit md:h-204 lg:h-204'
       : 'lg:w-87.5 lg:h-92 md:w-89.5 md:h-123 w-full h-99.5';
 
   return (

@@ -48,9 +48,9 @@ export const MypageShell = ({ children }: MypageShellProps) => {
   }, [pathname, closeNav]);
 
   return (
-    <div className="lg:flex lg:items-start relative lg:justify-center lg:gap-12 px-6">
+    <div className="relative px-6 pt-6 lg:flex lg:items-start lg:justify-center lg:gap-12 lg:pt-8">
       <SideNav className="hidden lg:flex lg:sticky lg:top-26 w-60" />
-      <div className="max-w-187 mx-auto pt-6 lg:hidden">
+      <div className="max-w-187 mx-auto lg:hidden">
         <div className="relative inline-block">
           <button
             type="button"
