@@ -11,8 +11,14 @@ import './globals.css';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: '[3팀] Globalnomad',
-  description: '3팀에서 작업한 Globalnomad 페이지입니다.',
+  title: '체험 한입',
+  description: '새로운 경험을 한입에',
+  openGraph: {
+    images: ['/og-image.png'],
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 const RootLayout = async ({
