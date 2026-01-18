@@ -14,6 +14,7 @@ export type BaseOptions = {
   init?: Omit<RequestInit, 'body' | 'method'>;
   timeoutMs?: number;
   retryConfig?: RetryConfig;
+  skipUnauthorizedRetry?: boolean;
 };
 
 type RequestCoreOption = BaseOptions & {
@@ -52,6 +53,7 @@ export const createRequestCore = (env: RequesterEnv) => {
     body,
     timeoutMs,
     retryConfig,
+    skipUnauthorizedRetry,
   }: RequestCoreOption): Promise<Response> => {
     const url = env.resolveUrl(path, query);
     const accessToken = env.getAccessToken ? await env.getAccessToken() : undefined;
@@ -71,7 +73,7 @@ export const createRequestCore = (env: RequesterEnv) => {
 
     let res = await env.fetchFn(url, mergedInit, { timeoutMs, retryConfig });
 
-    if (res.status === 401 && env.handleUnauthorized) {
+    if (res.status === 401 && !skipUnauthorizedRetry && env.handleUnauthorized) {
       const isRefreshed = await env.handleUnauthorized();
       if (isRefreshed) {
         const newAccessToken = await env.getAccessToken?.();
@@ -80,7 +82,7 @@ export const createRequestCore = (env: RequesterEnv) => {
       }
     }
 
-    if (!res.ok) throw responseToApiError(res);
+    if (!res.ok) throw await responseToApiError(res);
     return res;
   };
 
