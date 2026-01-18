@@ -3,6 +3,7 @@
 import LogoFont from '@/shared/assets/logo/logo_font0.svg';
 import LogoImg from '@/shared/assets/logo/logo_img.svg';
 import Button from '@/shared/ui/Button/Button';
+import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
 
 import { useAuth } from '../model/useAuth';
 
@@ -20,8 +21,9 @@ export const Header = () => {
           <LogoImg className="w-18" />
           <LogoFont className="w-20 ml-1 dark:bg-white" />
         </Button>
-        {/* 로그인 여부에 따라 분기 */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-0">
+          <ThemeToggleButton />
+          {/* 로그인 여부에 따라 분기 */}
           {isAuthenticated ? <HeaderAuth user={user!} /> : <HeaderGuest />}
         </div>
       </div>
