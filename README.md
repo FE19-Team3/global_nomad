@@ -45,11 +45,11 @@ src/
 │  ├─ (mypage)/                      # 로그인 후 개인 영역
 │  │  ├─ profile/
 │  │  │  └─ page.tsx
-│  │  ├─ reservations/
+│  │  ├─ reservations-list/
 │  │  │  └─ page.tsx
 │  │  ├─ my-activites/
 │  │  │  └─ page.tsx
-│  │  └─ booking-status/
+│  │  └─ my-activities-reservations/
 │  │     └─ page.tsx
 │  │
 │  └─ layout.tsx                     # 전역 레이아웃
