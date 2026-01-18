@@ -1,3 +1,4 @@
+import Footer from '@/widgets/footer/footer';
 import { Header } from '@/widgets/header/ui/Header';
 
 interface MainLayoutProps {
@@ -9,6 +10,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     <div className="flex min-h-screen flex-col">
       <Header />
       {children}
+      <Footer />
     </div>
   );
 }
