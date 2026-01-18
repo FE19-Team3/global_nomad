@@ -1,6 +1,7 @@
 'use client';
 
 import { type ReactNode, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 import CloseIcon from '@/shared/assets/icons/ic_modal_close.svg';
 
@@ -41,7 +42,10 @@ const BaseModal = ({
 
   if (!isOpen) return null;
 
-  return (
+  const portalEl = typeof window !== 'undefined' ? document.body : null;
+  if (!portalEl) return null;
+
+  return createPortal(
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm"
       style={{ zIndex }}
@@ -62,7 +66,8 @@ const BaseModal = ({
 
         {children}
       </div>
-    </div>
+    </div>,
+    portalEl,
   );
 };
 
