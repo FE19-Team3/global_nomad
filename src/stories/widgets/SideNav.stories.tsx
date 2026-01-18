@@ -36,7 +36,7 @@ export const BookingPage: Story = {
     nextjs: {
       appDirectory: true,
       navigation: {
-        pathname: '/booking',
+        pathname: '/reservations-list',
       },
     },
   },
@@ -53,12 +53,12 @@ export const MyExperiencePage: Story = {
   },
 };
 
-export const BookingStatusPage: Story = {
+export const MyActivitiesReservationsPage: Story = {
   parameters: {
     nextjs: {
       appDirectory: true,
       navigation: {
-        pathname: '/booking-status',
+        pathname: '/my-activities-reservations',
       },
     },
   },

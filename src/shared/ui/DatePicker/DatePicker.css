@@ -152,16 +152,16 @@
   opacity: 0.35;
 }
 
-/* ===== event ===== */
-.datepicker-calendar .fc-daygrid-day-events {
+/* ===== event (dot) ===== */
+.datepicker-calendar-dot .fc-daygrid-day-events {
   display: absolute;
   top: -110%;
   left: 75%;
   width: fit-content;
   height: fit-content;
 }
-.datepicker-calendar .fc-daygrid-day .fc-event,
-.datepicker-calendar .fc-daygrid-day .fc-h-event {
+.datepicker-calendar-dot .fc-daygrid-day .fc-event,
+.datepicker-calendar-dot .fc-daygrid-day .fc-h-event {
   background-color: var(--color-green-400);
   width: 10px;
   height: 10px;
@@ -170,14 +170,98 @@
 }
 
 @media (max-width: 360px) {
-  .datepicker-calendar .fc-daygrid-day-events {
+  .datepicker-calendar-dot .fc-daygrid-day-events {
     left: 70%;
   }
-  .datepicker-calendar .fc-daygrid-day .fc-event,
-  .datepicker-calendar .fc-daygrid-day .fc-h-event {
+  .datepicker-calendar-dot .fc-daygrid-day .fc-event,
+  .datepicker-calendar-dot .fc-daygrid-day .fc-h-event {
     width: 8px;
     height: 8px;
   }
+}
+
+/* ===== reservation calendar ===== */
+.datepicker-calendar-reservation .fc-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.datepicker-calendar-reservation .fc-toolbar-title {
+  margin: 0 16px;
+}
+.datepicker-calendar-reservation .fc-col-header-cell-cushion {
+  font-size: 14px;
+}
+.datepicker-calendar-reservation .fc-daygrid-day-frame {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  height: 124px;
+  padding: 4px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  cursor: default;
+  border-radius: 8px;
+}
+.datepicker-calendar-reservation .fc-daygrid-day-top {
+  display: flex;
+  justify-content: center;
+}
+.datepicker-calendar-reservation .fc-daygrid-day .fc-daygrid-day-number {
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  .datepicker-calendar-reservation .fc-daygrid-day-frame {
+    height: 104px;
+  }
+  .datepicker-calendar-reservation .fc-daygrid-day .fc-daygrid-day-number {
+    font-size: 12px;
+  }
+}
+.datepicker-calendar-reservation .fc-daygrid-day-events {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.datepicker-calendar-reservation .fc-daygrid-event {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: none;
+}
+.datepicker-calendar-reservation .fc-event-main,
+.datepicker-calendar-reservation .fc-event-main-frame,
+.datepicker-calendar-reservation .fc-event-title-container {
+  padding: 0;
+  margin: 0;
+}
+.datepicker-calendar-reservation .fc-event-title {
+  font-weight: 500;
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  .datepicker-calendar-reservation .fc-event-title {
+    font-size: 11px;
+  }
+}
+.datepicker-calendar-reservation .event-completed {
+  background-color: #edeef2;
+}
+.datepicker-calendar-reservation .event-completed .fc-event-title-container {
+  color: #84858c;
+}
+.datepicker-calendar-reservation .event-pending {
+  background-color: #e5f3ff;
+}
+.datepicker-calendar-reservation .event-pending .fc-event-title-container {
+  color: #3d9ef2;
+}
+.datepicker-calendar-reservation .event-confirmed {
+  background-color: #fff8dd;
+}
+.datepicker-calendar-reservation .event-confirmed .fc-event-title-container {
+  color: #ffb051;
 }
 
 /* ===== 기본 스타일 제거 ===== */

@@ -26,6 +26,7 @@ export const ReservationListClient = () => {
       status: selected ? mapStatusLabelToValue(selected) : undefined,
     }),
   );
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -34,14 +35,14 @@ export const ReservationListClient = () => {
     if (!el) return;
 
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && query.hasNextPage && !query.isFetchingNextPage) {
-        query.fetchNextPage();
+      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
       }
     });
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [query.hasNextPage, query.isFetchingNextPage, query.fetchNextPage]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (query.isLoading) return <div>Loading...</div>;
   if (!query.data) return null;
@@ -51,9 +52,9 @@ export const ReservationListClient = () => {
   return (
     <div className="flex flex-col gap-6 w-94 md:w-186">
       <div className="flex flex-col py-2 gap-1">
-        <Text.B18 as="h2">내 정보</Text.B18>
+        <Text.B18 as="h2">체험 신청 내역</Text.B18>
         <Text.M14 as="span" className="text-gray-500">
-          나의 예약 내역을 확인하고 관리할 수 있습니다.
+          체험 신청 내역을 확인하고 관리할 수 있습니다.
         </Text.M14>
       </div>
       <div className="flex flex-wrap gap-2">

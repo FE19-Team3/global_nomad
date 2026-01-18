@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import Ic_calender from '@/shared/assets/icons/ic_calender.svg';
 import Ic_setting from '@/shared/assets/icons/ic_setting.svg';
@@ -27,19 +28,24 @@ type SideNavProps = {
 // 경로는 임시 경로 설정한 것임
 const navItems: BaseNavItem[] = [
   { value: '내 정보', href: '/my-page', icon: <Ic_user /> },
-  { value: '예약내역', href: '/reservation-list', icon: <Ic_speech /> },
-  { value: '내 체험 관리', href: '/my-activities/new', icon: <Ic_setting /> },
-  { value: '예약 현황', href: '/booking-status', icon: <Ic_calender /> },
+  { value: '체험 신청 내역', href: '/reservations-list', icon: <Ic_speech /> },
+  { value: '내 체험 관리', href: '/my-activities', icon: <Ic_setting /> },
+  { value: '내 체험 현황', href: '/my-activities-reservations', icon: <Ic_calender /> },
 ];
 
 export const SideNav = ({ className }: SideNavProps) => {
   const { user } = useAuth();
   const pathname = usePathname();
+  const [isMounted, setIsMounted] = useState(false);
   const slots = styles();
   const navMenuItems = navItems.map((item) => ({
     ...item,
-    selected: pathname === item.href,
+    selected: isMounted ? pathname === item.href : false,
   }));
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <aside className={cn(slots.root(), className)}>
