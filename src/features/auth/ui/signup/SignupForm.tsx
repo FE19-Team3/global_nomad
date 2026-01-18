@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { getKakaoAuthUrl } from '@/features/auth/kakaoAuth';
@@ -15,6 +16,8 @@ import Label from '@/shared/ui/Label';
 import Text from '@/shared/ui/Text';
 
 export const SignupForm = () => {
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -128,7 +131,12 @@ export const SignupForm = () => {
             SNS 계정으로 회원가입하기
           </Text.M16>
         </div>
-
+        {error && (
+          <div className="w-full p-3 mb-5 rounded-md bg-red-50 text-red-600 text-sm">
+            {error === 'already_registered' && '이미 가입된 계정입니다. 로그인해주세요.'}
+            {error === 'oauth' && '카카오 회원가입에 실패했습니다. 다시 시도해주세요.'}
+          </div>
+        )}
         <Button
           type="button"
           variant="secondary"
