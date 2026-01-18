@@ -19,7 +19,7 @@ const MainContent = ({ initialData }: { initialData: ActivityListResponse }) => 
   };
 
   return (
-    <main className="bg-[linear-gradient(180deg,#f7dba2_-6.85%,#fffff7_22.43%,#FFFFFF_100%)] overflow-x-hidden">
+    <main className="bg-[linear-gradient(180deg,#f7dba2_-6.85%,#fffff7_22.43%,#FFFFFF_100%)] [[data-theme='dark']_&]:bg-[linear-gradient(180deg,#f7dba2_-6.85%,#000007_22.43%,#000000_100%)] overflow-x-hidden">
       <div className="w-full md:mx-auto md:max-w-350 px-6 py-10 md:px-10">
         <div className="mb-11 w-full">
           <MainHero />

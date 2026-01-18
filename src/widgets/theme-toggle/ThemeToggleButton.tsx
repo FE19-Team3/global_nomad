@@ -9,7 +9,7 @@ const ThemeToggleButton = () => {
     <button
       type="button"
       onClick={toggleTheme}
-      className="fixed right-4 bottom-4 rounded-full border cursor-pointer border-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition hover:bg-gray-50"
+      className="cursor-pointer rounded-full border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-800 transition hover:bg-gray-50"
     >
       {theme === 'light' ? '다크모드' : '기본모드'}
     </button>

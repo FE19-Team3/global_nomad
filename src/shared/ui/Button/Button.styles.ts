@@ -10,7 +10,7 @@ export const styles = tv({
   variants: {
     /** 버튼 역할 */
     variant: {
-      primary: { root: 'bg-primary text-white  hover:bg-primary-200' },
+      primary: { root: 'bg-primary text-white-force hover:bg-primary-200' },
       secondary: {
         root: `
         bg-white

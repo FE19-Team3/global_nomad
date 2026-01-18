@@ -7,7 +7,6 @@ import { ModalProvider } from '@/shared/providers/ModalProvider';
 import ReactQueryProvider from '@/shared/providers/ReactQueryProvider';
 import { ThemeProvider, type Theme } from '@/shared/providers/theme-provider';
 import './globals.css';
-import ThemeToggleButton from '@/widgets/theme-toggle/ThemeToggleButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +30,6 @@ const RootLayout = async ({
         <ReactQueryProvider>
           <ThemeProvider initialTheme={theme}>
             <ModalProvider />
-            <ThemeToggleButton />
             {children}
           </ThemeProvider>
         </ReactQueryProvider>
