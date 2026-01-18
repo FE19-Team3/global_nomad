@@ -37,6 +37,7 @@ export const BookingCard = ({ reservation }: BookingCardProps) => {
       headCount: reservation.headCount,
       date: reservation.date,
       reservationId: reservation.id,
+      activityId: reservation.activity.id,
     },
     onClose: () => setIsReviewModalOpen(false),
   };
@@ -118,7 +119,7 @@ export const BookingCard = ({ reservation }: BookingCardProps) => {
                   className={slots.actionBtn({ actionBtnVariant: 'cancel' })}
                   onClick={handleChangeStatus}
                 >
-                  <Text.B14>예약 취소</Text.B14>
+                  <Text.M14>예약 취소</Text.M14>
                 </Button>
               </>
             )}
@@ -138,13 +139,14 @@ export const BookingCard = ({ reservation }: BookingCardProps) => {
             {reservation.status === 'completed' && (
               <Button
                 type="button"
-                variant="primary"
+                variant={reservation.reviewSubmitted ? 'secondary' : 'primary'}
                 size="sm"
                 radius="sm"
                 className={slots.actionBtn()}
                 onClick={() => setIsReviewModalOpen(true)}
+                disabled={reservation.reviewSubmitted}
               >
-                <Text.B14>후기 작성</Text.B14>
+                <Text.B14>{reservation.reviewSubmitted ? '후기 작성 완료' : '후기 작성'}</Text.B14>
               </Button>
             )}
           </div>
