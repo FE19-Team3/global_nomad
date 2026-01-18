@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import CloseIcon from '@/shared/assets/icons/ic_modal_close.svg';
@@ -21,6 +21,12 @@ const BaseModal = ({
   children,
   zIndex = 50,
 }: BaseModalProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   useEffect(() => {
     if (!isOpen) return;
     const handleEsc = (e: KeyboardEvent) => {
@@ -40,10 +46,7 @@ const BaseModal = ({
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
-  const portalEl = typeof window !== 'undefined' ? document.body : null;
-  if (!portalEl) return null;
+  if (!isOpen || !isMounted) return null;
 
   return createPortal(
     <div
@@ -67,7 +70,7 @@ const BaseModal = ({
         {children}
       </div>
     </div>,
-    portalEl,
+    document.body,
   );
 };
 
