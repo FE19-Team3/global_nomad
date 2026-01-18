@@ -1,7 +1,7 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { isApiError } from '@/shared/api';
@@ -27,7 +27,7 @@ const STATUS_TO_BADGE_VARIANT: Record<BookingCardProps['reservation']['status'],
 export const BookingCard = ({ reservation }: BookingCardProps) => {
   const slots = styles();
   const { openAlert } = useModalStore();
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const ReviewModalProp = {
     reservation: {
@@ -44,8 +44,8 @@ export const BookingCard = ({ reservation }: BookingCardProps) => {
   const handleChangeStatus = async () => {
     try {
       await changeBookingStatus(reservation.id);
+      await queryClient.invalidateQueries({ queryKey: ['my-reservations'] });
       openAlert({ message: '예약이 변경되었습니다.' });
-      router.refresh();
     } catch (e) {
       if (isApiError(e)) {
         console.error('API Error:', e.message);
