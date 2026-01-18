@@ -449,7 +449,7 @@ const MyActivitiesReservationContent = () => {
       </div>
 
       <div className="flex flex-col gap-6 w-full">
-        <div className="w-full lg:max-w-[760px]">
+        <div className="w-full">
           {isDashboardLoading ? (
             <NoData text="내 체험 현황을 불러오는 중입니다." />
           ) : isDashboardError ? (
