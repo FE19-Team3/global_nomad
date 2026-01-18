@@ -102,14 +102,12 @@
   /* border: 1px solid red; */
 }
 /* ----- 오늘 날짜 ----- */
-.datepicker-calendar .fc-day-today .fc-daygrid-day-frame {
+/* .datepicker-calendar .fc-day-today .fc-daygrid-day-frame {
   background-color: var(--color-blue-100);
-}
+} */
 
 /* ----- 선택 가능 날짜 ----- */
-/* .datepicker-calendar .fc-daygrid-day.selectable-date .fc-daygrid-day-frame {
-  background-color: var(--color-blue-50);
-} */
+
 .datepicker-calendar .fc-daygrid-day.selectable-date .fc-daygrid-day-frame:hover {
   background-color: var(--color-blue-50);
   cursor: pointer;

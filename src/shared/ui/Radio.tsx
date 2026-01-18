@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import {
   createContext,
   useContext,
@@ -60,9 +58,19 @@ const RadioItem = ({ value, label, className, id, disabled = false, ...props }: 
     onChange(e.target.value);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (disabled) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onChange(value);
+    }
+  };
+
   return (
     <label
       htmlFor={radioId}
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={handleKeyDown}
       className={cn(
         'relative flex cursor-pointer items-center justify-center rounded-xl border px-6 py-4 transition-colors',
         'border-gray-300 text-m-14 text-gray-950',
@@ -79,6 +87,7 @@ const RadioItem = ({ value, label, className, id, disabled = false, ...props }: 
         checked={isSelected}
         onChange={handleChange}
         disabled={disabled}
+        tabIndex={-1}
         className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
         {...props}
       />

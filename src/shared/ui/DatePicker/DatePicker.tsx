@@ -37,6 +37,30 @@ const DatePicker = ({ onDateSelect, selectedDates = [] }: DatePickerProps) => {
         dayHeaderFormat={{ weekday: 'narrow' }}
         height="auto"
         validRange={validRange}
+        dayCellDidMount={(arg) => {
+          const dateStr = `${arg.date.getFullYear()}-${String(arg.date.getMonth() + 1).padStart(2, '0')}-${String(arg.date.getDate()).padStart(2, '0')}`;
+          const cellDate = new Date(arg.date);
+          cellDate.setHours(0, 0, 0, 0);
+
+          const isPast = cellDate < today;
+          const isTooFuture = cellDate > maxDate;
+
+          // 선택 가능한 날짜만 포커스 가능하게
+          if (uniqueDates.includes(dateStr) && !isPast && !isTooFuture) {
+            const frame = arg.el.querySelector('.fc-daygrid-day-frame') as HTMLElement;
+            if (frame) {
+              frame.tabIndex = 0;
+
+              frame.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedDate(dateStr);
+                  onDateSelect?.(dateStr);
+                }
+              });
+            }
+          }
+        }}
         dateClick={(info) => {
           const clickedDate = new Date(info.dateStr);
           clickedDate.setHours(0, 0, 0, 0);
