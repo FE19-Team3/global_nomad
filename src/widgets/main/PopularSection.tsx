@@ -13,7 +13,7 @@ import { ActivityCard } from './ActivityCard';
 const PopularSection = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const { activities, fetchNextPage, hasNextPage } = useActivityInfiniteList({
+  const { activities, fetchNextPage, nextCursor } = useActivityInfiniteList({
     sort: 'most_reviewed',
   });
 
@@ -81,7 +81,7 @@ const PopularSection = () => {
             orientation="horizontal"
             estimateSize={280}
             items={activities}
-            hasNextPage={hasNextPage}
+            nextCursor={nextCursor}
             fetchNextPage={fetchNextPage}
             renderItem={(activity) => (
               <div key={activity.id} className={`w-${280} mx-2`}>

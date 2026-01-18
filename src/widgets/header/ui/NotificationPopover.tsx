@@ -6,7 +6,7 @@ import Popover from '@/shared/ui/Popover';
 import NotificationModal from '@/widgets/notification/NotificationModal';
 
 export const NotificationPopover = () => {
-  const { notifications, fetchNextPage, hasNextPage, isLoading } = useNotificationInfiniteList({
+  const { notifications, fetchNextPage, nextCursor, isLoading } = useNotificationInfiniteList({
     size: 10,
   });
 
@@ -32,7 +32,7 @@ export const NotificationPopover = () => {
           <NotificationModal
             items={notifications}
             isLoading={isLoading}
-            hasNextPage={hasNextPage}
+            nextCursor={nextCursor}
             fetchNextPage={fetchNextPage}
             onClose={close}
           />

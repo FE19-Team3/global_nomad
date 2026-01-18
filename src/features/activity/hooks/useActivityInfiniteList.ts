@@ -49,12 +49,21 @@ const useActivityInfiniteList = ({
     initialPageParam: undefined,
   });
 
+  const activities = query.data?.pages
+    ? query.data.pages.flatMap((page) => page.activities.map(mapToActivityCardItem))
+    : [];
+
+  const nextCursor = query.data?.pages?.[query.data.pages.length - 1]?.cursorId ?? null;
+
+  const fetchNextPage = () => {
+    if (!nextCursor) return;
+    return query.fetchNextPage();
+  };
+
   return {
-    activities: query.data?.pages
-      ? query.data.pages.flatMap((page) => page.activities.map(mapToActivityCardItem))
-      : [],
-    fetchNextPage: query.fetchNextPage,
-    hasNextPage: query.hasNextPage,
+    activities,
+    fetchNextPage,
+    nextCursor,
     isFetchingNextPage: query.isFetchingNextPage,
     isLoading: query.isLoading,
   };
