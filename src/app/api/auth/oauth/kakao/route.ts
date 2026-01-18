@@ -34,36 +34,6 @@ const createAuthRedirectResponse = (
 
   return response;
 };
-// const KAKAO_USER_URL = 'https://kapi.kakao.com/v2/user/me';
-
-// 카카오 닉네임 뽑아서 자동 회원가입으로 사용
-// const getKakaoNickname = async (code: string) => {
-//   const tokenParams = new URLSearchParams({
-//     grant_type: 'authorization_code',
-//     client_id: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY ?? '',
-//     redirect_uri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI ?? '',
-//     code,
-//   });
-
-//   const tokenRes = await fetch(KAKAO_TOKEN_URL, {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-//     body: tokenParams.toString(),
-//   });
-
-//   if (!tokenRes.ok) return null;
-
-//   const { access_token: accessToken } = await tokenRes.json();
-
-//   const userRes = await fetch(KAKAO_USER_URL, {
-//     headers: { Authorization: `Bearer ${accessToken}` },
-//   });
-
-//   if (!userRes.ok) return null;
-
-//   const user = await userRes.json();
-//   return user?.kakao_account?.profile?.nickname ?? user?.properties?.nickname ?? null;
-// };
 
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
