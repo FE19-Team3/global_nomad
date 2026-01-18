@@ -35,7 +35,7 @@ export const UpdateProfileImageView = ({
         className="absolute bottom-0 right-0 cursor-pointer"
         aria-label="프로필 이미지 변경"
       >
-        <EditBtnIcon className="size-8 md:size-6 lg:size-8" />
+        <EditBtnIcon className="size-8" />
       </button>
 
       {showRemoveBtn && (

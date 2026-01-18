@@ -18,7 +18,7 @@ export async function getNotifications(
   if (params?.size !== undefined) query.size = params.size;
 
   const { data } = await clientApi.get({
-    path: '/notifications',
+    path: '/my-notifications',
     query,
     schema: NotificationApiResponseSchema,
   });

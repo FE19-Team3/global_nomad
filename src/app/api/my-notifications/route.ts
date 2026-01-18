@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   if (size !== null) query.size = Number(size);
 
   const { data, status } = await serverApi.get({
-    path: '/notifications',
+    path: '/my-notifications',
     query,
     schema: NotificationApiResponseSchema,
   });
