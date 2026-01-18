@@ -28,7 +28,7 @@ type SideNavProps = {
 const navItems: BaseNavItem[] = [
   { value: '내 정보', href: '/my-page', icon: <Ic_user /> },
   { value: '예약내역', href: '/reservation-list', icon: <Ic_speech /> },
-  { value: '내 체험 관리', href: '/my-activities', icon: <Ic_setting /> },
+  { value: '내 체험 관리', href: '/my-activities/new', icon: <Ic_setting /> },
   { value: '예약 현황', href: '/booking-status', icon: <Ic_calender /> },
 ];
 

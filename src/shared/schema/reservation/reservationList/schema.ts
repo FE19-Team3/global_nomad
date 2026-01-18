@@ -14,7 +14,7 @@ export const ActivitySchema = z.object({
   bannerImageUrl: z.string(),
 });
 
-export const ReservationWithActivityResponseDtoSchema = z.object({
+export const ReservationSchema = z.object({
   id: z.number(),
   teamId: z.string(),
   userId: z.number(),
@@ -39,8 +39,9 @@ export const ReservationWithActivityResponseDtoSchema = z.object({
 
 export const ReservationListResponseSchema = z.object({
   cursorId: z.number().nullable(),
-  reservations: z.array(ReservationWithActivityResponseDtoSchema),
+  reservations: z.array(ReservationSchema),
   totalCount: z.number(),
 });
 
+export type ReservationDTO = z.infer<typeof ReservationSchema>;
 export type ReservationListResponseDto = z.infer<typeof ReservationListResponseSchema>;
