@@ -31,12 +31,21 @@ const useNotificationInfiniteList = ({ size = 10 }: Params = {}) => {
     staleTime: 60 * 1000,
   });
 
+  const notifications = query.data?.pages
+    ? query.data.pages.flatMap((page) => page.notifications.map(parseNotification))
+    : [];
+
+  const nextCursor = query.data?.pages?.[query.data.pages.length - 1]?.cursorId ?? null;
+
+  const fetchNextPage = () => {
+    if (!nextCursor) return;
+    return query.fetchNextPage();
+  };
+
   return {
-    notifications: query.data
-      ? query.data.pages.flatMap((page) => page.notifications.map(parseNotification))
-      : [],
-    fetchNextPage: query.fetchNextPage,
-    hasNextPage: query.hasNextPage,
+    notifications,
+    fetchNextPage,
+    nextCursor,
     isFetchingNextPage: query.isFetchingNextPage,
     isLoading: query.isLoading,
   };

@@ -216,6 +216,19 @@ const MyActivitiesReservationContent = () => {
     [reservationsQuery.data],
   );
 
+  // 마지막 페이지의 cursorId 계산
+  const nextCursor = useMemo(() => {
+    const pages = reservationsQuery.data?.pages;
+    if (!pages || pages.length === 0) return null;
+    return pages[pages.length - 1].cursorId ?? null;
+  }, [reservationsQuery.data]);
+
+  // InfiniteList용 fetchNextPage 래퍼
+  const handleFetchNextPage = () => {
+    if (!nextCursor) return;
+    reservationsQuery.fetchNextPage();
+  };
+
   const totalCount = reservationsQuery.data?.pages[0]?.totalCount ?? 0;
 
   const updateMutation = useMutation({
@@ -366,8 +379,8 @@ const MyActivitiesReservationContent = () => {
           ) : (
             <InfiniteList
               items={reservations}
-              hasNextPage={reservationsQuery.hasNextPage}
-              fetchNextPage={reservationsQuery.fetchNextPage}
+              nextCursor={nextCursor}
+              fetchNextPage={handleFetchNextPage}
               estimateSize={140}
               renderItem={(reservation) => (
                 <div className="pb-4">

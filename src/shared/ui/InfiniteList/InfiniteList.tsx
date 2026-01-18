@@ -11,17 +11,17 @@ export type InfiniteListHandle = {
 
 type InfiniteListProps<T> = {
   estimateSize?: number;
-  hasNextPage?: boolean;
+  nextCursor: number | null;
   items: T[];
   orientation?: 'vertical' | 'horizontal';
-  fetchNextPage?: () => void;
+  fetchNextPage?: (cursor: number) => void;
   renderItem: (item: T) => ReactNode;
 };
 
 function InfiniteListInner<T>(
   {
     estimateSize = 80,
-    hasNextPage = false,
+    nextCursor,
     items,
     orientation = 'vertical',
     fetchNextPage,
@@ -58,15 +58,13 @@ function InfiniteListInner<T>(
   const lastVirtualItem = virtualItems[virtualItems.length - 1];
 
   useEffect(() => {
-    if (
-      lastVirtualItem &&
-      lastVirtualItem.index >= items.length - 1 &&
-      hasNextPage &&
-      fetchNextPage
-    ) {
-      fetchNextPage();
-    }
-  }, [hasNextPage, fetchNextPage, items.length, lastVirtualItem]);
+    if (!lastVirtualItem) return;
+    if (lastVirtualItem.index < items.length - 1) return;
+    if (!nextCursor) return;
+    if (!fetchNextPage) return;
+
+    fetchNextPage(nextCursor);
+  }, [nextCursor, fetchNextPage, items.length, lastVirtualItem]);
 
   return (
     <div

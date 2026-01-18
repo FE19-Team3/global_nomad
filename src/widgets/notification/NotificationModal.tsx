@@ -10,7 +10,7 @@ import NotificationCard from './NotificationCard';
 import { notificationModalStyles } from './NotificationModal.styles';
 
 type Props = {
-  hasNextPage?: boolean;
+  nextCursor: number | null;
   isLoading?: boolean;
   items: NotificationEntity[];
   fetchNextPage?: () => void;
@@ -19,7 +19,7 @@ type Props = {
 };
 
 const NotificationModal = ({
-  hasNextPage,
+  nextCursor,
   isLoading,
   items,
   fetchNextPage,
@@ -50,7 +50,7 @@ const NotificationModal = ({
           <InfiniteList
             items={items}
             estimateSize={96}
-            hasNextPage={hasNextPage}
+            nextCursor={nextCursor}
             fetchNextPage={fetchNextPage}
             renderItem={(item) => (
               <NotificationCard key={item.id} item={item} _onDelete={_onDelete} />
