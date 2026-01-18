@@ -6,7 +6,7 @@ type SchemaParseFailure = {
   error: {
     flatten: (mapper: (issue: { message: string }) => string) => {
       formErrors: string[];
-      fieldErrors: Record<string, string[]>;
+      fieldErrors: Record<string, string[] | undefined>;
     };
   };
 };

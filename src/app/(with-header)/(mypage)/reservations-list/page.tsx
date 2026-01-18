@@ -4,7 +4,7 @@ import { serverApi } from '@/shared/api/server';
 import { ReservationListResponseSchema } from '@/shared/schema/reservation/reservationList/schema';
 
 import { reservationListInfiniteQuery } from './queries/reservationList';
-import { ReservationListClient } from './reservation-list.client';
+import { ReservationListClient } from './reservations-list.client';
 
 const ReservationListPage = async () => {
   const queryClient = new QueryClient();

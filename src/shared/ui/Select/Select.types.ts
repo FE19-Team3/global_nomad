@@ -22,6 +22,7 @@ export interface SelectRootProps {
 
 export interface SelectTriggerProps {
   className?: string;
+  displayValue?: string;
   placeholder?: string;
   variant?: 'original' | 'input-like';
 }

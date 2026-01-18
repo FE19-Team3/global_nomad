@@ -41,7 +41,7 @@ const ActivityFormContent = ({
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={onSubmit} className="mb-4 flex flex-col">
+      <form onSubmit={onSubmit} className="mb-4 flex flex-col w-full">
         <Text.B18 as="h2" className="mb-8">
           {title}
         </Text.B18>
