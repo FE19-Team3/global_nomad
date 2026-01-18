@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import { getKakaoAuthUrl } from '@/features/auth/kakaoAuth';
@@ -16,6 +17,8 @@ import { useLoginSubmit } from '../../model/useLoginSubmit';
 import VisibleButton from './VisibleButton';
 
 const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
   const [isVisible, setIsVisible] = useState(false);
   const [isCapsLockOn, setIsCapsLockOn] = useState(false);
 
@@ -84,7 +87,13 @@ const LoginForm = () => {
           <Divider className="absolute" />
           <p className="text-m16 relative bg-white px-4 text-gray-600">or</p>
         </div>
-
+        {error && (
+          <div className="p-3 rounded-md bg-red-50 text-red-600 text-sm">
+            {error === 'not_registered' &&
+              '가입되지 않은 계정입니다. 회원가입을 먼저 진행해주세요.'}
+            {error === 'oauth' && '카카오 로그인에 실패했습니다. 다시 시도해주세요.'}
+          </div>
+        )}
         <Button
           type="button"
           variant="secondary"
